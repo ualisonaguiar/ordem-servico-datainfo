@@ -63,8 +63,10 @@ class UsuarioFile extends AbstractService
     protected function hasUserAtivo()
     {
         $arrUsuario = $this->getUserSession();
-        if ($arrUsuario[0]->getInAtivo() != UsuarioEntity::CO_SITUACAO_ATIVO) {
-            throw new \Exception('Usuário com acesso bloqueado.');
+        if (!empty($arrUsuario)) {
+            if ($arrUsuario[0]->getInAtivo() != UsuarioEntity::CO_SITUACAO_ATIVO) {
+                throw new \Exception('Usuário com acesso bloqueado.');
+            }
         }
     }
 
