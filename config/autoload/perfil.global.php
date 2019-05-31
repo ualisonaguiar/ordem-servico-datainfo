@@ -2,6 +2,7 @@
 
 use OrdemServico\Entity\Usuario as UsuarioEntity;
 use InepZend\Navigation\Navigation;
+use InepZend\Util\ApplicationProperties;
 
 const NAME_MENU_ATIVIDADES = 'Atividades';
 const NAME_MENU_DEMANDAS = 'Demandas';
@@ -78,38 +79,38 @@ $arrSistema = [
     ]
 ];
 
-/**
- * IBAMA
- */
-//$arrMenuIbama = [
-//    NAME_MENU_ALTERAR_SENHA => [
-//        'change_pass',
-//        'Alteração de senha'
-//    ],
-//    NAME_MENU_RELATORIO_PONTO => [
-//        'relatorioponto',
-//        'Funcionalidade responsável por lista os pontos de entrada e saída dos funcionários.',
-//    ]
-//];
-//
-//return [
-//    'menu-sistema' => [
-//        UsuarioEntity::CO_PERFIL_FUNCIONARIO => array_merge($arrMenuIbama, $arrSistema),
-//        UsuarioEntity::CO_PERFIL_PREPOSTO => array_merge($arrPadrao, $arrPreposto, $arrPrepostoGestor, $arrDemandante, $arrMenuIbama, $arrSistema),
-//        UsuarioEntity::CO_PERFIL_CE => array_merge($arrSistema),
-//    ]
-//];
+$strClinet = ApplicationProperties::get('application.client');
 
 /**
  * INEP
  */
-
-return [
-    'menu-sistema' => [
-        UsuarioEntity::CO_PERFIL_FUNCIONARIO => array_merge($arrPadrao, $arrSistema),
-        UsuarioEntity::CO_PERFIL_PREPOSTO => array_merge($arrPadrao, $arrPreposto, $arrPrepostoGestor, $arrDemandante, $arrSistema),
-        UsuarioEntity::CO_PERFIL_SERVIDOR => array_merge($arrDemandante, $arrSistema),
-        UsuarioEntity::CO_PERFIL_GESTOR => array_merge($arrDemandante, $arrPrepostoGestor, $arrSistema),
-        UsuarioEntity::CO_PERFIL_CE => array_merge($arrPadrao, $arrSistema),
+if ($strClinet == 'inep') {
+    return [
+        'menu-sistema' => [
+            UsuarioEntity::CO_PERFIL_FUNCIONARIO => array_merge($arrPadrao, $arrSistema),
+            UsuarioEntity::CO_PERFIL_PREPOSTO => array_merge($arrPadrao, $arrPreposto, $arrPrepostoGestor, $arrDemandante, $arrSistema),
+            UsuarioEntity::CO_PERFIL_SERVIDOR => array_merge($arrDemandante, $arrSistema),
+            UsuarioEntity::CO_PERFIL_GESTOR => array_merge($arrDemandante, $arrPrepostoGestor, $arrSistema),
+            UsuarioEntity::CO_PERFIL_CE => array_merge($arrPadrao, $arrSistema),
+        ]
+    ];
+} else {
+$arrMenuIbama = [
+    NAME_MENU_ALTERAR_SENHA => [
+        'change_pass',
+        'Alteração de senha'
+    ],
+    NAME_MENU_RELATORIO_PONTO => [
+        'relatorioponto',
+        'Funcionalidade responsável por lista os pontos de entrada e saída dos funcionários.',
     ]
 ];
+
+    return [
+        'menu-sistema' => [
+            UsuarioEntity::CO_PERFIL_FUNCIONARIO => array_merge($arrMenuIbama, $arrSistema),
+            UsuarioEntity::CO_PERFIL_PREPOSTO => array_merge($arrPadrao, $arrPreposto, $arrPrepostoGestor, $arrDemandante, $arrMenuIbama, $arrSistema),
+            UsuarioEntity::CO_PERFIL_CE => array_merge($arrSistema),
+        ]
+    ];
+}
