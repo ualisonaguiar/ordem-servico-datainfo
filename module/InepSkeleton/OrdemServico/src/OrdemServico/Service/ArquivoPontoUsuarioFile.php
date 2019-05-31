@@ -5,6 +5,7 @@ namespace OrdemServico\Service;
 use InepZend\Service\AbstractService;
 use InepZend\Service\ServiceAngularTrait;
 use InepZend\Util\Date;
+use OrdemServico\Entity\ArquivoPonto;
 use OrdemServico\Entity\Usuario as UsuarioEntity;
 use Zend\Form\Element\DateTime;
 
@@ -45,10 +46,12 @@ class ArquivoPontoUsuarioFile extends AbstractService
                         'dt_ponto' => $arrInformacao['dt_ponto'],
                         'hr_ponto' => $arrInformacao['hr_ponto'],
                     ]);
+                    $arrLinhaArquivo = $linhaArquivo->toArray();
+                    $arrLinhaArquivo['tp_migracao'] = ArquivoPonto::TP_MIGRACAO_CONCLUIDO;
+                    $this->getService('OrdemServico\Service\ArquivoPontoFile')->save($arrLinhaArquivo);
                 }
             }
             self::setFlush(true);
-            $serviceArquivoPonto->updateBy(['tp_migracao' => 2], ['tp_migracao' => 1]);
             $this->commit();
         } catch (\Exception $exception) {
             $this->rollback();

@@ -12,6 +12,9 @@ use InepZend\Entity\Entity;
  */
 class ArquivoPonto extends Entity
 {
+    const TP_MIGRACAO_PENDENTE = 1;
+    const TP_MIGRACAO_CONCLUIDO = 2;
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
