@@ -8,6 +8,7 @@ use InepZend\Service\ServiceAngularTrait;
 use InepZend\Util\Date;
 use InepZend\Util\ArrayCollection;
 use InepZend\Exception\Exception;
+use OrdemServico\Entity\ArquivoPonto;
 use OrdemServico\Entity\Usuario;
 
 class RelatorioPonto extends AbstractService
@@ -107,7 +108,7 @@ class RelatorioPonto extends AbstractService
                         'ds_linha' => $strLinha,
                         'id_usuario_alteracao' => $intIdUsuarioLogado,
                         'dt_alteracao' => date('Y-m-d H:i:s'),
-                        'tp_migracao' => 1
+                        'tp_migracao' => ArquivoPonto::TP_MIGRACAO_PENDENTE
                     ]);
                 }
             }

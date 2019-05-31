@@ -19,6 +19,6 @@ class ArquivoPontoRepository extends Repository
             ->where($queryBuilder->expr()->notIn($this->getAlias() . '.id_arquivo_ponto', $queryNot->getDQL()))
             ->andWhere($this->getAlias() . '.tp_migracao = :tp_migracao')
             ->getQuery();
-        return $this->executeQuery($query, ['tp_migracao' => 1], true);
+        return $this->executeQuery($query, ['tp_migracao' => ArquivoPonto::TP_MIGRACAO_PENDENTE], true);
     }
 }
