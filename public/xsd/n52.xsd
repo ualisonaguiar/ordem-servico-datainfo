@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://inepskeleton.local/xsd" xmlns="http://inepskeleton.local/xsd" elementFormDefault="qualified">
+    <xs:element name="registers">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="register" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="CO_PROJETO">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:minInclusive value="1000000"/>
+                                        <xs:maxInclusive value="9999999"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="TP_ORIGEM">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="P"/>
+                                        <xs:enumeration value="G"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="NU_META_MUNICIPIO">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:minInclusive value="1"/>
+                                        <xs:maxInclusive value="9999999999"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="CO_LOCAL">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:minLength value="1"/>
+                                        <xs:maxLength value="20"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="NO_LOCAL">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:minLength value="1"/>
+                                        <xs:maxLength value="250"/>
+                                        <xs:pattern value="([a-zA-Z 0-9,.-])*"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="NU_CNPJ" nillable="true" minOccurs="0">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:length value="14"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="CO_CENSO" nillable="true" minOccurs="0">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:maxInclusive value="9999999999"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="TX_EMAIL_LOCAL" nillable="true" minOccurs="0">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:maxLength value="100"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="QT_PREDIOS">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:minInclusive value="1"/>
+                                        <xs:maxInclusive value="99999"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="CO_BLOCO">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:minLength value="1"/>
+                                        <xs:maxLength value="10"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="NO_BLOCO">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:minLength value="1"/>
+                                        <xs:maxLength value="200"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="NO_LOGRADOURO">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:minLength value="1"/>
+                                        <xs:maxLength value="100"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="NU_ENDERECO" nillable="true" minOccurs="0">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:maxInclusive value="9999999999"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="NO_COMPLEMENTO" nillable="true" minOccurs="0">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:maxLength value="100"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="NO_BAIRRO">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:minLength value="1"/>
+                                        <xs:maxLength value="100"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="NU_CEP">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:length value="8"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="CO_MUNICIPIO">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:minInclusive value="1000000"/>
+                                        <xs:maxInclusive value="9999999"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="SG_UF">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="AC"/>
+                                        <xs:enumeration value="AL"/>
+                                        <xs:enumeration value="AP"/>
+                                        <xs:enumeration value="AM"/>
+                                        <xs:enumeration value="BA"/>
+                                        <xs:enumeration value="CE"/>
+                                        <xs:enumeration value="DF"/>
+                                        <xs:enumeration value="ES"/>
+                                        <xs:enumeration value="GO"/>
+                                        <xs:enumeration value="MA"/>
+                                        <xs:enumeration value="MT"/>
+                                        <xs:enumeration value="MS"/>
+                                        <xs:enumeration value="MG"/>
+                                        <xs:enumeration value="PA"/>
+                                        <xs:enumeration value="PB"/>
+                                        <xs:enumeration value="PR"/>
+                                        <xs:enumeration value="PE"/>
+                                        <xs:enumeration value="PI"/>
+                                        <xs:enumeration value="RJ"/>
+                                        <xs:enumeration value="RN"/>
+                                        <xs:enumeration value="RS"/>
+                                        <xs:enumeration value="RO"/>
+                                        <xs:enumeration value="RR"/>
+                                        <xs:enumeration value="SC"/>
+                                        <xs:enumeration value="SP"/>
+                                        <xs:enumeration value="SE"/>
+                                        <xs:enumeration value="TO"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="NU_TELEFONE1">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:minLength value="1"/>
+                                        <xs:maxLength value="13"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="NU_TELEFONE2" nillable="true" minOccurs="0">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:maxLength value="13"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="NU_CPF_RESPONSAVEL" nillable="true" minOccurs="0">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:length value="11"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="NO_RESPONSAVEL">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:minLength value="1"/>
+                                        <xs:maxLength value="250"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="NO_CARGO_RESPONSAVEL">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:minLength value="1"/>
+                                        <xs:maxLength value="50"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="TX_EMAIL_RESPONSAVEL">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:minLength value="1"/>
+                                        <xs:maxLength value="100"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="QT_SALAS">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:minInclusive value="1"/>
+                                        <xs:maxInclusive value="99999"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="QT_CAPACIDADE_MAXIMA">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:minInclusive value="1"/>
+                                        <xs:maxInclusive value="99999"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="QT_BANHEIRO_FEMININO">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:minInclusive value="1"/>
+                                        <xs:maxInclusive value="99999"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="QT_BANHEIRO_MASCULINO">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:minInclusive value="1"/>
+                                        <xs:maxInclusive value="99999"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_ATENDIMENTO_DIFERENCIADO">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_SABATISTAS">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_RAMPA_ACESSO">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_ELEVADOR">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="QT_CANDIDATOS_ALOCADOS" nillable="true" minOccurs="0">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:maxInclusive value="9999999999"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_PREVISAO_REFORMA">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="TP_SITUACAO_ALOCACAO">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="1"/>
+                                        <xs:enumeration value="2"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="CO_JUSTIFICATIVA" nillable="true" minOccurs="0">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:maxInclusive value="999"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_ENDERECO_CONFIRMADO" nillable="true" minOccurs="0">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

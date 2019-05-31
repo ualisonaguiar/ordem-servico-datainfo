@@ -1,0 +1,11 @@
+<?php
+$strTitle = 'Responsável pelo Envio';
+$this->headTitle($strTitle);
+?>
+<h1><?php echo $this->escapeHtml($strTitle); ?></h1>
+<p>Insira as devidas informações e observe o símbolo <font style="color: red;">*</font> para aquelas entradas de dados que são de preenchimento obrigatório.</p>
+<?php
+$form = $this->form;
+$form->setAttribute('action', $this->url('responsavelenvio', array('action' => 'add')));
+echo $this->form()->render($form);
+?>

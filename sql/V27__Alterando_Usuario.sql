@@ -1,0 +1,2 @@
+update tb_ordem_servico set no_fiscal_requisitante = 'Carlos Roberto Porfírio Júnior' where no_fiscal_requisitante = 'Carlos Roberto Porfírio';
+update tb_ordem_servico set no_fiscal_tecnico = 'Carlos Roberto Porfírio Júnior' where no_fiscal_tecnico = 'Carlos Roberto Porfírio';

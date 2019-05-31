@@ -1,0 +1,26 @@
+<?php 
+$this->html($this)->open();
+$arrHtmlHeadInfo = $this->htmlHeadPortalBackgroundVermelho2013()->render()[1];
+$this->htmlBodyPortalBackgroundVermelho2013()->open();
+$this->htmlBodyPortalBackgroundVermelho2013()->renderArchorTop();
+$this->htmlBodyPortalBackgroundVermelho2013()->renderNavBar();
+$this->htmlBodyPortalBackgroundVermelho2013()->renderHeader();
+$this->htmlBodyPortalBackgroundVermelho2013()->renderContent($arrHtmlHeadInfo);
+$this->htmlBodyPortalBackgroundVermelho2013()->renderFooter('container', 'left', '<a href="#topo" title="Ir para o topo da página">Topo <img src="' . $this->basePath() . '/vendor/InepZend/images/rodape_topoPagina.png" alt="Ir para o topo da página." border="0" /></a>', 'float: right;');
+echo $this->inlineScript();
+$this->htmlBodyPortalBackgroundVermelho2013()->close();
+$this->html()->close();
+?>
+<script language="javascript">
+    $(function() {
+        $("#inepZendMenuColapse .menuList li ul").parent().accordion({
+            collapsible: true,
+            active: false,
+            icons: false,
+            heightStyle: "content",
+        });
+    });
+    $(document).ready(function() {
+        $("#inepZendMenuColapse .menuList li ul li .ui-accordion-content, #inepZendMenuColapse .menuList li ul li .ui-state-active").parent().attr('style', 'background: url("<?php echo $this->basePath(); ?>/vendor/InepZend/images/has_child_submenu_level2_transp.png") no-repeat scroll 160px 50% transparent !important;');
+    });
+</script>

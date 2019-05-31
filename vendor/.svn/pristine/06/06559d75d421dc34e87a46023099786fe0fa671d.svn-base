@@ -1,0 +1,28 @@
+<?php
+use InepZend\View\Helper\AbstractHtmlHeadHelper;
+
+$this->angular()->addController(array('url' => getRenderScriptUrl(null, 'InepZend', 'Application', 'js', 'NavigationController' . AbstractHtmlHeadHelper::getSufixJsMin()), 'dependence' => 'Controller/AbstractCoreController'));
+echo '<div class="NavigationController" ng-app="NavigationController" ng-controller="NavigationController">';
+if (!$booHasIdentity)
+    echo '<div id="menu-administrative-responsible"></div>';
+else {
+    $strStyle = '';
+    if ($this->applicationInfo()->getThemeOption('menu_fix') === false)
+        $strStyle = (@$_COOKIE['menu-toggle-responsible-not-fix'] == 'false') ? 'display: none; visibility: hidden;' : ''; ?>
+    <div id="menu-administrative-responsible" class="col-sm-3 col-md-2 sidebar sidebar-offcanvas hide-print hide collapse" style="<?php echo $strStyle; ?>">
+        <div class="col-sm-3 col-md-2 sidebar sidebar-offcanvas">
+            <section>
+                <header>
+                    <figure>
+                        <div class="navigation-logo"></div>
+                    </figure>
+                    <h2 class="h2 hide-print" id="nav" style="text-align: center;">Navegação</h2>
+                </header>
+                <nav aria-labeledby="#nav">
+                    <?php echo str_replace('', '', $mixDivMenu); ?>
+                </nav>
+            </section>
+        </div>
+    </div>
+<?php }
+echo '</div>'; ?>

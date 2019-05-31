@@ -1,0 +1,7 @@
+<?php
+$strTitle = 'Responsável pelo Envio';
+$this->headTitle($strTitle);
+?>
+<h1><?php echo $this->escapeHtml($strTitle); ?></h1>
+<p>Manipule os responsáveis pelos envios dos dados.</p>
+<?php echo $this->form()->render($this->form); ?>

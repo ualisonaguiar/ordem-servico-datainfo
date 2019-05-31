@@ -1,0 +1,20 @@
+<?php
+$strTitle = 'Logs';
+$this->headTitle($strTitle);
+?>
+<link href="<?php echo $this->basePath() . getRenderScriptUrl('Log/css/visualizar-informacao'); ?>"
+      media="screen" rel="stylesheet" type="text/css">
+<script
+    defer type="text/javascript"
+    src="<?php echo $this->basePath() . getRenderScriptUrl('Log/js/index'); ?>">
+</script>
+<h1><?php echo $this->escapeHtml($strTitle); ?></h1>
+<p>Realize a filtragem para listar os arquivos de log escritos automaticamente pelo sistema e visualize o conteúdo de cada arquivo de log ou por data. Também é possível realizar o <i>download</i> de arquivos de log.<br />
+Os logs são dividos em pelo seu level variando entre <strong>critical</strong> (<i>exceptions</i> geradas por erros de PHP ou comandos <i>throw</i>), <strong>error</strong> (erros de PHP subdividos em <i>notice</i>, <i>warning</i> e <i>fatal</i>) e <strong>info</strong> (rotas/passos de execução de requisições acionadas por usuários, execuções em banco de dados inclusive com tempo de resposta, etc).<br /></p>
+<?php echo $this->form()->render($this->form); ?>
+<br />
+<div class="caixaVazada">
+    <h2 style="font-style: italic;">Download</h2>
+    <p>Clique no ícone de adicionar em cada arquivo de log do resultado da filtragem que deseje realizar o <i>download</i>.</p>
+    <?php echo $this->form()->render($this->formDownload); ?>
+</div>

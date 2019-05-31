@@ -1,0 +1,11 @@
+<?php
+echo $this->partial(
+    'inep-zend/log/tree-info-log',
+    array(
+        'arrInfoLogFile' => $this->arrInfoLogFile,
+        'strIndentitySession' => $this->strDsPath
+    )
+);
+unset($this->arrInfoLogFile);
+echo $this->button(null, $this->url('log-index', array('ds_path' => base64_encode($this->strDsPath))));
+?>

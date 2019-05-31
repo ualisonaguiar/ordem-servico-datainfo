@@ -1,0 +1,7 @@
+<?php
+$strTitle = 'Massa para Teste';
+$this->headTitle($strTitle);
+?>
+<h1><?php echo $this->escapeHtml($strTitle); ?></h1>
+<p>Realize o cadastro de uma massa de teste.</p>
+<?php echo $this->form()->render($this->form); ?>

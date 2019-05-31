@@ -1,0 +1,1 @@
+delete from tb_arquivo_ponto_usuario where id_usuario = 20 and dt_ponto BETWEEN '2018-10-01' and '2018-10-31';

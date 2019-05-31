@@ -1,0 +1,12 @@
+<?php
+foreach ($this->arrDataLog as $intDataLog => $arrInfoLog) :
+    ?>
+    <ul>
+        <li style="display: none;">
+            <i class="glyphicon glyphicon-plus-sign visualizar-log" style="cursor: pointer;" ref="<?php echo $this->strIndentitySession.'|'.$this->intUserSystem.'|'.$intDataLog; ?>"></i>
+            &nbsp;
+            <?php echo date('d/m/Y H:i:s', $intDataLog); ?>
+            <div class="hide"></div>
+        </li>
+    </ul>
+<?php endforeach; ?>

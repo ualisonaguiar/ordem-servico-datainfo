@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>_README</title>
+<link rel="stylesheet" href="https://stackedit.io/res-min/themes/default.css" />
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body><div class="container"><h1 id="util"><strong><i class="icon-folder-open"></i> Util</strong></h1>
+
+<h2 id="1-índice"><i class="icon-list"></i>1. Índice</h2>
+
+<p><div class="toc"><div class="toc">
+<ul>
+<li><a href="#util"> Util</a><ul>
+<li><a href="#1-índice">1. Índice</a></li>
+<li><a href="#2-definição"> 2. Definição</a><ul>
+<li><a href="#21-conceito"> 2.1. Conceito</a></li>
+<li><a href="#22-principais-características">2.2. Principais características</a><ul>
+<li><a href="#221-namespace"> 2.2.1. Namespace</a></li>
+</ul>
+</li>
+<li><a href="#23-apidocunittest"> 2.3. APIDoc/UnitTest</a></li>
+</ul>
+</li>
+<li><a href="#3-como-usar"> 3. Como usar</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</p>
+
+<p><a id="definicao"></a></p>
+
+<h2 id="2-definição"><i class="icon-th"></i> 2. Definição</h2>
+
+<h3 id="21-conceito"><i class="icon-pencil"></i> 2.1. Conceito</h3>
+
+<blockquote>
+  <p><em>Util</em> é uma biblioteca disponibilizada no <strong>InepZend</strong> na qual contém classes especializadas que facilitam o desenvolvimento de funcionalidades, podendo ser utilizadas em camadas onde sejam necessárias a suas utilizações.</p>
+</blockquote>
+
+<hr>
+
+<p><a id="principais-caracteristicas"></a></p>
+
+<h3 id="22-principais-características"><i class="icon-info"></i>2.2. Principais características</h3>
+
+<ul>
+<li>As chamadas dos métodos são sempre estáticas <kbd>::</kbd>:</li>
+</ul>
+
+<pre class="prettyprint"><code class=" hljs lasso"><span class="hljs-subst">\</span>InepZend<span class="hljs-subst">\</span>Util<span class="hljs-subst">\</span><span class="hljs-built_in">Date</span><span class="hljs-tag">::isDate</span>(<span class="hljs-string">'18/07/2014'</span>, <span class="hljs-string">'template'</span>);</code></pre>
+
+<ul>
+<li><p>As classes são divididas e especializadas por assunto.</p>
+
+<ul><li>Ex.: <strong><em>\InepZend\Util\Data</em></strong>, faz manipulação somente de datas.</li></ul></li>
+<li><p>A classe <strong><em>\InepZend\Util\Library</em></strong> referencia <strong>todos</strong> os métodos contidos nas classes especializadas da Util. Por questão de performance (memória) é sugerido o uso do método da classe especializada e não da \InepZend\Util\Library.</p></li>
+<li><p>Além de métodos de classe, também possui funções divididas por assunto e que podem ser utilizadas na aplicação:</p></li>
+</ul>
+
+<pre class="prettyprint"><code class=" hljs scss"><span class="hljs-comment">// Funcao em InepZend/Util/Functions/FileSytem.php</span>
+<span class="hljs-function">showFile(<span class="hljs-string">'data/arquivo.txt'</span>)</span>;</code></pre>
+
+<hr>
+
+<p><a id="namespace"></a></p>
+
+<h4 id="221-namespace"><i class="icon-sitemap"></i> 2.2.1. Namespace</h4>
+
+<blockquote>
+  <ul>
+  <li>\InepZend\Util</li>
+  </ul>
+</blockquote>
+
+<hr>
+
+<p><a id="apidoc"></a></p>
+
+<h3 id="23-apidocunittest"><i class="icon-book"></i> 2.3. APIDoc/UnitTest</h3>
+
+<blockquote>
+  <ul>
+  <li><p>APIDoc</p>
+  
+  <blockquote>
+    <p><a href="http://desenvphp.inep.gov.br/apidoc/namespace-InepZend.Util.html">http://desenvphp.inep.gov.br/apidoc/namespace-InepZend.Util.html</a></p>
+  </blockquote></li>
+  <li><p>UnitTest</p>
+  
+  <blockquote>
+    <p><a href="http://desenvphp.inep.gov.br/apidoc/namespace-InepZend.Util.html">http://desenvphp.inep.gov.br/apidoc/namespace-InepZend.Util.html</a> <br> <br>
+    <strong>Obs.:</strong> Para cada classe da <strong>Util</strong> tem seu teste unitário com o sufixo “<strong>test</strong>” ou “<strong>SpecificTest</strong>“.</p>
+  </blockquote></li>
+  </ul>
+</blockquote>
+
+<hr>
+
+<p><a id="como-usar"></a></p>
+
+<h2 id="3-como-usar"><i class="icon-terminal"></i> 3. Como usar</h2>
+
+<blockquote>
+  <p>Os exemplos da utilização de cada método estão contidos em seus comentários após a <em>annotation</em> <strong>@example</strong> e nas classes de teste:</p>
+  
+  <pre class="prettyprint"><code class=" hljs tex">// @example <span class="hljs-command">\InepZend</span><span class="hljs-command">\Util</span><span class="hljs-command">\ApplicationInfo</span>::getApplicationInfo();</code></pre>
+</blockquote>
+
+<hr></div></body>
+</html>

@@ -1,0 +1,88 @@
+<?php 
+$strDivStyle = ($this->strDivStyle) ? $this->strDivStyle : 'width: 1150px; height: 500px;';
+$booClickAddMarker = ($this->clickAddMarker) ? $this->clickAddMarker : 'false';
+$strApiKey = ($this->strApiKey) ? $this->strApiKey : null;
+if ($this->arrOption && is_array($this->arrOption)) {
+    $strMapOption = (key_exists('arrMapOption', $this->arrOption) ? '{' : '{}');
+    foreach ($this->arrOption as $strKey => $mixValue) {
+        if ($strKey == 'arrMapOption') {
+            foreach ($mixValue as $strParam => $mixValueParam) {
+                if (is_array($mixValueParam))
+                    $strMapOption .= "$strParam : new google.maps.LatLng(" . implode(',', $mixValueParam) . ")";
+                else
+                    $strMapOption .= "$strParam : $mixValueParam";
+                if (next($mixValue))
+                    $strMapOption .= ',';
+            }
+            $strMapOption .= '}';
+        } elseif ($strKey == 'arrMarker') {
+            $strArrMarker = '[';
+            if (is_array($mixValue)) {
+                foreach ($mixValue as $arrMarker) {
+                    $strArrMarker .= '{';
+                    foreach ($arrMarker as $strParam => $mixValueParam) {
+                        if (is_array($mixValueParam))
+                            $strArrMarker .= "$strParam : new google.maps.LatLng(" . implode(',', $mixValueParam) . ")";
+                        else
+                            $strArrMarker .= "$strParam : $mixValueParam";
+                        if (next($arrMarker))
+                            $strArrMarker .= ',';
+                    }
+                    $strArrMarker .= (next($mixValue) ? '},' : '}');
+                }
+            }
+            $strArrMarker .= ']';
+        }
+    }
+}
+?>
+<div id="map_canvas" style="<?php echo $strDivStyle; ?>"></div>
+<script type="text/javascript"
+    src="<?php echo "http://maps.googleapis.com/maps/api/js?key=$strApiKey&sensor=false"; ?>">
+</script>
+<script type="text/javascript">
+var map;
+var markers = [];
+var booClickAddMarker = <?php echo $booClickAddMarker; ?>;
+
+function initialize() {
+    var arrMarker = <?php echo $strArrMarker; ?>;
+    map = new google.maps.Map(document.getElementById("map_canvas"), <?php echo $strMapOption; ?>);
+    if (arrMarker) {
+        $.each(arrMarker, function(index, value){
+            value.map = map;
+            var marker = new google.maps.Marker(value);
+            markers.push(marker); 
+        });
+    }
+    if (booClickAddMarker) {
+        google.maps.event.addListener(map, 'click', function(event) {
+            addMarker(event.latLng);
+        });
+    }
+}
+
+function addMarker(latLng) {
+    cleanMarkers();
+    var marker = new google.maps.Marker({
+        position : latLng,
+        map : map
+    });
+    var divMarkerPosition = document.createElement('DIV');
+    divMarkerPosition.setAttribute('id', 'marker_position');
+    divMarkerPosition.innerHTML = "<span id='latitude'>" + marker.getPosition().lat() + "</span><span id='longitude'>" + marker.getPosition().lng() + '</span>';
+    document.getElementById('map_canvas').appendChild(divMarkerPosition);
+    markers.push(marker);
+}
+
+function cleanMarkers() {
+    var divMarkerPosition = document.getElementById('marker_position');
+    for (var intCount = 0; intCount < markers.length; ++intCount)
+        markers[intCount].setMap(null);
+    if (divMarkerPosition)
+        document.getElementById('map_canvas').removeChild(divMarkerPosition);
+    markers = [];
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+</script>

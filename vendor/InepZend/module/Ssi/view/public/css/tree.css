@@ -1,0 +1,50 @@
+.divTreeItem {
+    border: 1px solid #94d7e4;
+    margin-bottom: 3px;
+    padding: 2px;
+    padding-left: 5px;
+    background-color: #33FFFF;
+    cursor: pointer;
+}
+
+.divTreeItem1 {
+    margin-left: 10% !important;
+    background-color: #33FFCC;
+}
+
+.divTreeItem2 {
+    margin-left: 20% !important;
+    background-color: #33FF99;
+}
+
+.divTreeItem3 {
+    margin-left: 30% !important;
+    background-color: #33FF66;
+}
+
+.divTreeItem4 {
+    margin-left: 40% !important;
+    background-color: #33FF00;
+}
+
+.divTree {
+    width: 60% !important;
+}
+
+@media screen and (max-width: 767px) {
+    .divTree {
+        width: 100%;
+    }
+}
+
+.fa-plus-circle {
+    color: #000080;
+}
+
+.fa-trash-o {
+    color: red;
+}
+
+.error {
+    margin-top: 0px !important;
+}

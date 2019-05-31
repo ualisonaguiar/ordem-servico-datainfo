@@ -1,0 +1,471 @@
+function getFlexigridCel(strColName, intRow, strReference)
+{
+    if (empty(intRow))
+        intRow = 0;
+    var arrCelFromCol = getFlexigridCol(strColName, strReference);
+    return (!isArray(arrCelFromCol)) ? false : arrCelFromCol[intRow];
+}
+
+function getFlexigridCol(strColName, strReference)
+{
+    if (empty(strColName))
+        return false;
+    var flexigrid = getFlexigrid(strReference);
+    var arrTable = flexigrid.toArray();
+    if (arrTable.length === 0)
+        return false;
+    var table = arrTable[0];
+    return getElementsByAttribute(table, 'TD', 'abbr', strColName);
+}
+
+function setFlexigridCelAttribute(strColName, intRow, strAttribute, mixValue, strReference)
+{
+    var cel = getFlexigridCel(strColName, intRow, strReference);
+    if (isBoolean(cel))
+        return false;
+    cel.setAttribute(strAttribute, mixValue);
+    return cel;
+}
+
+function setFlexigridColAttribute(strColName, strAttribute, mixValue, strReference)
+{
+    var arrCelFromCol = getFlexigridCol(strColName, strReference);
+    if (isBoolean(arrCelFromCol))
+        return false;
+    for (var intCount = 0; intCount < arrCelFromCol.length; ++intCount) {
+        var cel = arrCelFromCol[intCount];
+        cel.setAttribute(strAttribute, mixValue);
+    }
+    return arrCelFromCol;
+}
+
+function setFlexigridCelClass(strColName, intRow, mixValue, strReference)
+{
+    return setFlexigridCelAttribute(strColName, intRow, 'class', mixValue, strReference);
+}
+
+function setFlexigridColClass(strColName, mixValue, strReference)
+{
+    return setFlexigridColAttribute(strColName, 'class', mixValue, strReference);
+}
+
+function setFlexigridCelStyle(strColName, intRow, mixValue, strReference)
+{
+    return setFlexigridCelAttribute(strColName, intRow, 'style', mixValue, strReference);
+}
+
+function setFlexigridColStyle(strColName, mixValue, strReference)
+{
+    return setFlexigridColAttribute(strColName, 'style', mixValue, strReference);
+}
+
+function setNameIntoInputPage()
+{
+    var arrSpanPControl = getElementsFromAttribute(document.body, 'SPAN', 'class', 'pcontrol');
+    for (var intCount = 0; intCount < arrSpanPControl.length; ++intCount) {
+        var arrInputText = getElementsFromAttribute(arrSpanPControl[intCount], 'INPUT', 'type', 'text');
+        for (var intCount2 = 0; intCount2 < arrInputText.length; ++intCount2) {
+            var inputText = arrInputText[intCount2];
+            if (empty(inputText.getAttribute('name')))
+                inputText.setAttribute('name', 'page_grid');
+        }
+    }
+}
+
+function checkShowButton(arrRecord, strJsonButton)
+{
+//    var jsonButton = getJsonObject(strJsonButton);
+//    alert(arrRecord.length);
+//    console.log(arrRecord);
+//    for (var strAttribute in arrRecord)
+//        alert(arrRecord[strAttribute]);
+//    alert(jsonButton.strName);
+//    alert(jsonButton.strCssClass);
+//    alert(jsonButton.strJsFunction);
+//    alert(jsonButton.strJsFunctionCondition);
+    return true;
+}
+
+function delegateOperationAction(strOperation, grid, strUrlInsert, strUrlUpdate, strUrlDelete, strConfirmDelete)
+{
+    if (empty(grid.innerHTML)) {
+        var arrTable = grid.toArray();
+        if (arrTable.length !== 0)
+            grid = arrTable[0];
+    }
+    switch (strOperation) {
+        case 'Inserir':
+            window.location.href = strGlobalBasePath + strUrlInsert;
+            break;
+        case 'Alterar':
+        case 'Excluir':
+            var strUrl = (strOperation == 'Alterar') ? strUrlUpdate : strUrlDelete;
+            var strConfirm;
+            if (strOperation == 'Excluir') {
+                if (empty(strConfirmDelete))
+                    strConfirmDelete = "Deseja realmente realizar a operação de " + strOperation.toUpperCase() + " este registro?";
+                strConfirm = strConfirmDelete;
+            }
+            flexRedirect(strUrl, grid, strConfirm, strOperation);
+            break;
+    }
+}
+
+function flexRedirect(strUrl, grid, strConfirm, strOperation)
+{
+    if ((empty(strUrl)) || (empty(grid)))
+        return false;
+    strUrl = strGlobalBasePath + strUrl;
+    var arrTrSelected = $('.trSelected', grid);
+    var strOperationText = (!empty(strOperation)) ? ' de ' + strOperation.toUpperCase() : '';
+    if (arrTrSelected.length !== 0) {
+        var trSelected = arrTrSelected[0];
+        var strPk = trSelected.id.replace('row', '');
+        strUrl += '/' + strPk;
+        if (strOperation == 'Excluir') {
+            if (empty(strConfirm))
+                strConfirm = 'Deseja realmente realizar a operação' + strOperationText + ' este registro?';
+            confirmDialog(strConfirm, 'Operação' + strOperation.toUpperCase(), 300, 200, 'window.location.href = "' + strUrl + '";');
+        } else if (!empty(strConfirm))
+            confirmDialog(strConfirm, 'Confirmação', 300, 200, 'window.location.href = "' + strUrl + '";');
+        else
+            window.location.href = strUrl;
+    } else
+        alertDialog('É necessário selecionar algum registro para realizar a operação' + strOperationText + '!', 'Operação' + strOperationText, 300, 200);
+    return true;
+}
+
+var trActionGlobal;
+function clickColAction(divButton, booRemoveClass)
+{
+    if (empty(divButton))
+        return false;
+    trActionGlobal = divButton.parentNode.parentNode.parentNode;
+    if (!empty(trActionGlobal)) {
+        if (empty(booRemoveClass))
+            booRemoveClass = false;
+        if (!booRemoveClass)
+            setTimeout('trActionGlobal.className = "trSelected";', 50);
+        else
+            setTimeout('trActionGlobal.className = "";', 50);
+    }
+    return true;
+}
+
+function showColButtonInterval(strReference)
+{
+    setInterval('showColButton' + strReference + '();', 200);
+}
+
+function editFlexigridButton(strJson, booIsThemeAdministrativeResponsible)
+{
+    if (!booIsThemeAdministrativeResponsible)
+        return false;
+    var arrDivFbutton = getElementsFromAttribute(document.body, 'DIV', 'class', 'fbutton');
+    var jsonAccesskey = getJsonObject(strJson);
+    for (var intCount = 0; intCount < arrDivFbutton.length; ++intCount) {
+        var div = arrDivFbutton[intCount];
+        div.innerHTML = replaceAll(div.innerHTML, 'span', 'button type="button"');
+        var arrButton = getElementsFromAttribute(div, 'BUTTON', 'type', 'button');
+        for (var intCount2 = 0; intCount2 < arrButton.length; ++intCount2) {
+            var button = arrButton[intCount2];
+            var strClassOriginal = button.getAttribute('class');
+            if (empty(strClassOriginal))
+                strClassOriginal = '';
+            var arrClassOriginal = strClassOriginal.split(' ');
+            eval('var strAccesskey = (isObject(jsonAccesskey)) ? jsonAccesskey.' + arrClassOriginal[0] + ' : null;');
+            if (strAccesskey !== null)
+                button.setAttribute('accesskey', strAccesskey);
+            var strClass = strClassOriginal;
+            if (strClass.indexOf('btnDefault') == -1)
+                strClass += ' btnDefault';
+            if (strClass.indexOf('btn ') == -1)
+                strClass += ' btn';
+            if (strClass.indexOf('btn-info') == -1)
+                strClass += ' btn-info';
+            button.setAttribute('class', strClass);
+        }
+    }
+    return true;
+}
+
+function flexOnSubmit()
+{
+    var strReference = this.referenceTable;
+    var inputHiddenParam = getObject('filter_criteria_' + strReference.replace('#', ''));
+    if (!empty(inputHiddenParam))
+        this.params = [{name: 'criteria', value: inputHiddenParam.value}];
+    return true;
+}
+
+function flexOnSuccess(data, strReference, strCallback, strJsFunctionAccordion)
+{
+    if ((empty(data)) || (empty(strReference)))
+        return;
+    var arrResult = [];
+    var arrTr = data.bDiv.getElementsByTagName('TR');
+    for (var intCount = 0; intCount < arrTr.length; ++intCount) {
+        var arrRecord = [];
+        var arrTd = arrTr[intCount].getElementsByTagName('TD');
+        for (var intCount2 = 0; intCount2 < arrTd.length; ++intCount2) {
+            var td = arrTd[intCount2];
+            var mixKey = (empty(td.getAttribute('abbr'))) ? intCount2 : td.getAttribute('abbr');
+            var arrDiv = td.getElementsByTagName('DIV');
+            arrRecord[mixKey] = (arrDiv.length > 0) ? arrDiv[0].innerHTML : td.innerHTML;
+        }
+        arrResult[intCount] = arrRecord;
+    }
+    if (!document.all)
+        $(data.bDiv).attr('style', 'height: auto; min-width: 0;');
+    var mixResult = ((isObject(data)) && (isObject(data.bDiv))) ? arrGlobalFlexigridResult[strReference] = new Array(data.bDiv.innerHTML, ((document.all) ? data.bDiv.innerText : data.bDiv.textContent), arrResult) : false;
+    if (!empty(strCallback))
+        eval(strCallback);
+    if (!empty(strJsFunctionAccordion))
+        showColAccordion(strReference, strJsFunctionAccordion);
+    else
+        removeColAccordion(strReference);
+    if (booGlobalFlexigridCache)
+        arrGlobalFlexigridResult[strGlobalFlexigridRequestName] = new Array(data.hDiv.getElementsByTagName('THEAD')[0], data.bDiv.getElementsByTagName('TBODY')[0], new Array($(data.pDiv).find('select').val(), $(data.pDiv).find('input').val(), $(data.pDiv).find('span.pcontrol span').html(), $(data.pDiv).find('.pPageStat').html()), new Date().getTime());
+    return mixResult;
+}
+
+function flexOnError(XMLHttpRequest, strStatus, strErrorThrown)
+{
+    alertDialog('Ocorreu alguma falha e a operação não pôde ser realizada!', 'Paginação', 300, 200, '$(\'.flexigrid\').attr(\'style\', \'display: none;\');');
+    return true;
+}
+
+function showColAccordion(strReference, strJsFunctionAccordion)
+{
+    if ((empty(strReference)) || (empty(strJsFunctionAccordion)))
+        return false;
+    var arrTable = $(strReference).toArray();
+    if (arrTable.length !== 0) {
+        var table = arrTable[0];
+        var arrColAccordion = getElementsFromAttribute(table, 'DIV', 'name', 'flexigridColAccordion');
+        for (var intCount = 0; intCount < arrColAccordion.length; ++intCount) {
+            var colAccordion = arrColAccordion[intCount];
+            if (empty(colAccordion))
+                continue;
+            if (colAccordion.innerHTML != "")
+                break;
+            if (strJsFunctionAccordion === '') {
+                colAccordion.style.display = 'none';
+                continue;
+            }
+            var strParam = 'arrGlobalFlexigridResult["' + strReference + '"][2][' + intCount + ']';
+            var strJsFunctionAccordionItem = replaceAll(strJsFunctionAccordion, ')', ((strJsFunctionAccordion.indexOf('()') == -1) ? ', ' : '') + strParam + ')');
+            colAccordion.innerHTML += '<i id=\'icon' + strReference + '[' + intCount + ']\' class=\'fa fa-plus-square\' onclick="clickColAccordionWaitDialog(\'' + strReference + '\', \'' + base64Encode(strJsFunctionAccordionItem) + '\', this);"></i>';
+        }
+        var arrTbody = $(table).children('TBODY');
+        var arrTr = [];
+        for (var intCount2 = 0; intCount2 < arrTbody.length; ++intCount2) {
+            var arrTrFromTbody = $(arrTbody[intCount2]).children('TR');
+            for (var intCount3 = 0; intCount3 < arrTrFromTbody.length; ++intCount3)
+                arrTr[arrTr.length] = arrTrFromTbody[intCount3];
+        }
+        removeChildNodes(table);
+        for (var intCount2 = 0; intCount2 < arrTr.length; ++intCount2) {
+            if (document.all)
+                innerHTMLsuper(table, arrTr[intCount2].outerHTML, false, 'TBODY');
+            else {
+                var tbodyNew = document.createElement('TBODY');
+                tbodyNew.appendChild(arrTr[intCount2]);
+                table.appendChild(tbodyNew);
+            }
+        }
+    }
+    return true;
+}
+
+function removeColAccordion(strReference)
+{
+    if (empty(strReference))
+        return false;
+    var arrTable = $(strReference).toArray();
+    if (arrTable.length !== 0) {
+        var table = arrTable[0];
+        var arrColAccordion = getElementsFromAttribute(table, 'DIV', 'name', 'flexigridColAccordion');
+        for (var intCount = 0; intCount < arrColAccordion.length; ++intCount)
+            $(arrColAccordion[intCount]).remove();
+    }
+    return true;
+}
+
+function clickColAccordion(strReference, strJsFunctionAccordionItem, iconPlusMinus)
+{
+    if ((empty(strReference)) || (empty(strJsFunctionAccordionItem)) || (empty(iconPlusMinus)))
+        return false;
+    iconPlusMinus = getObject(iconPlusMinus);
+    var tr = iconPlusMinus.parentNode.parentNode.parentNode.parentNode;
+    var tbody = tr.parentNode;
+    var arrTrAccordion = getElementsFromAttribute(tbody, 'TR', 'data-parent', tr.getAttribute('id'));
+    var booPlus = (iconPlusMinus.getAttribute('class').indexOf('plus') != -1);
+    var strFinder = (booPlus) ? 'plus' : 'minus';
+    var strReplacer = (booPlus) ? 'minus' : 'plus';
+    iconPlusMinus.setAttribute('class', replaceAll(iconPlusMinus.getAttribute('class'), strFinder, strReplacer));
+    if (arrTrAccordion.length > 0)
+        arrTrAccordion[0].style.display = (booPlus) ? '' : 'none';
+    if ((booPlus) && (arrTrAccordion.length === 0)) {
+        strJsFunctionAccordionItem = base64Decode(strJsFunctionAccordionItem);
+        var intColspan = $(tr).children('TD').length;
+        var arrTr = $(tbody).children('TR');
+        removeChildNodes(tbody);
+        for (var intCount = 0; intCount < arrTr.length; ++intCount) {
+            if (document.all)
+                innerHTMLsuper(tbody, arrTr[intCount].outerHTML, false, 'TR');
+            else
+                tbody.appendChild(arrTr[intCount]);
+            if (arrTr[intCount] == tr) {
+                appendTdTrIntoTbody(tbody, tr.getAttribute('id'), '<div style=\'padding: 5px;\'>Aguarde...</div>', intColspan);
+                eval('var strResult = ' + strJsFunctionAccordionItem + ';');
+                appendTdTrIntoTbody(tbody, tr, strResult, intColspan);
+            }
+        }
+    }
+    return true;
+}
+
+function clickColAccordionWaitDialog(strReference, strJsFunctionAccordionItem, iconPlusMinus)
+{
+	if ((empty(strReference)) || (empty(strJsFunctionAccordionItem)) || (empty(iconPlusMinus)))
+        return false;
+    iconPlusMinus = getObject(iconPlusMinus);
+    var tr = iconPlusMinus.parentNode.parentNode.parentNode.parentNode;
+    var arrTrAccordion = getElementsFromAttribute(tr.parentNode, 'TR', 'data-parent', tr.getAttribute('id'));
+    var booPlus = (iconPlusMinus.getAttribute('class').indexOf('plus') != -1);
+    if ((booPlus) && (arrTrAccordion.length === 0)) {
+    	openWaitDialog();
+    	setTimeout('clickColAccordion("' + strReference + '", "' + strJsFunctionAccordionItem + '", "' + iconPlusMinus.getAttribute("id") + '"); closeWaitDialog();', 200);
+    	return true;
+    }
+    return clickColAccordion(strReference, strJsFunctionAccordionItem, iconPlusMinus);
+}
+
+function appendTdTrIntoTbody(tbody, mixTr, strContent, intColspan)
+{
+    if (isObject(mixTr)) {
+        var trNew = mixTr;
+        var arrTd = getElementsFromAttribute(trNew.parentNode, 'TD', 'data-parent', trNew.getAttribute('id'));
+        if (arrTd.length > 0) {
+            var tdNew = arrTd[0];
+            if (!empty(strContent))
+                tdNew.innerHTML = strContent;
+        }
+        return;
+    }
+    if (empty(tbody))
+        return false;
+    var trNew = document.createElement('TR');
+    trNew.setAttribute('data-parent', mixTr);
+    var tdNew = document.createElement('TD');
+    if (!empty(strContent))
+        tdNew.innerHTML = strContent;
+    if (!empty(intColspan))
+        tdNew.setAttribute('colspan', intColspan);
+    tdNew.setAttribute('data-parent', mixTr);
+    trNew.appendChild(tdNew);
+    if (document.all)
+        innerHTMLsuper(tbody, trNew.outerHTML, false, 'TR');
+    else
+        tbody.appendChild(trNew);
+    return true;
+}
+
+function getFlexigrid(strReference)
+{
+    if (empty(strReference))
+        strReference = '#tableData';
+    return $(strReference);
+}
+
+function reloadFlexigrid(strUrl, options, strReference)
+{
+    var flexigrid = getFlexigrid(strReference);
+    if (!empty(options))
+        flexigrid.flexOptions(options);
+    else
+        flexigrid.flexOptions({newp: 1});
+    if (!empty(strUrl))
+        flexigrid.flexOptions({url: strGlobalBasePath + strUrl});
+    return flexigrid.flexReload();
+}
+
+(function ($) {
+    /**
+     * Exibe mensagem quando nao retornar nada na flexgrid.
+     *
+     * @param string strId
+     */
+    $.flexGridResult = function (strId)
+    {
+        if ($('#' + strId).text() === '')
+            $.dialogAlert({mixText: 'Não existem resultados para a pesquisa.'});
+    };
+
+    /**
+     * Retorna o id da row pelo elemento clicado.
+     *
+     * @return string
+     */
+    $.fn.flexGridRowId = function ()
+    {
+        return $(this).closest('tr').attr('id').replace('row', '');
+    };
+
+    /**
+     * Redireciona pelo clique do elemento dentro da flexgrid.
+     *
+     * @param string strLocation
+     */
+    $.fn.flexGridRedirect = function (strLocation)
+    {
+        $.redirect(strLocation + '/' + $(this).flexGridRowId());
+    };
+
+    /**
+     * Ao confirmar que quer deletar o item chama este metodo para executar o
+     * ajax e chamar o metodo de retorno.
+     *
+     * @param string strUrl
+     */
+    $.flexGridDelete = function (strUrl)
+    {
+        ajaxRequest(strUrl, '', '$.flexGridDeleteAfter');
+    };
+
+    /**
+     * Verifica o status do retorno do ajax em json e exibe a mensagem, de acordo
+     * com o status ele recarrega a flexgrid ou deixa ela como esta.
+     *
+     * @param string strResult
+     */
+    $.flexGridDeleteAfter = function (strResult)
+    {
+        var result = getJsonObject(strResult);
+        if (result.intStatus == 1) {
+            $('table[summary=flexigridTable]').flexReload();
+            $('table[summary=flexigridTable]').attr('data-load-flexigrid', '1');
+        }
+        $.dialogAlert({mixText: result.strMessage});
+    };
+})(jQuery);
+
+//function exampleAccordion(arrRecord)
+//{
+//    var strResult = '';
+//    if (!empty(arrRecord)) {
+//        for (var strAttribute in arrRecord) {
+//            if (isNumeric(strAttribute))
+//                continue;
+//            strResult += strAttribute + ': ' + arrRecord[strAttribute] + '<br />';
+//        }
+//    }
+//    return strResult;
+//}
+
+//function exampleCallback()
+//{
+//    alert('exampleCallback');
+//    return true;
+//}

@@ -1,0 +1,74 @@
+<?php
+
+$strCallback = ($this->strCallback) ? $this->strCallback : 'drawVisualization';
+$strDivId = (!empty($this->strDivId)) ? $this->strDivId : 'divGeoChart';
+$strChartOption = (!empty($this->strChartOption)) ? $this->strChartOption : '{}';
+$arrData = array(
+    array('BR-AC', 1, 'Acre/AC', 'Rio Branco'),
+    array('BR-AL', 2, 'Alagoas/AL', 'Maceió'),
+    array('BR-AM', 3, 'Amazonas/AM', 'Manaus'),
+    array('BR-AP', 4, 'Amapá/AP', 'Macapá'),
+    array('BR-BA', 5, 'Bahia/BA', 'Salvador'),
+    array('BR-CE', 6, 'Ceará/CE', 'Fortaleza'),
+    array('BR-DF', 7, 'Distrito Federal/DF', 'Brasília'),
+    array('BR-ES', 8, 'Espírito Santo/ES', 'Vitória'),
+    array('BR-GO', 9, 'Goiás/GO', 'Goiânia'),
+    array('BR-MA', 10, 'Maranhão/MA', 'São Luis'),
+    array('BR-MG', 11, 'Minas Gerais/MG', 'Belo Horizonte'),
+    array('BR-MS', 12, 'Mato Grosso do Sul/MS', 'Campo Grande'),
+    array('BR-MT', 13, 'Mato Grosso/MT', 'Cuiabá'),
+    array('BR-PA', 14, 'Pará/PA', 'Belém'),
+    array('BR-PB', 15, 'Paraíba/PB', 'João Pessoa'),
+    array('BR-PE', 16, 'Pernambuco/PE', 'Recife'),
+    array('BR-PI', 17, 'Piauí/PI', 'Teresina'),
+    array('BR-PR', 18, 'Paraná/PR', 'Curitiba'),
+    array('BR-RJ', 19, 'Rio de Janeiro/RJ', 'Rio de Janeiro'),
+    array('BR-RN', 20, 'Rio Grande do Norte/RN', 'Natal'),
+    array('BR-RO', 21, 'Rondônia/RO', 'Porto Velho'),
+    array('BR-RR', 22, 'Roraima/RR', 'Boa Vista'),
+    array('BR-RS', 23, 'Rio Grande do Sul/RS', 'Porto Alegre'),
+    array('BR-SC', 24, 'Santa Catarina/SC', 'Florianópolis'),
+    array('BR-SE', 25, 'Sergipe/SE', 'Aracaju'),
+    array('BR-SP', 26, 'São Paulo/SP', 'São Paulo'),
+    array('BR-TO', 27, 'Tocantins/TO', 'Palmas'),
+);
+array_walk_recursive($arrData, '\InepZend\Util\ArrayCollection::arrayWalkRecursiveAddSingleQuotes');
+$strData = '';
+foreach ($arrData as $arrInfo)
+    $strData .= ",[" . implode(',', $arrInfo) . "]";
+?>
+<script type="text/javascript">
+    var <?php echo $strCallback; ?> = function drawVisualization()
+    {
+        var data = google.visualization.arrayToDataTable([
+            ['Value', 'Capital', 'UF', 'Cidade']
+            <?php echo $strData; ?>
+        ]);
+        var formatter = new google.visualization.PatternFormat('{2}');
+        formatter.format(data, [0, 1, 2, 3], 0);
+        var formatter = new google.visualization.PatternFormat('{3}');
+        formatter.format(data, [0, 1, 2, 3], 1);
+        var view = new google.visualization.DataView(data);
+        view.setColumns([0, 1]);
+        var chart = new google.visualization.GeoChart(document.getElementById('<?php echo $strDivId; ?>'));
+<?php if (!empty($this->clickRegion)) { ?>
+            google.visualization.events.addListener(chart, 'regionClick', function(arrResult) {
+                eval('<?php echo $this->clickRegion; ?>(arrResult["region"]);');
+            });
+<?php } ?>
+        var options = <?php echo $strChartOption; ?>;
+        if (options.width == undefined)
+            options.width = 700;
+        if (options.region == undefined)
+            options.region = 'BR';
+        if (options.resolution == undefined)
+            options.resolution = 'provinces';
+        if (options.colorAxis == undefined)
+            options.colorAxis = {colors: ['#abdfab', '#006600']};
+        if (options.legend == undefined)
+            options.legend = 'none';
+        chart.draw(view, options);
+    }
+</script>
+<script src="https://www.google.com/jsapi?autoload={modules:[{name: 'visualization', version: '1', language: 'pt-BR', packages: ['geochart'], callback: <?php echo $strCallback ?>}]}"></script>
+<div id='<?php echo $strDivId; ?>'></div>

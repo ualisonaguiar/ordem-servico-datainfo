@@ -1,0 +1,1 @@
+update tb_ordem_servico set tp_situacao = 2 where nu_ordem_servico in (974, 978 ,979 ,980 ,981 ,982 ,983 ,984 ,985 ,986 ,987 ,988 ,990 ,991 ,992 ,993 ,994);

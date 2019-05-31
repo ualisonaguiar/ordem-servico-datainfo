@@ -1,0 +1,17 @@
+<?php
+$strTitle = 'Administração de Demandas';
+$this->headTitle($strTitle);
+?>
+<h1><?php echo $this->escapeHtml($strTitle); ?></h1>
+<p>Edite as informações necessárias e observe o símbolo <font style="color: red;">*</font> para aquelas entradas de
+    dados que são de preenchimento obrigatório.</p>
+<?php
+
+$form = $this->form;
+$form->setAttribute('action', $this->url('demanda', array('action' => 'edit')));
+$this->angular()
+    ->addService(array('url' => getRenderScriptUrl('InepSkeleton/OrdemServico/js/OrdemServicoDemandaService'), 'dependence' => 'Service/AbstractService'))
+    ->addService(array('url' => getRenderScriptUrl('InepSkeleton/OrdemServico/js/DemandaService'), 'dependence' => 'Service/AbstractService'))
+    ->addController(array('url' => getRenderScriptUrl('InepSkeleton/OrdemServico/js/CalculaMathController'), 'dependence' => 'Controller/AbstractCoreController'))
+    ->addController(array('url' => getRenderScriptUrl('InepSkeleton/OrdemServico/js/DemandaFormController'), 'dependence' => 'Controller/AbstractGridController', 'html' => $this->form()->render($form)))
+?>

@@ -1,0 +1,32 @@
+<?php
+
+if ((is_array($this->arrData)) && (!empty($this->arrData))) {
+    $strCallback = ($this->strCallback) ? $this->strCallback : 'drawVisualization';
+    $strDivId = (!empty($this->strDivId)) ? $this->strDivId : 'divGauge';
+    $strChartOption = (!empty($this->strChartOption)) ? $this->strChartOption : '{}';
+    $strTitle = ((is_array($this->arrOptionEdited)) && (array_key_exists('title', $this->arrOptionEdited))) ? $this->arrOptionEdited['title'] : null;
+    $strData = '';
+    foreach ($this->arrData as $arrInfo) {
+        if ((!array_key_exists(0, $arrInfo)) || (!array_key_exists(1, $arrInfo)))
+            continue;
+        $strData .= ",['" . $arrInfo[0] . "'," . $arrInfo[1] . "]";
+    }
+    ?>
+    <script type="text/javascript">
+        var <?php echo $strCallback; ?> = function drawVisualization()
+        {
+            var data = google.visualization.arrayToDataTable([
+                ['Label', 'Value']
+                <?php echo $strData; ?>
+            ]);
+            var chart = new google.visualization.Gauge(document.getElementById('<?php echo $strDivId; ?>'));
+            var options = <?php echo $strChartOption; ?>;
+            chart.draw(data, options);
+<?php if (!empty($strTitle)) { ?>
+            document.getElementById('<?php echo $strDivId; ?>').innerHTML += '<div id="<?php echo $strDivId; ?>Title" style="font-weight: bold; text-align: center; width: 196px;"><?php echo $strTitle; ?></div>';
+<?php } ?>
+        }
+    </script>
+    <script src="https://www.google.com/jsapi?autoload={modules:[{name: 'visualization', version: '1', language: 'pt-BR', packages: ['gauge'], callback: <?php echo $strCallback ?>}]}"></script>
+    <div id='<?php echo $strDivId; ?>'></div>
+<?php } ?>

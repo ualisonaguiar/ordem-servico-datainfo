@@ -1,0 +1,1 @@
+insert into tb_usuario (no_usuario, nu_pis, ds_email, ds_login) values ('Victor Luiz Soares Vitorino', '013296111270', 'victor.vitorino@inep.gov.br', 'victor.vitorino');

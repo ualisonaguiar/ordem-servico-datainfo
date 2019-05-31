@@ -1,0 +1,1 @@
+update tb_ordem_servico set tp_situacao = 1 where id_ordem_servico = 602;

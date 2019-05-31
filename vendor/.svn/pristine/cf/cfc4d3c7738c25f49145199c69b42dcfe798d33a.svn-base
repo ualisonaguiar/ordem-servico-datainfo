@@ -1,0 +1,51 @@
+<?php
+
+if ((is_array($this->arrData)) && (!empty($this->arrData))) {
+    $strCallback = ($this->strCallback) ? $this->strCallback : 'drawVisualization';
+    $strDivId = (!empty($this->strDivId)) ? $this->strDivId : 'divAreaChart';
+    $strChartOption = (!empty($this->strChartOption)) ? $this->strChartOption : '{}';
+    $arrItem = array("'" . $this->strTitleHorizontal . "'");
+    foreach ($this->arrData as $arrInfo) {
+        if ((!array_key_exists(0, $arrInfo)) || (!array_key_exists(1, $arrInfo)) || (!array_key_exists(2, $arrInfo)) || (array_key_exists($arrInfo[0], $arrItem)))
+            continue;
+        $arrItem[$arrInfo[0]] = "'" . $arrInfo[0] . "'";
+    }
+    $arrItem = array_values($arrItem);
+    $strItem = '[' . implode(',', $arrItem) . ']';
+    $arrData = array();
+    foreach ($this->arrData as $arrInfo) {
+        if ((!array_key_exists(0, $arrInfo)) || (!array_key_exists(1, $arrInfo)) || (!array_key_exists(2, $arrInfo)))
+            continue;
+        if (!array_key_exists($arrInfo[1], $arrData))
+            $arrData[$arrInfo[1]] = array(0 => "'" . $arrInfo[1] . "'");
+        $intKeyItem = array_search("'" . $arrInfo[0] . "'", $arrItem);
+        $arrData[$arrInfo[1]][$intKeyItem] = $arrInfo[2];
+    }
+    $strData = '';
+    foreach ($arrData as $arrInfo)
+        $strData .= ",[" . implode(',', $arrInfo) . "]";
+    ?>
+    <script type="text/javascript">
+        var <?php echo $strCallback; ?> = function drawVisualization()
+        {
+            var data = google.visualization.arrayToDataTable([
+                <?php echo $strItem . $strData; ?>
+            ]);
+            var chart = new google.visualization.AreaChart(document.getElementById('<?php echo $strDivId; ?>'));
+            var options = <?php echo $strChartOption; ?>;
+            if (options.width == undefined)
+                options.width = 700;
+            if (options.height == undefined)
+                options.height = 400;
+            if (options.isStacked == undefined)
+                options.isStacked = true;
+            if (options.vAxis == undefined)
+                options.vAxis = {title: "<?php echo $this->strTitleVertical; ?>"};
+            if (options.hAxis == undefined)
+                options.hAxis = {title: "<?php echo $this->strTitleHorizontal; ?>"};
+            chart.draw(data, options);
+        }
+    </script>
+    <script src="https://www.google.com/jsapi?autoload={modules:[{name: 'visualization', version: '1', language: 'pt-BR', packages: ['corechart'], callback: <?php echo $strCallback ?>}]}"></script>
+    <div id='<?php echo $strDivId; ?>'></div>
+<?php } ?>

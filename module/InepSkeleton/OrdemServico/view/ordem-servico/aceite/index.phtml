@@ -1,0 +1,11 @@
+<?php
+$strTitle = 'Aceite de Ordem de Serviço';
+$this->headTitle($strTitle);
+?>
+<h1><?php echo $this->escapeHtml($strTitle); ?></h1>
+<p>Responsável por aceitar as Ordens de Serviço.</p>
+<?php
+$this->angular()
+    ->addService(array('url' => getRenderScriptUrl('InepSkeleton/OrdemServico/js/AceiteService'), 'dependence' => 'Service/AbstractService'))
+    ->addController(array('url' => getRenderScriptUrl('InepSkeleton/OrdemServico/js/AceiteController'), 'dependence' => 'Controller/AbstractGridController', 'html' => $this->form()->render($this->form)));
+?>

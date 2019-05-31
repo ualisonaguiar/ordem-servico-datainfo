@@ -1,0 +1,14 @@
+<?php
+$strTitle = 'Informações do Ponto';
+$this->headTitle($strTitle);
+?>
+    <style type="text/css">
+        @import "<?php echo $this->basePath() . '/renderscript/InepSkeleton/OrdemServico/css/relatorio-ponto'; ?>";
+    </style>
+    <h1><?php echo $this->escapeHtml($strTitle); ?></h1>
+    <p>Retorna informações do ponto batido pelo funcionário.</p>
+<?php
+$this->angular()
+    ->addService(array('url' => getRenderScriptUrl('InepSkeleton/OrdemServico/js/RelatorioPontoService'), 'dependence' => 'Service/AbstractService'))
+    ->addController(array('url' => getRenderScriptUrl('InepSkeleton/OrdemServico/js/RelatorioPontoFormController'), 'dependence' => 'Controller/AbstractGridController', 'html' => $this->form()->render($form)));
+?>

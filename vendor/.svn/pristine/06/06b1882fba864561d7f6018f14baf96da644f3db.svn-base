@@ -1,0 +1,19 @@
+<ul class="breadcrumb">
+    <li>
+        <a href="http://portal.inep.gov.br" title="Ir para o Portal INEP" target="_self">INEP</a>
+        <span class="divider">/</span>
+    </li>
+    <li>
+        <a href="/publicacao" title="Ir para página inicial de Publicações do INEP" target="_self">Publicações</a>
+        <span class="divider">/</span>
+    </li>
+    <?php foreach ($this->pages as $intKeyPage => $pageNavigation) { ?>
+        <li>
+            <?php if ($intKeyPage < count($this->pages) - 1) { ?>
+                <a href="<?php echo $pageNavigation->getHref(); ?>" target="_self"><?php echo $pageNavigation->getLabel(); ?></a>
+                <span class="divider">/</span>
+            <?php } else
+                echo $pageNavigation->getLabel(); ?>
+        </li>
+    <?php } ?>
+ </ul>

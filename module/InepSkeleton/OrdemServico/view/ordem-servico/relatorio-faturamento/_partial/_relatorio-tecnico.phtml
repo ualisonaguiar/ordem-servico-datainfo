@@ -1,0 +1,296 @@
+<?php
+
+use InepZend\Util\String;
+use InepZend\Util\Date;
+?>
+<style>
+    .lista-demanda {
+        font-weight: bold;
+    }
+
+    table {
+        border-spacing: 0;
+        border-collapse: collapse;
+    }
+
+    .lista-demanda li span {
+        font-weight: normal;
+    }
+
+
+    td, th {
+        border: 1px solid black;
+    }
+
+    .sem-borda {
+        border: 0px !important;
+    }
+
+    body {
+        margin: 0px;
+    }
+
+    .page {
+        width: 1000px;
+        background-color: #FFFFFF;
+        text-align: left;
+        margin-bottom: 20px;
+        padding: 10px;
+    }
+</style>
+<div style="width: 1000px;">
+    <h2 style="text-align: center">RELATÓRIO PARA PAGAMENTO</h2>
+    <div>
+        <table border="1" style="width: 1000px;">
+            <tr>
+                <td><b>Nº:</b></td>
+                <td><b><?php echo $this->numeroRelatorio; ?></b></td>
+                <td align="center"><b>Referente ao Mês:</b></td>
+                <td align="center" colspan="3"><b><?php echo $this->mesAnoReferencia; ?></b></td>
+            </tr>
+            <tr style="background: #CCCCCC">
+                <td colspan="6" align="center">
+                    <br />
+                    <strong>Relatório de Ordens de Serviço e Ordens de Serviço de Garantia</strong>
+                    <br />
+                    <br />
+                    <br />
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 121px;"><b>Total de OS:</b></td>
+                <td style="margin-left: 34px; width: 149px;">
+                    &nbsp;&nbsp;<?php echo count($this->arrOrdemServico); ?>
+                    <br />
+                    <br />
+                </td>
+                <td><b>Total de OS Fora do Prazo:</b></td>
+                <td colspan="3">
+                    <br />
+                    <br />
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 121px;"><b>Total de OSG:</b></td>
+                <td style="margin-left: 34px; width: 149px;"></td>
+                <td><b>Total de OSG Fora do Prazo:</b></td>
+                <td colspan="3"></td>
+            </tr>
+            <tr>
+                <td><b>Total:</b></td>
+                <td style="margin-left: 34px; width: 149px;"></td>
+                <td><b>Total Fora do Prazo:</b></td>
+                <td colspan="3"></td>
+            </tr>
+            <tr style="background: #CCCCCC">
+                <td colspan="6" align="center">
+                    <br />
+                    <strong>Detalhamento das Ordens de Serviço Concluídas</strong>
+                    <br />
+                    <br />
+                    <br />
+                </td>
+            </tr>
+        </table>
+        <table border="1" style="width: 1000px;">
+            <tr align="center">
+                <td align="center"><strong>Nº</strong></td>
+                <td colspan="2"><strong>Área de Atividade</strong></td>
+                <td align="center"><strong>Prazo Requerido</strong></td>
+                <td align="center"><strong>Prazo Executado</strong></td>
+                <td align="center"><strong>Qtd MAT</strong></td>
+            </tr>
+            <?php
+            $arrAtividade = [];
+            foreach ($this->arrDemandas as $intNumeroOs => $arrInfoDemanada) {
+                foreach ($arrInfoDemanada['demanda'] as $arrDemanda) {
+                    $intSequencia = $arrDemanda['demanda']->sequencia;
+                    if (count($arrDemanda['atividade']) == 1) {
+                        $arrAtividade[$intNumeroOs][] = prepareAtividadeSequencia(reset($arrDemanda['atividade']), $intSequencia);
+                    } else {
+                        foreach ($arrDemanda['atividade'] as $arrAtividadeInfo) {
+                            $arrAtividade[$intNumeroOs][] = prepareAtividadeSequencia($arrAtividadeInfo, $intSequencia);
+                        }
+                    }
+                }
+            }
+            foreach ($this->arrOrdemServico as $intNumeroOs => $arrInfoOrdemServico) :
+                $arrAtividadeFirst = $arrAtividade[$intNumeroOs][0];
+                $arrAtividade[$intNumeroOs][0]['ignore'] = true;
+                ?>
+                <tr>
+                    <td rowspan="<?php echo count($arrAtividade[$intNumeroOs]); ?>" align="center" style="width: 50px;">
+                        <strong><?php echo $intNumeroOs; ?></strong>
+                    </td>
+                    <td style="width: 35px;" align="center">
+                        <?php echo $arrAtividadeFirst['co_atividade']; ?>
+                    </td>
+                    <td>
+                        <?php echo $arrAtividadeFirst['descricao']; ?>
+                    </td>
+                    <td rowspan="<?php echo count($arrAtividade[$intNumeroOs]); ?>" align="center" style="width: 50px;">
+                        <?php echo Date::convertDate($arrInfoOrdemServico['dt_prazo'], 'd/m/Y'); ?>
+                    </td>
+                    <td rowspan="<?php echo count($arrAtividade[$intNumeroOs]); ?>" align="center" style="width: 50px;">
+                        <?php echo Date::convertDate($arrInfoOrdemServico['dt_prazo'], 'd/m/Y'); ?>
+                    </td>
+                    <td style="width: 80px;" align="center">
+                        <?php echo $arrAtividadeFirst['vl_qma']; ?>
+                    </td>
+                </tr>
+                <?php
+                    foreach($arrAtividade[$intNumeroOs] as $arrAtividadeVinculdade) {
+                        if (array_key_exists('ignore', $arrAtividadeVinculdade)) {
+                            continue;
+                        }
+                        montarQuadradoAtividadeRelatorio($arrAtividadeVinculdade['co_atividade'], $arrAtividadeVinculdade['descricao'], $arrAtividadeVinculdade['vl_qma']);
+                    }
+            endforeach;
+            ?>
+            <tr>
+                <td colspan="6">
+                    <strong>Observações:</strong>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                </td>
+            </tr>
+            <tr style="background: #CCCCCC">
+                <td colspan="6" align="center">
+                    <br />
+                    <strong>Relatório de Avaliação da Qualidade</strong>
+                    <br />
+                    <br />
+                    <br />
+                </td>
+            </tr>
+        </table>
+        <table border="1" style="width: 1000px;">
+            <tr>
+                <td colspan="2" style="width: 137px;"><strong>Total de Indicação com "ACEITO":</strong></td>
+                <td style="width: 100px;"><br /><br /></td>
+                <td colspan="2"><strong>Total de indicação com "NÃO ACEITO":</strong></td>
+                <td style="width: 221px;"><br /><br /></td>
+            </tr>
+            <tr>
+                <td><strong>Total de Avaliações:</strong></td>
+                <td colspan="5">
+                    <br />
+                    <br />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="6">
+                    <strong>Observações:</strong>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                </td>
+            </tr>
+        </table>
+        <table border="1" style="width: 1000px;">
+            <tr style="background: #CCCCCC">
+                <td colspan="4" align="center">
+                    <br />
+                    <strong>Relatório de Indicadores de Nível de Serviço</strong>
+                    <br />
+                    <br />
+                    <br />
+                </td>
+            </tr>
+            <tr>
+                <td><strong>INS1:</strong></td>
+                <td><strong>______________%</strong></td>
+                <td><strong>Glosa Prevista:</strong></td>
+                <td><strong>______________%</strong></td>
+            </tr>
+            <tr>
+                <td><strong>INS2:</strong></td>
+                <td><strong>______________%</strong></td>
+                <td><strong>Glosa Prevista:</strong></td>
+                <td><strong>______________%</strong></td>
+            </tr>
+            <tr>
+                <td><strong>INS3:</strong></td>
+                <td><strong>______________%</strong></td>
+                <td><strong>Glosa Prevista:</strong></td>
+                <td><strong>______________%</strong></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">Total de Glosa:</td>
+                    <td colspan="2" align="center">_____________________%</td>
+                </tr>
+        </table>
+        <table border="1" style="width: 1000px;">
+            <tr style="background: #CCCCCC">
+                <td colspan="4" align="center">
+                    <br />
+                    <strong>Relatório de Faturamento</strong>
+                    <br />
+                    <br />
+                    <br />
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Valor Mensal de MAT:</strong></td>
+                <td style="width: 200px;">
+                    <br />
+                    <br />
+                </td>
+                <td><strong>Volume Mensal de Glosas:</strong></td>
+                <td style="width: 200px;">
+                    <br />
+                    <br />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"><strong>Volume Mensal de Pagamento:</strong></td>
+                <td colspan="2">
+                    <br />
+                    <br />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"><strong>Valor de Pagamento:</strong></td>
+                <td colspan="2">R$ _____________________</td>
+            </tr>
+        </table>
+        <p style="text-align: justify">
+            Em cumprimento ao contrato nº 51 / 2013, informamos que o Relatório para Pagamento,
+            enviado pela empresa Datainfo Soluções em Tecnologia da Informação LTDA, foi devidamente analisado.
+            Deste modo, autorizamos o faturamento referente às Ordens de Serviços constantes neste relatório,
+            totalizando _____________________________ MAT, considerando as glosas previstas, com
+            <strong>VALOR DE PAGAMENTO R$</strong>____________________________.
+        </p>
+        <br />
+        <br />
+        <p><b><?php echo $this->dataRelatorio; ?></b></p>
+    </div>
+</div>
+
+<?php
+
+function montarQuadradoAtividadeRelatorio($strCodAtividade, $strAtividade, $floMat)
+{
+    ?>
+    <tr>
+        <td style="width: 35px;" align="center"><?php echo $strCodAtividade; ?></td>
+        <td><?php echo $strAtividade; ?></td>
+        <td align="center"><?php echo $floMat; ?></td>
+    </tr>
+    <?php
+}
+
+function prepareAtividadeSequencia($arrAtividadeVinculo, $intSequencia)
+{
+    $arrAtividadeVinculo['descricao'] = $arrAtividadeVinculo['no_atividade'];
+    $arrAtividadeVinculo['descricao'] .= ' - Atividade ' . $intSequencia;
+    if ($arrAtividadeVinculo['nu_sequencia'] != null) {
+        $arrAtividadeVinculo['descricao'] .= '.' . $arrAtividadeVinculo['nu_sequencia'];
+    }
+    return $arrAtividadeVinculo;
+}

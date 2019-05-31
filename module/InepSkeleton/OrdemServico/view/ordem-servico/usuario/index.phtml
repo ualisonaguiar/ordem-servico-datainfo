@@ -1,0 +1,26 @@
+<?php
+$strTitle = 'Usuário';
+$this->headTitle($strTitle);
+?>
+    <h1><?php echo $this->escapeHtml($strTitle); ?></h1>
+    <style type="text/css">
+        @import "<?php echo $this->basePath() . '/renderscript/InepSkeleton/OrdemServico/css/usuario'; ?>";
+    </style>
+    <p>Realize a administração dos usuários de acesso ao sistema.</p>
+<?php
+$this->angular()
+    ->addService(
+        array(
+            'url' => getRenderScriptUrl('InepSkeleton/OrdemServico/js/UsuarioService'),
+            'dependence' => 'Service/AbstractService'
+        )
+    )
+    ->addController(
+        array(
+            'url' => getRenderScriptUrl('InepSkeleton/OrdemServico/js/UsuarioController'),
+            'dependence' => 'Controller/AbstractGridController',
+            'html' => $this->form()->render($this->form
+            )
+        )
+    );
+?>

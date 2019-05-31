@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://inepskeleton.local/xsd" xmlns="http://inepskeleton.local/xsd" elementFormDefault="qualified">
+    <xs:element name="registers">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="register" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="CO_PROJETO">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:minInclusive value="1000000"/>
+                                        <xs:maxInclusive value="9999999"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="TP_ORIGEM">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="P"/>
+                                        <xs:enumeration value="G"/>
+                                        <xs:enumeration value="I"/>
+                                        <xs:enumeration value="C"/>
+                                        <xs:enumeration value="R"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="NO_ARQUIVO">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:minLength value="1"/>
+                                        <xs:maxLength value="255"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="CO_INSTRUMENTO">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:minLength value="1"/>
+                                        <xs:maxLength value="5"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="QT_INSTRUMENTO">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:minInclusive value="1"/>
+                                        <xs:maxInclusive value="9999999999"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="DT_SITUACAO">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:dateTime">
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="CO_SITUACAO">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="1"/>
+                                        <xs:enumeration value="2"/>
+                                        <xs:enumeration value="3"/>
+                                        <xs:enumeration value="4"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

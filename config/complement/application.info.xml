@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SYSTEM>
+    <!-- Informacoes da aplicacao -->
+    <NAME>Ordem de Serviço</NAME>
+    <ACRONYM></ACRONYM>
+
+    <!-- Informacoes do cabecalho -->
+    <CLASS_CSS_BACKGROUND>headerClassCssBackground</CLASS_CSS_BACKGROUND>
+    <CLASS_CSS_LOGO>headerClassCssLogo</CLASS_CSS_LOGO>
+    <CLASS_CSS_BAR>headerClassCssBar</CLASS_CSS_BAR>
+    <TEXT_BAR></TEXT_BAR>
+    <LINK></LINK>
+    
+    <!-- Informacoes do Google Analytics -->
+    <ID_ACOMPANHAMENTO></ID_ACOMPANHAMENTO>
+    <URL_PADRAO></URL_PADRAO>
+    
+    <!-- Informacoes alteradas via Jenkins -->
+    <VERSION>@VERSION@</VERSION>
+    <BUILD_NUMBER>@BUILD_NUMBER@</BUILD_NUMBER>
+    <REVISION>@REVISION@</REVISION>
+    <BUILD_TAG>@BUILD_TAG@</BUILD_TAG>
+    <BUILD_DATE>@BUILD_DATE@</BUILD_DATE>
+    
+    <!-- Informacoes responsavel pelo projeto -->
+    <RESPONSIBLE>
+        <ARCHITECTURE>arquitetura.php@inep.gov.br</ARCHITECTURE>
+        <PRODUCT_OWNER></PRODUCT_OWNER>
+    </RESPONSIBLE>
+</SYSTEM>

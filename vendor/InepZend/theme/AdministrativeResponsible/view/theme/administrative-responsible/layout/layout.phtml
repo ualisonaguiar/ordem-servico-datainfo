@@ -1,0 +1,180 @@
+<?php
+use InepZend\Util\String;
+use InepZend\Util\ApplicationProperties;
+
+$this->html($this)->open(true, array('class' => 'js svg'));
+$arrHtmlHeadInfo = $this->htmlHeadAdministrativeResponsible()->render()[1];
+$this->htmlBodyAdministrativeResponsible()->open();
+$strStyleNavigation = '';
+
+if (ApplicationProperties::get('layout.barra.governo') == 'true' || empty(ApplicationProperties::get('layout.barra.governo'))) {
+    echo $this->barraBrasil()->getHtml();
+    $strStyleNavigation = 'margin-bottom: 18px; top: 32px;';
+}
+$booHasIdentity = $this->authentication()->hasIdentity();
+if (!is_array($arrHtmlHeadInfo))
+    $arrHtmlHeadInfo = array();
+$arrHtmlHeadInfo['booHasIdentity'] = $booHasIdentity;
+?>
+    <header class="header-banner" role="banner">
+        <nav role="navigation" aria-labelledby="#nav" class="navbar navbar-default navbar-fixed-top"
+             style="<?php echo $strStyleNavigation; ?>">
+            <div id="nomeInep" class="show-print hide">
+                Instituto Nacional de Estudos e Pesquisas Educacionais Anísio Teixeira
+            </div>
+            <h2 id="nav" class="hide hide-print">Navegação Principal</h2>
+            <div class="container-fluid">
+                <div class="navbar-header text-center">
+                    <?php if (($booHasIdentity) && ($this->applicationInfo()->getThemeOption('menu_fix') === false)) { ?>
+                        <button id="btn-menu-administrative-responsible" class="navbar-toggle collapsed left hide-print"
+                                type="button" data-toggle="collapse" data-target="#menu-administrative-responsible">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    <?php } ?>
+                    <?php if (ApplicationProperties::get('layout.inep.logo') == 'true' || empty(ApplicationProperties::get('layout.inep.logo'))) : ?>
+                        <a id="imagem-logo-inep" href="<?php echo $this->url('login'); ?>"
+                           aria-label="Bem vindo ao INEP" tabindex="1" accesskey="i" class="navbar-brand"
+                           target="_self">
+                            <img title="Instituto Nacional de Estudos e Pesquisas Educacionais Anísio Teixeira"
+                                 alt="Instituto Nacional de Estudos e Pesquisas Educacionais Anísio Teixeira"
+                                 src="<?php echo $this->basePath() . '/vendor/InepZend/theme/administrative-responsible/images/logo_inep.png'; ?>"/>
+                        </a>
+                    <?php endif; ?>
+                    <span class="navbar-brand" title="<?php echo $this->applicationInfo()->getApplicationInfoName(); ?>"
+                          data-placement="bottom" data-toggle="tooltip"
+                          data-original-title="<?php echo $this->applicationInfo()->getApplicationInfoName(); ?>">
+                    <?php echo String::truncate($this->applicationInfo()->getApplicationInfoName(), 12, '...', true); ?>
+                        &nbsp;
+                </span>
+                    <button id="navbar-toggle-info-usuario" type="button"
+                            class="navbar-toggle collapsed right p-n hide-print">
+                        <span class="sr-only">Toggle navigation</span>
+                        <i class="fa fa-gear text-white"></i>
+                    </button>
+                </div>
+                <div id="navbar-collapse" class="collapse navbar-collapse inep-zend-name-application">
+                    <ul class="nav navbar-nav ul-print">
+                        <li class="active">
+                        <span class="h3 m-n font-700" title="" data-placement="bottom" data-toggle="tooltip"
+                              data-original-title="<?php echo $this->applicationInfo()->getApplicationInfoName(); ?>">
+                            <?php
+                            $strMethod = ($this->applicationInfo()->getApplicationInfoAcronym()) ? 'getApplicationInfoAcronym' : 'getApplicationInfoName';
+                            echo $this->applicationInfo()->$strMethod();
+                            ?>
+                        </span>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right m-l ul-print">
+                        <?php echo $this->userSystem($this)->render(); ?>
+                        <script type="text/javascript">if (existFunction('addIcoMenuBar')) {
+                                addIcoMenuBar();
+                            }</script>
+                        <li class="hide-print navbarHelp">
+                            <a href="javascript:alertDialog('Entre em contato com o gestor do sistema para obter a ajuda necessária.', 'Ajuda');"
+                               accesskey="a" tabindex="8"><i class="fa fa-info-circle"></i> Ajuda</a>
+                            <div class="hide show-print">Ajuda</div>
+                        </li>
+                        <?php echo $this->themeColor()->render(); ?>
+                        <li class="navbarContrast">
+                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Contraste" accesskey="g"
+                               tabindex="11" class="contrast"><i class="fa fa-adjust"></i></a>
+                        </li>
+                        <li class="hide-print navbarFontSize">
+                            <a href="javascript:controlFontSize('0', 140, 60, undefined, undefined, new Array('DIV')); void(0);"
+                               accesskey="n" tabindex="12">
+                                <div title="Fonte normal" class="icoFontSize icoFontSizeNormal show-print"></div>
+                            </a>
+                            <div class="hide show-print">Fonte normal</div>
+                        </li>
+                        <li class="hide-print navbarFontSize">
+                            <a href="javascript:controlFontSize('+', 140, 60, undefined, undefined, new Array('DIV')); void(0);"
+                               accesskey="+" tabindex="13">
+                                <div title="Aumentar fonte" class="icoFontSize icoFontSizePlus"></div>
+                            </a>
+                            <div class="hide show-print">Aumentar fonte</div>
+                        </li>
+                        <li class="hide-print navbarFontSize">
+                            <a href="javascript:controlFontSize('-', 140, 60, undefined, undefined, new Array('DIV')); void(0);"
+                               accesskey="-" tabindex="14">
+                                <div title="Diminuir fonte" class="icoFontSize icoFontSizeMinus"></div>
+                            </a>
+                            <div class="hide show-print">Aumentar fonte</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="row" style="margin-left: 0px; margin-right: 0px;">
+        <div class="faixa-logo container-fluid hide">
+            <?php if (!$booHasIdentity) { ?>
+                <div class="row" style="margin-top: 25px;">
+                    <div class="col-md-12 text-center fundo-logo">
+                        <figure>
+                            <div class="login-logo"></div>
+                        </figure>
+                    </div>
+                </div>
+            <?php } ?>
+        </div>
+        <div class="container<?php echo ($booHasIdentity) ? '-fluid' : '' ?>">
+            <div class="row row-offcanvas row-offcanvas-left">
+                <?php echo $this->partial('layout/layout-administrative-responsible/navigation', $arrHtmlHeadInfo); ?>
+                <div id="contentContainer" class="controlFontSize" style="overflow: hidden;">
+                    <?php
+                    if (!$booHasIdentity)
+                        $strClass = 'col-md-12 col-md-offset-0';
+                    else
+                        $strClass = (($this->applicationInfo()->getThemeOption('menu_fix') === false) && (@$_COOKIE['menu-toggle-responsible-not-fix'] == 'false')) ? 'col-md-12 col-md-offset-0' : 'col-md-10 col-md-offset-2';
+                    ?>
+                    <div id="contentApplication" class="col-sm-9 col-sm-offset-3 <?php echo $strClass; ?> content"
+                         style="padding-top: 2.3%;">
+                        <div class="row">
+                            <div class="col-xs-6" style="width: 100%;">
+                                <?php echo @$arrHtmlHeadInfo['strHtmlBreadCrumbsResult']; ?>
+                                <div class="showMessage-fluid">
+                                    <?php echo $this->message()->showMessage(); ?>
+                                </div>
+                                <div class="panel panel-info panel-content"
+                                     style="min-height: 500px; padding: 10px; overflow: hidden;">
+                                    <?php echo $this->content; ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php if (ApplicationProperties::get('layout.inep.logo') == 'true' || empty(ApplicationProperties::get('layout.inep.logo'))) : ?>
+    <footer role="contentinfo" class="bg-danger text-white pfix-b inepzend-rodape">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-2"></div>
+                <div class="col-xs-5 col-sm-8 text-center">
+                    <p class="m-n">&copy; <strong>MEC</strong> <span
+                            class="visible-lg-inline">- Ministério da Educação</span> | <strong>INEP</strong> <span
+                            class="visible-lg-inline">- Instituto Nacional de Estudos e Pesquisas Educacionais Anísio Teixeira</span>
+                    </p>
+                </div>
+                <div class="col-xs-7 col-sm-2 text-right">
+                    <!--<?php echo $this->applicationInfo()->showVersion(true); ?>-->
+                    <ul class="list-inline text-nowrap m-n ul-print">
+                        <li><?php echo $this->applicationInfo()->showVersion(false, true, true); ?></li>
+                        <li><a href="#top" data-placement="left" data-toggle="tooltip" title="Voltar ao topo"
+                               accesskey="t" tabindex="141" class="btn btn-link btn-xs"><i
+                                    class="fa fa-arrow-circle-up text-white"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+<?php endif; ?>
+<?php
+echo $this->inlineScript();
+$this->htmlBodyAdministrativeResponsible()->close();
+$this->html()->close();
+?>

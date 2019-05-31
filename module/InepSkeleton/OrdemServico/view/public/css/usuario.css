@@ -1,0 +1,12 @@
+.preposto-texto {
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+    color: #31708f;
+}
+
+
+.preposto-texto-cell {
+    background-image: linear-gradient(to bottom, #beedf2 0px, #97dfe7 100%);
+    background-repeat: repeat-x;
+    border-color: #31708f;
+}

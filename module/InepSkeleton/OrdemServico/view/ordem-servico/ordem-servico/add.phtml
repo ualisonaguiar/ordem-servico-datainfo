@@ -1,0 +1,26 @@
+<?php
+$strTitle = 'Administração de Ordens de Serviço';
+$this->headTitle($strTitle);
+?>
+    <h1><?php echo $this->escapeHtml($strTitle); ?></h1>
+    <p>Insira as devidas informações e observe o símbolo <font style="color: red;">*</font> para aquelas entradas de
+        dados que são de preenchimento obrigatório.</p>
+<?php
+$form = $this->form;
+$form->setAttribute('action', $this->url('ordemdeservico', array('action' => 'add')));
+$this->angular()
+    ->addService(array('url' => getRenderScriptUrl('InepSkeleton/OrdemServico/js/OrdemServicoService'), 'dependence' => 'Service/AbstractService'))
+    ->addService(array('url' => getRenderScriptUrl('InepSkeleton/OrdemServico/js/OrdemServicoDemandaService'), 'dependence' => 'Service/AbstractService'))
+    ->addService(array('url' => getRenderScriptUrl('InepSkeleton/OrdemServico/js/DemandaService'), 'dependence' => 'Service/AbstractService'))
+    ->addService(array('url' => getRenderScriptUrl('InepSkeleton/OrdemServico/js/OrdemServicoAceiteService'), 'dependence' => 'Service/AbstractService'))
+    ->addController(array('url' => getRenderScriptUrl('InepSkeleton/OrdemServico/js/CalculaMathController'), 'dependence' => 'Controller/AbstractCoreController'))
+    ->addController(array('url' => getRenderScriptUrl('InepSkeleton/OrdemServico/js/OrdemServicoFormController'), 'dependence' => 'Controller/AbstractGridController', 'html' => $this->form()->render($form)));
+?>
+<script
+    type="text/javascript"
+    src="<?= $this->basePath() . '/js_entityconst/OrdemServico/OrdemServico'; ?>">
+</script>
+<script
+    type="text/javascript"
+    src="<?= $this->basePath() . '/js_message/OrdemServico'; ?>">
+</script>

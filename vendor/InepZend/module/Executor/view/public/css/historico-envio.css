@@ -1,0 +1,4 @@
+.flexigrid .hDiv th:nth-child(5),
+.flexigrid .bDiv td:nth-child(5) {
+    display: none !important;
+}

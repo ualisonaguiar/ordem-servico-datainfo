@@ -1,0 +1,7 @@
+<?php
+$strTitle = 'Ilha de Dados em Cache';
+$this->headTitle($strTitle);
+?>
+<h1><?php echo $this->escapeHtml($strTitle); ?></h1>
+<p>Manipule as ilhas de dados em cache.</p>
+<?php echo $this->form()->render($this->form); ?>

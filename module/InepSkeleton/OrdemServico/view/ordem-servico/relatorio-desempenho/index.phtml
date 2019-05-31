@@ -1,0 +1,11 @@
+<?php
+$strTitle = 'Relatório de desempenho';
+$this->headTitle($strTitle);
+?>
+<h1><?php echo $this->escapeHtml($strTitle); ?></h1>
+<p>Realize geração do relatório de desempenho.</p>
+<?php
+$this->angular()
+    ->addService(array('url' => getRenderScriptUrl('InepSkeleton/OrdemServico/js/RelatorioDesempenhoService'), 'dependence' => 'Service/AbstractService'))
+    ->addController(array('url' => getRenderScriptUrl('InepSkeleton/OrdemServico/js/RelatorioDesempenhoFormController'), 'dependence' => 'Controller/AbstractGridController', 'html' => $this->form()->render($form)));
+?>

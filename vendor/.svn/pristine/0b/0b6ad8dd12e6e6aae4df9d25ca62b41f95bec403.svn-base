@@ -1,0 +1,31 @@
+<?php
+
+
+if ((is_array($this->arrData)) && (!empty($this->arrData))) {
+    $strCallback = ($this->strCallback) ? $this->strCallback : 'drawVisualization';
+    $strDivId = (!empty($this->strDivId)) ? $this->strDivId : 'divOrgChart';
+    $strChartOption = (!empty($this->strChartOption)) ? $this->strChartOption : '{}';
+    $strData = '';
+    foreach ($this->arrData as $arrInfo) {
+        if ((!array_key_exists(0, $arrInfo)) || (!array_key_exists(1, $arrInfo)))
+            continue;
+        $strData .= ",['" . $arrInfo[0] . "'," . ((empty($arrInfo[1])) ? 'null' : "'" . $arrInfo[1] . "'") . ",'" . $arrInfo[0] . "']";
+    }
+    ?>
+    <script type="text/javascript">
+        var <?php echo $strCallback; ?> = function drawVisualization()
+        {
+            var data = google.visualization.arrayToDataTable([
+                ['Name', 'Manager', 'Tooltip']
+                <?php echo $strData; ?>
+            ]);
+            var chart = new google.visualization.OrgChart(document.getElementById('<?php echo $strDivId; ?>'));
+            var options = <?php echo $strChartOption; ?>;
+            if (options.allowHtml == undefined)
+                options.allowHtml = true;
+            chart.draw(data, options);
+        }
+    </script>
+    <script src="https://www.google.com/jsapi?autoload={modules:[{name: 'visualization', version: '1', language: 'pt-BR', packages: ['orgchart'], callback: <?php echo $strCallback ?>}]}"></script>
+    <div id='<?php echo $strDivId; ?>'></div>
+<?php } ?>

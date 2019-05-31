@@ -1,0 +1,8 @@
+<?php
+$strTitle = 'Layout File';
+$this->headTitle($strTitle);
+?>
+<h1><?php echo $this->escapeHtml($strTitle); ?></h1>
+<p>Realiza o cadastro das informações do layout e suas dependências.</p>
+<h3>Adicionar Layout</h3>
+<div class="well" style="overflow: hidden;"><?php echo $this->form()->render($this->form); ?></div>

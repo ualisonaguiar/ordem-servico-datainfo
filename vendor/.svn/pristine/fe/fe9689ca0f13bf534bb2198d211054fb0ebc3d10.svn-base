@@ -1,0 +1,10 @@
+<?php
+$strTitle = 'Histórico de Envio';
+$this->headTitle($strTitle);
+echo $this->email()->renderHeaderMail();
+?>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->basePath() . getRenderScriptUrl('Executor/css/historico-envio'); ?>">
+<h1><?php echo $this->escapeHtml($strTitle); ?></h1>
+<p>Visualize a listagem do histórico dos seus envios das operações, com possibilidade de reenvio.</p>
+<?php echo $this->form()->render($this->form); ?>
+<script type="text/javascript" src="<?php echo $this->basePath() . getRenderScriptUrl('Executor/js/historico-envio'); ?>"></script>

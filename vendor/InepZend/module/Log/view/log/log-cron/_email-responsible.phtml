@@ -1,0 +1,20 @@
+<?php
+
+use InepZend\Util\Date;
+use InepZend\Util\Server;
+use InepZend\Module\Log\Service\LogModule as LogModuleService;
+?>
+<html>
+    <body>
+        <p>Prezado (a),<br /><br />
+            Durante a utilização do sistema <?php echo $this->strNameApplication ?>, na data <?php echo Date::convertDate($this->strDateLogErro, 'd/m/Y'); ?>, foi(ram) identificado(s) erro(s) que pode(m) prejudicar seu funcionamento:
+        </p>
+        <a href="<?php echo str_replace('//', '/', Server::getHost() . getShowFileUrl($this->strPathLog)); ?>" target="_self" style="cursor: pointer; color: #0000CC;">
+            <?php echo str_replace(LogModuleService::PATH_LOG, '', $this->strPathLog); ?>
+        </a>
+        <br /><br />
+        <p>Para fazer o download do arquivo é necessário estar autenticado.</p>
+        <p>Favor entrar em contato com a equipe técnica.</p>
+        <p>Inep/MEC</p>
+    </body>
+</html>

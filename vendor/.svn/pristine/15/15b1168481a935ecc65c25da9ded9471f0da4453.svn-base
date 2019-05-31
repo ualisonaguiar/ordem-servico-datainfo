@@ -1,0 +1,76 @@
+ .classForm input[type=checkbox] {
+    display: inline;
+    margin:0;
+}
+
+.classForm input[type=radio] {
+    display: inline;
+    margin:0;
+}
+
+ .classForm .lblCheck{
+    width: 100%;
+    display:inline;
+    background-color: #FFFFFF;
+    clear: left;
+    float: none;
+    font-weight: normal;
+    height: auto;
+    line-height: normal;
+    text-align: left;
+    font-size: 12px;
+    margin-left: 15px;
+}
+
+.grupoQuestao {
+    border : 1px solid yellowgreen;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.tituloGrupoQuestao {
+    border : 1px solid yellowgreen;
+    color: yellowgreen;
+    margin-top: 10px;
+    padding: 10px;
+}
+.subgrupoQuestao{
+    border: 1px solid black;
+    padding: 10px;
+    margin-top: 10px;
+}
+.tituloSubgrupoQuestao{
+    border: 1px solid black;
+    padding: 10px;
+    color: black;
+    margin-top: 10px;
+}
+
+.questao{
+    border: 1px solid red;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.tituloQuestao {
+    border: 1px solid red;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.questao p,
+.tituloQuestao p {
+    color: red;
+}
+
+.questionario {
+    border: 1px solid blue;
+    padding: 10px;
+}
+
+.tituloQuestionario {
+    border: 1px solid blue;
+    padding: 10px;
+    margin-top: 10px;
+    color: blue;
+}

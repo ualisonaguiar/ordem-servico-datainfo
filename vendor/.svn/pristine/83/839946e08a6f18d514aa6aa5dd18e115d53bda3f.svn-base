@@ -1,0 +1,8 @@
+<?php
+$strTitle = 'Massa para Teste';
+$this->headTitle($strTitle);
+?>
+<h1><?php echo $this->escapeHtml($strTitle); ?></h1>
+<p>Realize a pesquisa e manipule massas de teste.</p>
+<?php echo $this->form()->render($this->form); ?>
+<script type="text/javascript" src="<?php echo $this->basePath() . getRenderScriptUrl('TrocaArquivo/js/massa-teste'); ?>"></script>

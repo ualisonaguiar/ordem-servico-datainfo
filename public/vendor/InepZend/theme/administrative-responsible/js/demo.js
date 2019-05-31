@@ -1,0 +1,1 @@
+!function(a){"use strict";var b={init:function(){}},c={init:function(){b.init()}},d={init:function(){}},e={init:function(){}},f={init:function(){}};a(document).ready(c.init),a(window).load(d.init),a(window).resize(e.init),a(window).scroll(f.init)}(jQuery);

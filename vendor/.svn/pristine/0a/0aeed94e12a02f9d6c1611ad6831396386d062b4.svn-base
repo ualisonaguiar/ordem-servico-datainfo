@@ -1,0 +1,22 @@
+<?php
+$strTitle = 'Arquivos de Configuração';
+$this->headTitle($strTitle);
+?>
+<h1><?php echo $this->escapeHtml($strTitle); ?></h1>
+<p>Para editar alguma informação contida em algum arquivo de configuração do sistema, é necessário visualizar seu conteúdo, replicar na área abaixo e editar a informação desejada.<br />
+Caso queira editar informações contidas em mais de um arquivo, é necessário replicar todos os respectivos conteúdos e realizar a operação de edição.</p>
+<?php echo $this->form()->render($this->form); ?>
+<div class="well">
+    <h3>Listagem de arquivos para visualização</h3>
+    <?php
+    $flexigrid = $this->flexigrid();
+    $flexigrid->setRoute('application/autoload-config');
+    $flexigrid->setSortName('no_file');
+    $flexigrid->setSortOrder('desc');
+    $flexigrid->setShowInsert(false);
+    $flexigrid->setShowUpdate(false);
+    $flexigrid->setShowDelete(false);
+    $flexigrid->setCol('no_file', 'Arquivo', 1120);
+    echo $flexigrid->showGrid();
+    ?>
+</div>

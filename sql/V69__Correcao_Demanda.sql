@@ -1,0 +1,1 @@
+update tb_demanda set dt_abertura = (select d2.dt_alteracao from tb_demanda d2 where d2.id_demanda = id_demanda) where dt_abertura > '2018-02-28';

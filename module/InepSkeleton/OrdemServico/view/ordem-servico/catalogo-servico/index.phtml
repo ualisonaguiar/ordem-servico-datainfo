@@ -1,0 +1,23 @@
+<?php
+$strTitle = 'Catálogo de Serviço';
+$this->headTitle($strTitle);
+?>
+<h1><?php echo $this->escapeHtml($strTitle); ?></h1>
+<p>Realize a administração do Catálogo de Serviço.</p>
+<?php
+$this->angular()
+    ->addService(
+        array(
+            'url' => getRenderScriptUrl('InepSkeleton/OrdemServico/js/CatalogoService'),
+            'dependence' => 'Service/AbstractService'
+        )
+    )
+    ->addController(
+        array(
+                'url' => getRenderScriptUrl('InepSkeleton/OrdemServico/js/CatalogoController'),
+                'dependence' => 'Controller/AbstractGridController',
+                'html' => $this->form()->render($this->form
+            )
+        )
+    );
+?>

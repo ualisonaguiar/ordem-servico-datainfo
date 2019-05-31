@@ -1,0 +1,8 @@
+<?php
+$strTitle = 'Sistema de Segurança do Inep - SSI';
+$this->headTitle($strTitle);
+echo $this->render('inep-zend/index/change-pass.js');
+?>
+<h1><?php echo $this->escapeHtml($strTitle); ?></h1>
+<p>Para realizar a troca de senha<?php if ($this->booTemp) {?> temporária<?php }?> é necessário preencher as senhas dentro do padrão de validação.</p>
+<?php echo $this->form()->render($this->form); ?>

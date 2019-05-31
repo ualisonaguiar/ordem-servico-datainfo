@@ -1,0 +1,9 @@
+<?php
+$strTitle = 'Página Inicial';
+$this->headTitle($strTitle);
+?>
+<h1><?php echo $this->escapeHtml($strTitle); ?></h1>
+<p><?php echo $this->authentication()->getIdentity()->usuarioSistema->usuario->nome; ?>, obrigado por acessar o sistema <strong><?php echo $this->applicationInfo()->getApplicationInfoName(); ?></strong>.</p>
+<?php if (!empty($this->strInitialText)) { ?>
+    <p style="text-align: justify;"><?php echo $this->strInitialText; ?></p>
+<?php } ?>

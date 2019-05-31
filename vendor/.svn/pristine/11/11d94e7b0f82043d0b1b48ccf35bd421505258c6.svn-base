@@ -1,0 +1,8 @@
+<?php
+$strTitle = 'Usuário';
+$this->headTitle($strTitle);
+echo $this->email()->renderHeaderMail();
+?>
+<h1><?php echo $this->escapeHtml($strTitle); ?></h1>
+<p>Realize a alteração dos dados do usuário controlado no Executor.</p>
+<?php echo $this->form()->render($this->form); ?>

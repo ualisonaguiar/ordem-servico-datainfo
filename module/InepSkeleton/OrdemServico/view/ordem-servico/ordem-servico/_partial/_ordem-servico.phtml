@@ -1,0 +1,458 @@
+<?php
+
+use InepZend\Util\Server;
+use InepZend\Util\Date;
+?>
+<style>
+    .lista-demanda {
+        font-weight: bold;
+    }
+
+    table {
+        border-spacing: 0;
+        border-collapse: collapse;
+    }
+
+    .lista-demanda li span {
+        font-weight: normal;
+    }
+
+    td, th, div, p {
+        font-size: 12px;
+    }
+
+    td, th {
+        border: 1px solid black;
+    }
+
+    .sem-borda {
+        border: 0px !important;
+    }
+
+    body {
+        margin: 0px;
+    }
+
+    .page {
+        width: 1000px;
+        background-color: #FFFFFF;
+        text-align: left;
+        margin-bottom: 20px;
+        padding: 10px;
+    }
+</style>
+<div class="page">
+    <table style="width: 100%;">
+        <tr>
+            <td class="brasao sem-borda" align="center"><img src="<?php echo Server::getHost(true) . '/vendor/InepZend/images/brasaoNacional2.jpg'; ?>" style="height: 100px;"></td>
+        </tr>
+        <tr>
+            <td class="sem-borda" align="center"><strong>Ministério da Educação</strong></td>
+        </tr>
+        <tr>
+            <td class="sem-borda" align="center"><strong>Instituto Nacional de Estudos e Pesquisas Educacionais Anísio Teixeira</strong></td>
+        </tr>
+        <tr>
+            <td class="sem-borda" align="center"><strong>Diretoria de Tecnologia e Disseminação de Informações Educacionais</strong></td>
+        </tr>
+        <tr>
+            <td class="sem-borda"></td>
+        </tr>
+        <tr>
+            <td class="sem-borda"></td>
+        </tr>
+        <tr>
+            <td class="sem-borda" align="center"><strong>ORDEM DE SERVIÇO</strong></td>
+        </tr>
+    </table>
+    <br />
+    <table style="width: 100%;" cellpadding="3" cellspacing="1">
+        <tr>
+            <td style="width: 200px;">
+                <strong>Contrato: </strong><?php echo $this->ordem_servico->getDsContrato(); ?>
+            </td>
+            <td>
+                <strong>OS Nº <?php echo $this->ordem_servico->getNuOrdemServico(); ?></strong>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <p><strong>Descrição da necessidade:</strong></p>
+                <ol class="lista-demanda">
+                    <?php
+                    $renderDescricaoDemanda = $this->renderDescricaoDemandaHelper();
+                    if (trim($this->ordem_servico->getDsDescricao()) == '')
+                        echo $renderDescricaoDemanda->renderDescricaoDemanda($this->arrDemandas, $this->arrDemandaSuperior);
+                    else
+                        echo '<p>'. $renderDescricaoDemanda->renderizaDescricaoImpressao($this->ordem_servico->getDsDescricao()) .'</p>';
+                    ?>
+                </ol>
+            </td>
+        </tr>
+        <tr style="background: #CCCCCC">
+            <td colspan="2" align="center">
+                <strong>Área de assessoria</strong>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <table style="width: 100%;" border="0">
+                <?php
+                echo $renderDescricaoDemanda->renderAreaAssessoria();
+                ?>
+                </table>
+            </td>
+        </tr>
+        <tr style="background: #CCCCCC">
+            <td colspan="2" align="center">
+                <strong>Atividades requeridas</strong>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <table style="width: 100%;" cellpadding="3" cellspacing="1">
+                    <tr>
+                        <th align="center">ID</th>
+                        <th style="width: 100%;">Atividade</th>
+                        <th>CO</th>
+                        <th>I</th>
+                        <th>CR</th>
+                        <th>FP</th>
+                        <th>FACIM</th>
+                        <th>QMA</th>
+                    </tr>
+                    <?php
+                    foreach ($this->arrDemandas as $mixDemanda) :
+                        $intPosicao = $mixDemanda['demanda']->sequencia;
+                        foreach ($mixDemanda['atividade'] as $intSequencia => $arrAtividade) :
+                            $intNuSequencia = $arrAtividade['nu_sequencia'];
+                    ?>
+                        <tr>
+                            <td align="center"><?php echo $arrAtividade['co_atividade']; ?></td>
+                            <td><?php echo $arrAtividade['no_atividade'] . ' - Atividade ' . $intPosicao . (($intNuSequencia) ? '.' . $intNuSequencia : ''); ?></td>
+                            <td align="center"><?php echo $arrAtividade['vl_complexidade']; ?></td>
+                            <td align="center"><?php echo $arrAtividade['vl_impacto']; ?></td>
+                            <td align="center"><?php echo $arrAtividade['vl_criticidade']; ?></td>
+                            <td align="center"><?php echo $arrAtividade['vl_fator_ponderacao']; ?></td>
+                            <td align="center"><?php echo $arrAtividade['vl_facim']; ?></td>
+                            <td align="center"><?php echo $arrAtividade['vl_qma']; ?></td>
+                        </tr>
+                    <?php
+                        endforeach;
+                    endforeach;
+                    ?>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <p>
+                    <strong>Legenda:</strong> CO (Complexidade), I (Impacto), CR (Criticidade), FP (Fator de Ponderação), FACIM (Fator de Conhecimento Interno e Maturidade), B (Baixo), M (Médio), A (Alto), N (Normal), C(Crítico), D (Definido), PD (Parcialmente Definido) e I (Indefinido).
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <p><strong>Justificativa:</strong></p>
+                <p><?php echo $renderDescricaoDemanda->renderizaDescricaoImpressao($this->ordem_servico->getDsJustificativa()); ?></p>
+            </td>
+        </tr>
+        <tr style="background: #CCCCCC">
+            <td colspan="2" align="center">
+                <strong>Artefatos Requeridos</strong>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <table style="width: 100%;" cellpadding="3" cellspacing="1">
+                    <tr>
+                        <th align="center">ID</th>
+                        <th style="width: 100%;" align="left">Artefato</th>
+                    </tr>
+                    <tr>
+                        <td align="center">AA1</td>
+                        <td>Relatório de Atividades</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <br />
+    <table style="width: 100%;" cellpadding="3" cellspacing="1">
+        <tr>
+            <td colspan="2">
+                <table style="width: 100%;" cellpadding="3" cellspacing="1">
+                    <tr>
+                        <td>
+                            <strong>PRAZO:</strong>
+                        </td>
+                        <td style="width: 100%;">
+                            <p>Data: <?php echo Date::convertDate($this->ordem_servico->getDtPrazo(), 'd/m/Y'); ?></p>
+                            <p>Hora: <?php echo Date::convertDate($this->ordem_servico->getDtPrazo(), 'H:i'); ?></p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 50%;">
+                <table style="width: 490px;" border="0">
+                    <tr>
+                        <td class="sem-borda"><strong>Fiscal Requisitante:</strong></td>
+                    </tr>
+                    <tr>
+                        <td class="sem-borda" align="center">
+                            <br/>
+                            <br/>
+                            <hr>
+                            <p><?php echo $this->ordem_servico->getNoFiscalRequisitante(); ?></p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 50%">
+                <table style="width: 490px;" border="0">
+                    <tr>
+                        <td class="sem-borda"><strong>Fiscal Técnico:</strong></td>
+                    </tr>
+                    <tr>
+                        <td class="sem-borda" align="center">
+                            <br/>
+                            <br/>
+                            <hr>
+                            <p><?php echo $this->ordem_servico->getNoFiscalTecnico(); ?></p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <p><strong>Observações:</strong></p>
+                <br/>
+                <br/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Emitida em:</strong>
+                <p>Data: <?php echo Date::convertDate($this->ordem_servico->getDtEmissao(), 'd/m/Y'); ?></p>
+                <p>Hora: <?php echo Date::convertDate($this->ordem_servico->getDtEmissao(), 'H:i'); ?></p>
+            </td>
+            <td>
+                <table style="width: 490px;" border="0">
+                    <tr>
+                        <td class="sem-borda"><strong>Gestor do Contrato:</strong></td>
+                    </tr>
+                    <tr>
+                        <td class="sem-borda" align="center">
+                            <br/>
+                            <br/>
+                            <hr>
+                            <p><?php echo $this->ordem_servico->getNoGestorContrato(); ?></p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <p><strong>Observações:</strong></p>
+                <br/>
+                <br/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Recepcionada em:</strong>
+                <p>Data: <?php echo Date::convertDate($this->ordem_servico->getDtRecepcao(), 'd/m/Y'); ?></p>
+                <p>Hora: <?php echo Date::convertDate($this->ordem_servico->getDtRecepcao(), 'H:i'); ?></p>
+            </td>
+            <td>
+                <table style="width: 490px;" border="0">
+                    <tr>
+                        <td class="sem-borda"><strong>Preposto:</strong></td>
+                    </tr>
+                    <tr>
+                        <td class="sem-borda" align="center">
+                            <br/>
+                            <br/>
+                            <hr>
+                            <p><?php echo $this->ordem_servico->getNoPreposto(); ?></p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <br />
+                <p>Execução Finalizada em: ____/____/_______ Hora: ____:____</p>
+                <br /><br/>
+            </td>
+        </tr>
+        <tr style="background: #CCCCCC">
+            <td colspan="2" align="center">
+                <strong>Avaliação da Ordem de Serviço</strong>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <table style="width: 100%;" cellpadding="3" cellspacing="1">
+                    <tr>
+                        <th><strong>Descrição</strong></th>
+                        <th><strong>S</strong></th>
+                        <th><strong>N</strong></th>
+                        <th><strong>NA</strong></th>
+                    </tr>
+                    <tr>
+                        <td>O conteúdo do artefato está em conformidade com os guias, metodologias e padrões estabelecidos pelo Inep.</td>
+                        <td style="width: 30px;"></td>
+                        <td style="width: 30px;"></td>
+                        <td style="width: 30px;"></td>
+                    </tr>
+                    <tr>
+                        <td>A escrita no artefato está correta, redigido de forma clara, garantindo bom entendimento e evitando mais de uma interpretação em relação ao objetivo para o qual foi escrito.</td>
+                        <td style="width: 30px;"></td>
+                        <td style="width: 30px;"></td>
+                        <td style="width: 30px;"></td>
+                    </tr>
+                    <tr>
+                        <td>O artefato produzido está adequadamente armazenado nas ferramentas de suporte à Engenharia de Software sem duplicidade de artefato ou informação, sem conflito entre artefatos ou informações, sem repetição desnecessária de artefatos ou informações, no mesmo artefato ou entre outros artefatos.</td>
+                        <td style="width: 30px;"></td>
+                        <td style="width: 30px;"></td>
+                        <td style="width: 30px;"></td>
+                    </tr>
+                    <tr>
+                        <td>O artefato segue estritamente a formatação definida com os principais responsáveis pelo artefato ou serviço precisamente identificados.</td>
+                        <td style="width: 30px;"></td>
+                        <td style="width: 30px;"></td>
+                        <td style="width: 30px;"></td>
+                    </tr>
+                    <tr>
+                        <td>O artefato está relacionado ao serviço e atende ao solicitado na OS.</td>
+                        <td style="width: 30px;"></td>
+                        <td style="width: 30px;"></td>
+                        <td style="width: 30px;"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <p>Legenda: S (Sim), N (Não) e NA (Não se aplica)</p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <table style="width: 990px;" cellpadding="3" cellspacing="1">
+                    <tr>
+                        <td style="width: 100px;"><strong>Fiscal Requisitante:</strong></td>
+                        <td style="width: 300px;">
+                            <table border="0">
+                                <tr>
+                                    <td style="width: 5px; height: 5px; border: 2px solid black;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    <td class="sem-borda" style="width: 100px;">ACEITO</td>
+                                    <td style="width: 5px; height: 5px; border: 2px solid black;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    <td class="sem-borda">NÃO ACEITO</td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>Rubrica:</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <p>Observações:</p>
+                <br/>
+                <br/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <table style="width: 990px;" cellpadding="3" cellspacing="1">
+                    <tr>
+                        <td style="width: 100px;"><strong>Fiscal Técnico:</strong></td>
+                        <td style="width: 300px;">
+                            <table border="0">
+                                <tr>
+                                    <td style="width: 5px; height: 5px; border: 2px solid black;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    <td class="sem-borda" style="width: 100px;">ACEITO</td>
+                                    <td style="width: 5px; height: 5px; border: 2px solid black;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    <td class="sem-borda">NÃO ACEITO</td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>Rubrica:</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <p>Observações:</p>
+                <br/>
+                <br/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span>Prazo para Correção (em avaliação "Não Aceito"):</span>
+            </td>
+            <td>
+                <p>Data:</p>
+                <p>Hora:</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span>Conclusão OS (em avaliação "Aceito"):</span>
+            </td>
+            <td>
+                <p>Data:</p>
+                <p>Hora:</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <br />
+                <!--<p>TOTAL DE MAT: <strong><?php echo ceil($floSumMath); ?></strong>	TOTAL DE AVALIAÇÕES “NÃO ACEITO”: __________</p>-->
+                <p>TOTAL DE MAT: <strong>__________</strong>	TOTAL DE AVALIAÇÕES “NÃO ACEITO”: __________</p>
+                <br /><br />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p>Observação</p>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+            </td>
+            <td>
+                <table style="width: 490px;" border="0">
+                    <tr>
+                        <td class="sem-borda"><strong>Gestor do Contrato:</strong></td>
+                    </tr>
+                    <tr>
+                        <td class="sem-borda" align="center">
+                            <br/>
+                            <br/>
+                            <hr>
+                            <p><?php echo $this->ordem_servico->getNoGestorContrato(); ?></p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
+<?php
+if ($this->booQuedraPagaina) {
+?>
+    <pagebreak type="NEXT-ODD" resetpagenum="1" pagenumstyle="i" suppress="off" />
+<?php
+}
+?>

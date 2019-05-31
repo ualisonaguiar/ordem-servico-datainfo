@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CONTROLLER</title>
+<link rel="stylesheet" href="https://stackedit.io/res-min/themes/default.css" />
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body><div class="container"><h1 id="controller"><strong><i class="icon-folder-open"></i> Controller</strong></h1>
+
+
+
+<h2 id="1-índice">1. Índice</h2>
+
+<p><div class="toc"><div class="toc">
+<ul>
+<li><a href="#controller"> Controller</a><ul>
+<li><a href="#1-índice">1. Índice</a></li>
+<li><a href="#2-definição"> 2. Definição:</a><ul>
+<li><a href="#21-conceito"> 2.1. Conceito</a></li>
+<li><a href="#22-principais-características"> 2.2. Principais características:</a><ul>
+<li><a href="#221-classes-do-componente">2.2.1. Classes do componente</a></li>
+<li><a href="#222-estrutura-hierárquica">2.2.2. Estrutura hierárquica</a><ul>
+<li><a href="#2221-o-uso-das-classes-inepzendcontroller">2.2.2.1. O uso das classes \InepZend\Controller:</a><ul>
+<li><a href="#22211-abstractcontrollercore">2.2.2.1.1 AbstractControllerCore </a></li>
+<li><a href="#22212-abstractcontrollerservicemanager">2.2.2.1.2 AbstractControllerServiceManager </a></li>
+<li><a href="#22213-abstractcontrollerrepository">2.2.2.1.3 AbstractControllerRepository </a></li>
+<li><a href="#22214-abstractcontroller">2.2.2.1.4  AbstractController </a></li>
+<li><a href="#22215-abstractcontrollerpaginator">2.2.2.1.5 AbstractControllerPaginator </a></li>
+<li><a href="#22216-abstractcrudcontroller">2.2.2.1.6  AbstractCrudController </a></li>
+<li><a href="#22217-abstractrestfulcontroller">2.2.2.1.7 AbstractRestfulController </a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#221-namespace"> 2.2.1. Namespace</a></li>
+</ul>
+</li>
+<li><a href="#23-apidocunittest"> 2.3. APIDoc/UnitTest</a></li>
+</ul>
+</li>
+<li><a href="#3-como-usar"> 3. Como usar</a><ul>
+<li><a href="#31-mapeamento-de-rotas">3.1. Mapeamento de Rotas</a></li>
+<li><a href="#32-exemplo-de-código-annotation-example">3.2. Exemplo de código - annotation @example</a></li>
+</ul>
+</li>
+<li><a href="#4-referência">  4. Referência</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</p>
+
+
+
+<h2 id="2-definição"><i class="icon-th"></i> 2. Definição:</h2>
+
+
+
+<h3 id="21-conceito"><i class="icon-pencil"></i> 2.1. Conceito</h3>
+
+<blockquote>
+  <p><em>Controller</em> é uma biblioteca disponibilizada no <strong>InepZend</strong> na qual contém classe e trait que facilitam o desenvolvimento de funcionalidades, podendo ser utilizadas em camadas onde sejam necessárias a suas utilizações.</p>
+  
+  <p>Visando a facilidade do uso da biblioteca, a mesma foi desenvolvida aplicando o conceito de Trait [<a href="http://br1.php.net/trait">http://br1.php.net/trait</a> ].</p>
+</blockquote>
+
+<ul>
+<li><p>Controller é a camada responsável em realizar a comunicação entre as camadas View e Model.</p></li>
+<li><p>No InepZend, assim como no ZF2, é utilizado o padrão HMVC na qual o Controller não é responsável em implementar as regras de negócio, ficando essa responsabilidade para a camada da <em>Service</em><a href="#fn:service" id="fnref:service" title="See footnote" class="footnote">1</a>.</p></li>
+<li><p>Por não haver regra de negócio, alguns tratamentos de entrada de dados podem ser realizadas nela, como por exemplo a verificação de requisições oriundas de POST ou GET.</p></li>
+<li><p>Toda <a href="http://framework.zend.com/manual/2.0/en/modules/zend.view.quick-start.html" target="_blank">Action</a> de uma Controller deve estar mapeada em uma ou mais rotas.</p></li>
+<li><p>Basicamente uma action, ao ser invocada por uma rota, possui algumas operações padrões como:</p>
+
+<ul><li>Manipula dados de uma requisição.</li>
+<li>Invoca métodos de classes da camada Model (Service e Form), passando os dados da requisição caso seja necessário.</li>
+<li>Manipula o resultado da invocação dos métodos de classes da camada Model.</li>
+<li>Envia os dados para a View como mensagens amigáveis ou informações a serem manipuladas pelo usuário.</li></ul></li>
+<li><p>As classes de Controller devem ser implementadas dentro do diretório Controller, conforme abaixo:</p>
+
+<blockquote>
+  <ul><li><i class="icon-folder-open"></i> SeuModulo <br>
+  <ul><li><i class="icon-folder"></i> config</li>
+  <li><i class="icon-folder-open"></i> src <br>
+  <ul><li><i class="icon-folder-open"></i> SeuModulo <br>
+  <ul><li><i class="icon-folder-open"></i> Controller <br>
+  <ul><li><i class="icon-file"></i> <strong>ArquivoController.php</strong></li></ul></li></ul></li></ul></li>
+  <li><i class="icon-folder"></i> test</li>
+  <li><i class="icon-folder"></i> view  </li></ul></li></ul>
+</blockquote></li>
+</ul>
+
+<hr>
+
+<p><a id="principais-caracteristicas"></a></p>
+
+
+
+<h3 id="22-principais-características"><i class="icon-info"></i> 2.2. Principais características:</h3>
+
+
+
+<h4 id="221-classes-do-componente">2.2.1. Classes do componente</h4>
+
+<blockquote>
+  <ul>
+  <li>\InepZend\Controller\AbstractControllerCore; </li>
+  <li>\InepZend\Controller\AbstractControllerServiceManager;</li>
+  <li>\InepZend\Controller\AbstractControllerRepository;</li>
+  <li>\InepZend\Controller\AbstractController;</li>
+  <li>\InepZend\Controller\AbstractControllerPaginator;</li>
+  <li>\InepZend\Controller\AbstractCrudController;</li>
+  <li>\InepZend\Controller\AbstractRestfulController;</li>
+  </ul>
+</blockquote>
+
+<ul>
+<li>Todos as classes do componente da Controller do <em>InepZend</em> <strong>são abstratas</strong></li>
+</ul>
+
+<p><a id="hierarquia"></a></p>
+
+
+
+<h4 id="222-estrutura-hierárquica">2.2.2. Estrutura hierárquica</h4>
+
+<blockquote>
+  <ul>
+  <li><a href="#41">AbstractControllerCore</a> <br>
+  <ul><li><a title="extend AbstractControllerCore" href="#42">AbstractControllerServiceManager</a> <br>
+  <ul><li><a title="extend AbstractControllerServiceManager" href="#43">AbstractControllerRepository</a> <br>
+  <ul><li><a title="extend AbstractControllerRepository" href="#44">AbstractController</a> <br>
+  <ul><li><a title="extend AbstractController" href="#45">AbstractControllerPaginator</a></li>
+  <li><a title="extend AbstractController" href="#46">AbstractCrudController</a></li></ul></li></ul></li></ul></li></ul></li>
+  <li><a href="#47">AbstractRestfulController</a></li>
+  </ul>
+  
+  <blockquote>
+    <p>A classe  abaixo herda a classe acima. <br>
+    Sendo assim, a classe <em>AbstractControllerCore</em> é a classe de primeiro nível, e a classe <em>AbstractControllerServiceManager</em> herda/estende a <em>AbstractControllerCore</em>.</p>
+  </blockquote>
+</blockquote>
+
+
+
+<h5 id="2221-o-uso-das-classes-inepzendcontroller">2.2.2.1. O uso das classes \InepZend\Controller:</h5>
+
+<p><a id="41"></a></p>
+
+
+
+<h6 id="22211-abstractcontrollercore">2.2.2.1.1 <strong>AbstractControllerCore </strong></h6>
+
+<blockquote>
+  <ul>
+  <li>Classe abstrata responsável pelos métodos considerados essenciais aos controllers.</li>
+  <li>A classe <strong>AbstractControllerCore</strong> tem em seu escopo o mapeamento a trait ControllerCoreTrait. <br>
+  <ul><li><strong><a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.Controller.ControllerCoreTrait.html">ControllerCoreTrait</a></strong>: <br>
+  <ul><li>Responsável pelos métodos que tratam os dados das requisição POST que foram submetidas de um formulário.</li>
+  <li>Os valores do formulário são tratados e preparados para serem utilizados, como por exemplo a remoção de mascaras.</li>
+  <li>No escopo da <strong>ControllerCoreTrait</strong> utiliza as traits:  <br>
+  <ul><li><a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.View.RenderTemplate.html" target="_blank">RenderTemplate</a></li>
+  <li><a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.Http.RequestTrait.html" target="_blank">RequestTrait</a></li>
+  <li><a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.Session.SessionTrait.html" target="_blank">SessionTrait</a></li>
+  <li><a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.Log.LogTrace.html" target="_blank">LogTrace.</a></li></ul></li></ul></li></ul></li>
+  <li>Os métodos podem ser visto na documentação do InepZend: [ <a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.Controller.AbstractControllerCore.html">http://desenvphp.inep.gov.br/apidoc/class-InepZend.Controller.AbstractControllerCore.html</a> ]</li>
+  </ul>
+</blockquote>
+
+<p><a id="42"></a></p>
+
+
+
+<h6 id="22212-abstractcontrollerservicemanager">2.2.2.1.2 <strong>AbstractControllerServiceManager </strong></h6>
+
+<blockquote>
+  <ul>
+  <li>Classe abstrata responsável pelos métodos invocadores do <em>ServiceManager</em><a href="#fn:service" id="fnref:service" title="See footnote" class="footnote">2</a>, sobretudo para acionar serviços.</li>
+  <li>Na <a href="#hierarquia">hierarquia</a>, a <strong>AbstractControllerServiceManager</strong> herda da <a href="#41">AbstractControllerCore</a>.</li>
+  <li>A classe <strong>AbstractControllerServiceManager</strong> tem em seu escopo o mapeamento trait ControllerServiceManagerTrait.  <br>
+  <ul><li><a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.Controller.AbstractControllerServiceManager.html" target="_blank"><strong>ControllerServiceManagerTrait</strong></a>: <br>
+  <ul><li>Responsável em retornar os dados do serviço a ser consumido.</li></ul></li></ul></li>
+  <li>Os métodos podem ser visto na documentação do InepZend: [ <a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.Controller.AbstractControllerServiceManager.html">http://desenvphp.inep.gov.br/apidoc/class-InepZend.Controller.AbstractControllerServiceManager.html</a> ]</li>
+  </ul>
+</blockquote>
+
+<p><a id="43"></a></p>
+
+
+
+<h6 id="22213-abstractcontrollerrepository">2.2.2.1.3 <strong>AbstractControllerRepository </strong></h6>
+
+<blockquote>
+  <ul>
+  <li>Classe abstrata responsável pelos métodos relacionado ao Repository, incluindo o EntityManager<a href="#fn:service" id="fnref:service" title="See footnote" class="footnote">3</a>, para acionar interações com o banco de dados.</li>
+  <li>Na <a href="#hierarquia">hierarquia</a>, a <strong>AbstractControllerRepository</strong> herda da <a href="#42">AbstractControllerServiceManager</a>.</li>
+  <li>Os métodos podem ser visto na documentação do InepZend: [ <a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.Controller.AbstractControllerRepository.html">http://desenvphp.inep.gov.br/apidoc/class-InepZend.Controller.AbstractControllerRepository.html</a> ]</li>
+  </ul>
+</blockquote>
+
+<p><a id="44"></a></p>
+
+
+
+<h6 id="22214-abstractcontroller">2.2.2.1.4  <strong>AbstractController </strong></h6>
+
+<blockquote>
+  <ul>
+  <li>Classe abstrata responsável pelos métodos básicos para um CRUD sem paginação.</li>
+  <li>Na <a href="#hierarquia">hierarquia</a>, a <strong>AbstractController</strong> herda da <a href="#43">AbstractControllerRepository</a>.</li>
+  <li>Os métodos podem ser visto na documentação do InepZend: [ <a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.Controller.AbstractController.html">http://desenvphp.inep.gov.br/apidoc/class-InepZend.Controller.AbstractController.html</a> ]</li>
+  </ul>
+</blockquote>
+
+<p><a id="45"></a></p>
+
+<h6 id="22215-abstractcontrollerpaginator">2.2.2.1.5 <strong>AbstractControllerPaginator </strong></h6>
+
+<blockquote>
+  <ul>
+  <li>Classe abstrata responsável pelos métodos relacionados a paginação.</li>
+  <li>Na <a href="#hierarquia">hierarquia</a>, a <strong>AbstractControllerPaginator</strong> herda da <a href="#44">AbstractController</a>.</li>
+  <li>Os métodos podem ser visto na documentação do InepZend: [ <a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.Controller.AbstractControllerPaginator.html">http://desenvphp.inep.gov.br/apidoc/class-InepZend.Controller.AbstractControllerPaginator.html</a> ]</li>
+  </ul>
+</blockquote>
+
+<p><a id="46"></a></p>
+
+<h6 id="22216-abstractcrudcontroller">2.2.2.1.6  <strong>AbstractCrudController </strong></h6>
+
+<blockquote>
+  <ul>
+  <li>A <em>AbstractCrudController</em> é a classe principal a ser utilizada do componente ao desenvolver um CRUD completo e com paginação, pois contém métodos os básicos para o mesmo.</li>
+  <li>Na <a href="#hierarquia">hierarquia</a>, a <strong>AbstractCrudController</strong> herda da <a href="#45">AbstractControllerPaginator</a>.</li>
+  <li>Os métodos podem ser visto na documentação do InepZend: [ <a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.Controller.AbstractCrudController.html">http://desenvphp.inep.gov.br/apidoc/class-InepZend.Controller.AbstractCrudController.html</a> ]</li>
+  </ul>
+</blockquote>
+
+<p><a id="47"></a></p>
+
+<h6 id="22217-abstractrestfulcontroller">2.2.2.1.7 <strong>AbstractRestfulController </strong></h6>
+
+<blockquote>
+  <ul>
+  <li>Classe abstrata responsável pelas Actions utilizadas em <a href="http://pt.wikipedia.org/wiki/Web_service" target="_blank">Webservices</a> <a href="http://pt.wikipedia.org/wiki/RESTful" target="_blank">Restful</a>.</li>
+  <li>A classe <strong>AbstractRestfulController</strong> tem em seu escopo o mapeamento das traits ControllerServiceManagerTrait e ControllerCoreTrait. </li>
+  <li>A classe AbstractRestfulController herda diretamente da <a href="http://framework.zend.com/apidoc/2.1/classes/Zend.Mvc.Controller.AbstractRestfulController.html" target="_blank">AbstractRestfulController</a> da ZF2. <br>
+  <ul><li><a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.Controller.AbstractControllerServiceManager.html" target="_blank"><strong>ControllerServiceManagerTrait</strong></a>: <br>
+  <ul><li>Responsável em retornar os dados do serviço a ser consumido.</li></ul></li>
+  <li><strong><a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.Controller.ControllerCoreTrait.html">ControllerCoreTrait</a></strong>: <br>
+  <ul><li>Responsável pelos métodos que tratam os dados das requisição POST que foram submetidas de um formulário.</li>
+  <li>Os valores do formulário são tratados e preparados para serem utilizados, como por exemplo a remoção de mascaras.</li>
+  <li>No escopo da <strong>ControllerCoreTrait</strong> utiliza as traits:  <br>
+  <ul><li><a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.View.RenderTemplate.html" target="_blank">RenderTemplate</a></li>
+  <li><a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.Http.RequestTrait.html" target="_blank">RequestTrait</a></li>
+  <li><a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.Session.SessionTrait.html" target="_blank">SessionTrait</a></li>
+  <li><a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.Log.LogTrace.html" target="_blank">LogTrace.</a></li></ul></li></ul></li></ul></li>
+  <li>Os métodos podem ser visto na documentação do InepZend: [ <a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.Controller.AbstractRestfulController.html">http://desenvphp.inep.gov.br/apidoc/class-InepZend.Controller.AbstractRestfulController.html</a> ]</li>
+  </ul>
+</blockquote>
+
+<hr>
+
+<h4 id="221-namespace"><i class="icon-sitemap"></i> 2.2.1. Namespace</h4>
+
+<blockquote>
+  <ul>
+  <li>\InepZend\Controller</li>
+  </ul>
+</blockquote>
+
+<hr>
+
+
+
+<h3 id="23-apidocunittest"><i class="icon-book"></i> 2.3. APIDoc/UnitTest</h3>
+
+<blockquote>
+  <ul>
+  <li><p>APIDoc</p>
+  
+  <blockquote>
+    <p><a href="http://desenvphp.inep.gov.br/apidoc/namespace-InepZend.Controller.html">http://desenvphp.inep.gov.br/apidoc/namespace-InepZend.Controller.html</a></p>
+  </blockquote></li>
+  <li><p>UnitTest</p>
+  
+  <blockquote>
+    <ul><li>Diretório no InepZend: /vendor/InepZend/module/UnitTest/test/UnitTest/Controller/.</li>
+    <li><a href="http://desenvphp.inep.gov.br/apidoc/namespace-InepZend.Module.UnitTest.Controller.html">http://desenvphp.inep.gov.br/apidoc/namespace-InepZend.Module.UnitTest.Controller.html</a></li></ul>
+  </blockquote></li>
+  </ul>
+</blockquote>
+
+<hr>
+
+
+
+<h2 id="3-como-usar"><i class="icon-terminal"></i> 3. Como usar</h2>
+
+<p><a id="rota"></a></p>
+
+
+
+<h3 id="31-mapeamento-de-rotas">3.1. Mapeamento de Rotas</h3>
+
+<ul>
+<li><p>O InepZend herdou do ZF2 o acesso às  <a href="http://framework.zend.com/manual/2.0/en/modules/zend.view.quick-start.html" target="_blank">Action</a> de uma Controller via <a href="http://framework.zend.com/manual/2.0/en/modules/zend.mvc.routing.html" target="_blank">Rotas</a>.</p></li>
+<li><p>Rota é uma navegação que a aplicação possui para acessar determinada action.</p></li>
+<li><p>A rota é mapeada no arquivo <strong>module.config.php</strong> de cada módulo.</p>
+
+<blockquote>
+  <ul><li><i class="icon-folder-open"></i> SeuModulo <br>
+  <ul><li><i class="icon-folder-open"></i> config <br>
+  <ul><li><i class="icon-file"></i> <strong>module.config.php</strong></li></ul></li>
+  <li><i class="icon-folder"></i> src</li>
+  <li><i class="icon-folder"></i> test</li>
+  <li><i class="icon-folder"></i> view  </li></ul></li></ul>
+</blockquote></li>
+<li><p>Uma rota pode ser configurada em relação à:</p>
+
+<ul><li>Parâmetros a serem recebidos;</li>
+<li>Regras de validação destes parâmetros (constraints);</li>
+<li>Classe de Controller e o método Action a ser acionado;</li>
+<li><a href="http://framework.zend.com/manual/2.0/en/modules/zend.mvc.routing.html#router-types" target="_blank">Outras informações</a>.</li></ul></li>
+</ul>
+
+
+
+<pre class="prettyprint"><code class=" hljs xml"><span class="php"><span class="hljs-preprocessor">&lt;?php</span>
+
+<span class="hljs-keyword">return</span> <span class="hljs-keyword">array</span>(
+    <span class="hljs-string">'router'</span> =&gt; <span class="hljs-keyword">array</span>(
+        <span class="hljs-string">'routes'</span> =&gt; <span class="hljs-keyword">array</span>(
+            <span class="hljs-string">'home'</span> =&gt; <span class="hljs-keyword">array</span>(
+                <span class="hljs-string">'type'</span> =&gt; <span class="hljs-string">'Zend\Mvc\Router\Http\Literal'</span>,
+                <span class="hljs-string">'options'</span> =&gt; <span class="hljs-keyword">array</span>(
+                    <span class="hljs-string">'route'</span> =&gt; <span class="hljs-string">'/'</span>,
+                    <span class="hljs-string">'defaults'</span> =&gt; <span class="hljs-keyword">array</span>(
+                        <span class="hljs-string">'controller'</span> =&gt; <span class="hljs-string">'Application\Controller\Index'</span>,
+                        <span class="hljs-string">'action'</span> =&gt; <span class="hljs-string">'index'</span>,
+                    ),
+                ),
+            ),
+        ),
+    ),
+);
+.
+.
+.</span></code></pre>
+
+
+
+<h3 id="32-exemplo-de-código-annotation-example">3.2. Exemplo de código - annotation @example</h3>
+
+<p></p><ul> <br>
+<li>Os exemplos da utilização de cada método estão contidos em seus comentários após a <em>annotation</em> <strong>@example</strong>: <br></li></ul><p></p>
+
+<blockquote>
+  <a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.Controller.AbstractCrudController.html">http://desenvphp.inep.gov.br/apidoc/class-InepZend.Controller.AbstractCrudController.html</a>
+  
+  </blockquote>
+
+
+<h2 id="4-referência"><a id="referencia"></a> <i class="icon-unlink"></i> 4. Referência</h2>
+
+<blockquote>
+  <p><a href="http://desenvphp.inep.gov.br/apidoc/namespace-InepZend.Controller.html">http://desenvphp.inep.gov.br/apidoc/namespace-InepZend.Controller.html</a></p>
+</blockquote>
+
+<div class="footnotes"><hr><ol><li id="fn:service">A documentação pode ser localizado em:          <em>/InepZend/library/InepZend/Service/_READM.html</em> <a href="#fnref:service" title="Return to article" class="reversefootnote">↩</a></li><li id="fn:service">A documentação pode ser localizado em:          <em>/InepZend/library/InepZend/Service/_READM.html</em> <a href="#fnref:service" title="Return to article" class="reversefootnote">↩</a></li><li id="fn:service">A documentação pode ser localizado em:          <em>/InepZend/library/InepZend/Service/_READM.html</em> <a href="#fnref:service" title="Return to article" class="reversefootnote">↩</a></li></ol></div></div></body>
+</html>

@@ -1,0 +1,8 @@
+<script>
+    var respostas = <?php echo ($this->respostas) ? $this->respostas : '{}'; ?>;
+</script>
+<?php echo $this->form; ?>
+<script
+    type="text/javascript"
+    src="<?php echo $this->basePath() . getRenderScriptUrl('Sqi/js/answer'); ?>">
+</script>

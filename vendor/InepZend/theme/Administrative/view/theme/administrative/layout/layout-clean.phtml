@@ -1,0 +1,15 @@
+<?php
+$this->html($this)->open();
+$arrHtmlHeadInfo = $this->htmlHead()->render((!is_bool(@$GLOBALS['view_variable']['booMenu'])) ? false : $GLOBALS['view_variable']['booMenu'])[1];
+$this->htmlBody()->open();
+echo $this->barraBrasil()->getHtml();
+$strContent = $this->content;
+if ((is_array($arrHtmlHeadInfo)) && (array_key_exists('mixDivMenu', $arrHtmlHeadInfo)) && (!empty($arrHtmlHeadInfo['mixDivMenu'])))
+    $strContent = $this->partial('container', array_merge($arrHtmlHeadInfo, array('strContent' => $strContent)));
+$this->htmlBody()->renderNavBar(false);
+echo '<style>.container { width: 100%; }</style><div id="contentBackground" style="padding: 5px;">' . $strContent . '</div>';
+$this->htmlBody()->renderFooter();
+echo $this->inlineScript();
+$this->htmlBody()->close();
+$this->html()->close();
+?>

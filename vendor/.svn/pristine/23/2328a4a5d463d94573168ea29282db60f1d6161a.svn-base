@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UnitTest</title>
+<link rel="stylesheet" href="https://stackedit.io/res-min/themes/default.css" />
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body><div class="container"><h1 id="unittest"><strong><i class="icon-folder-open"></i> UnitTest</strong></h1>
+
+
+
+<h2 id="1-índice">1. Índice</h2>
+
+<p><div class="toc">
+<ul>
+<li><a href="#unittest"> UnitTest</a><ul>
+<li><a href="#1-índice">1. Índice</a></li>
+<li><a href="#2-definição"> 2. Definição</a><ul>
+<li><a href="#21-conceito"> 2.1. Conceito</a><ul>
+<li><a href="#211-tdd-test-driven-development">2.1.1 TDD (Test Driven Development)</a></li>
+<li><a href="#212-ciclo-de-desenvolvimento">2.1.2 Ciclo de desenvolvimento </a></li>
+</ul>
+</li>
+<li><a href="#22-principais-características"> 2.2. Principais características</a><ul>
+<li><a href="#221-classes-do-componente">2.2.1. Classes do componente</a></li>
+<li><a href="#222-estrutura-hierárquica">2.2.2. Estrutura hierárquica</a><ul>
+<li><a href="#2221-classes-inepzendunittest">2.2.2.1. Classes \InepZend\UnitTest</a><ul>
+<li><a href="#22211-abstractunittest">2.2.2.1.1. AbstractUnitTest</a></li>
+<li><a href="#22212-abstractservicecrudunittest">2.2.2.1.2. AbstractServiceCrudUnitTest</a></li>
+<li><a href="#22213-abstractserviceunittest">2.2.2.1.3. AbstractServiceUnitTest</a></li>
+<li><a href="#22214-abstractrouteunittest">2.2.2.1.4. AbstractRouteUnitTest</a></li>
+<li><a href="#22215-abstractcrudunittest">2.2.2.1.5. AbstractCrudUnitTest</a></li>
+<li><a href="#22216-abstractcrudcontrollerunittest">2.2.2.1.6. AbstractCrudControllerUnitTest</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#223-namespace"> 2.2.3. Namespace</a></li>
+</ul>
+</li>
+<li><a href="#23-apidocunittest"> 2.3. APIDoc/UnitTest</a></li>
+</ul>
+</li>
+<li><a href="#3-como-usar"> 3. Como usar</a><ul>
+<li><a href="#31-estrutura-de-pastas">3.1. Estrutura de pastas</a></li>
+<li><a href="#32-padrão-de-nomenclatura-e-asserts-annotation-de-teste">3.2. Padrão de nomenclatura e Asserts (Annotation de teste)</a></li>
+<li><a href="#33-skelgen">3.3. Skelgen</a><ul>
+<li><a href="#331-instalação">3.3.1 Instalação</a></li>
+<li><a href="#332-gerando-as-classes-de-teste">3.3.2 Gerando as classes de teste</a><ul>
+<li><a href="#3321-gerando-as-classes-de-teste-a-partir-do-inepzend">3.3.2.1 Gerando as classes de teste a partir do InepZend</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#34-realizando-os-testes-com-o-phpunit">3.4. Realizando os testes com o phpunit</a><ul>
+<li><a href="#341-instalação">3.4.1 Instalação</a></li>
+<li><a href="#342-configurações-xml">3.4.2 Configurações XML</a></li>
+<li><a href="#343-execução-do-comando-phpunit">3.4.3 Execução do comando phpunit</a></li>
+<li><a href="#344-código-exemplo-de-teste-de-uma-service">3.4.4 Código exemplo de teste de uma service</a></li>
+<li><a href="#345-código-exemplo-de-teste-de-uma-rota-controller">3.4.5 Código exemplo de teste de uma rota (controller)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#4-referência">  4. Referência </a></li>
+</ul>
+</li>
+</ul>
+</div>
+</p>
+
+
+
+<h2 id="2-definição"><i class="icon-th"></i> 2. Definição</h2>
+
+<hr>
+
+
+
+<h3 id="21-conceito"><i class="icon-pencil"></i> 2.1. Conceito</h3>
+
+<blockquote>
+  <p>Testes unitários ou popularmente conhecidos como <em>Unit Test</em>, são os primeiros passos/testes que o desenvolvedor implementa, no qual é criado durante a fase de desenvolvimento ou preferencialmente antes do seu inicio. <br>
+  O objetivo dos testes unitário é verificar a menor funcionalidade (unidade) implementada em um software, na qual isola partes dos códigos e métodos analisando se essas funcionalidades retornam o esperado mediando a um valor informado. <br>
+  O componente <strong>UnitTest</strong> do <strong>InepZend</strong> utiliza em sua concepção a biblioteca PHPUnit &lt;<a href="https://phpunit.de/">https://phpunit.de/</a>&gt;, sendo essa uma das mais difundidas para a linguagem PHP.</p>
+</blockquote>
+
+<p><a id="definicao-service"></a></p>
+
+
+
+<h4 id="211-tdd-test-driven-development"><strong>2.1.1 TDD (Test Driven Development)</strong></h4>
+
+<ul>
+<li>Test Driven Development (TDD) ou Desenvolvimento Orientado a Testes é uma técnica de desenvolvimento de software que baseia-se em um <a href="#ciclo">ciclo</a> curto de repetições.</li>
+<li>O TDD transforma a tradicional forma de desenvolvimento que é desenvolver e depois testar, passando  a ser o inverso, primeiramente implementados os testes unitários e depois desenvolvendo a solução proposta. </li>
+<li>Os testes unitários são utilizados para facilitar a abstração do projeto, pois segundo Freeman os testes são usados para clarear a ideia em relação ao que se deseja em relação ao código.  <br>
+<ul><li>Segundo Kent Beck Apud Freeman, diz que: “finalmente, consegui separar o projeto lógico do físico. Sempre me disseram para fazer isso, mas nunca ninguém tinha explicado como”, o TDD é a forma de se fazer isso. </li></ul></li>
+<li>A criação de testes unitários ou de componentes é o núcleo da concepção do TDD.  <br>
+<ul><li>Segundo Presmann, “Os componentes individuais são testados para garantir que operem corretamente. Cada componente é testado independentemente, sem os outros componentes de sistema. Os componentes podem ser entidades simples, tais como funções ou classes de objetos, ou podem ser grupos coerentes dessas entidades”. </li></ul></li>
+</ul>
+
+<p><a id="ciclo"></a></p>
+
+
+
+<h4 id="212-ciclo-de-desenvolvimento"><strong>2.1.2 Ciclo de desenvolvimento </strong></h4>
+
+<ul>
+<li>O ciclo baseia-se em 3 passos básicos: <br>
+<ul><li>Criar o teste;</li>
+<li>Implementar a solução para passar no teste;</li>
+<li>Refatorar o teste e solução para funcionar corretamente.</li></ul></li>
+</ul>
+
+
+
+<h3 id="22-principais-características"><a id="principais-caracteristicas"></a><i class="icon-info"></i> 2.2. Principais características</h3>
+
+
+
+<h4 id="221-classes-do-componente">2.2.1. Classes do componente</h4>
+
+<blockquote>
+  <ul>
+  <li>\InepZend\UnitTest\AbstractUnitTest;</li>
+  <li>\InepZend\UnitTest\AbstractServiceCrudUnitTest; <br>
+  \InepZend\UnitTest\AbstractServiceUnitTest;</li>
+  <li>\InepZend\UnitTest\AbstractRouteUnitTest;</li>
+  <li>\InepZend\UnitTest\AbstractCrudUnitTest;</li>
+  <li>\InepZend\UnitTest\AbstractCrudControllerUnitTest;</li>
+  </ul>
+</blockquote>
+
+<ul>
+<li>Todos as classes do componente do UnitTest do <em>InepZend</em> <strong>são abstratas</strong>.</li>
+</ul>
+
+<p><a id="hierarquia"></a></p>
+
+
+
+<h4 id="222-estrutura-hierárquica">2.2.2. Estrutura hierárquica</h4>
+
+<blockquote>
+  <ul>
+  <li><a href="#41">AbstractUnitTest</a>  <br>
+  <ul><li><a title="extend AbstractUnitTest" href="#42">AbstractServiceCrudUnitTest</a><a> <br>
+  </a><ul><li><a title="extend AbstractServiceCrudUnitTest" href="#43">AbstractServiceUnitTest</a><a></a></li></ul></li>
+  <li><a title="extend AbstractUnitTest" href="#44">AbstractRouteUnitTest</a> <br>
+  <ul><li><a title="extend AbstractRouteUnitTest" href="#45">AbstractCrudUnitTest</a> <br>
+  <ul><li><a title="extend AbstractCrudUnitTest" href="#46">AbstractCrudControllerUnitTest</a>                     </li></ul></li></ul></li></ul></li>
+  </ul>
+  
+  <blockquote>
+    <p>A classe  abaixo herda a classe acima.</p>
+  </blockquote>
+</blockquote>
+
+
+
+<h5 id="2221-classes-inepzendunittest">2.2.2.1. Classes \InepZend\UnitTest</h5>
+
+<p><a id="41"></a></p>
+
+
+
+<h6 id="22211-abstractunittest"><strong>2.2.2.1.1. AbstractUnitTest</strong></h6>
+
+<blockquote>
+  <ul>
+  <li>Classe abstrata responsável pelos métodos básicos para a implementação de qualquer tipo de método de teste unitário.  <br>
+  <ul><li>É a classe núcleo (core) e estende a classe nativa de <em>TestCase</em> do PHPUnit.</li></ul></li>
+  <li>Na <a href="#hierarquia">hierarquia</a>, ela é estendida por todas as classes do componente UnitTest.  </li>
+  <li>Utiliza em seu escopo as Traits <em>\InepZend\Util\DebugExec</em> [ <a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.Util.DebugExec.html">http://desenvphp.inep.gov.br/apidoc/class-InepZend.Util.DebugExec.html</a> ], <em>\InepZend\Service\ServiceManagerTrait</em> [ <a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.Service.ServiceManagerTrait.html">http://desenvphp.inep.gov.br/apidoc/class-InepZend.Service.ServiceManagerTrait.html</a> ]  e InepZend\Util\AttributeStaticTrait [ <a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.Util.AttributeStaticTrait.html">http://desenvphp.inep.gov.br/apidoc/class-InepZend.Util.AttributeStaticTrait.html</a> ].</li>
+  <li>Os métodos podem ser visto na documentação do InepZend: [ <a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.UnitTest.AbstractUnitTest.html">http://desenvphp.inep.gov.br/apidoc/class-InepZend.UnitTest.AbstractUnitTest.html</a> ]</li>
+  </ul>
+</blockquote>
+
+<p><a id="42"></a></p>
+
+
+
+<h6 id="22212-abstractservicecrudunittest"><strong>2.2.2.1.2. AbstractServiceCrudUnitTest</strong></h6>
+
+<blockquote>
+  <ul>
+  <li>Classe abstrata responsável pelos métodos específicos para aplicação de testes unitários em métodos de uma classe de serviço.</li>
+  <li>É acionado sempre antes da invocação de um método de teste unitário.</li>
+  <li>Na <a href="#hierarquia">hierarquia</a>, ela estende a classe <a href="#41"><em>AbstractUnitTest</em></a>.</li>
+  <li>Os métodos podem ser visto na documentação do InepZend: [ <a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.UnitTest.AbstractServiceCrudUnitTest.html">http://desenvphp.inep.gov.br/apidoc/class-InepZend.UnitTest.AbstractServiceCrudUnitTest.html</a> ]</li>
+  </ul>
+</blockquote>
+
+<p><a id="43"></a></p>
+
+
+
+<h6 id="22213-abstractserviceunittest"><strong>2.2.2.1.3. AbstractServiceUnitTest</strong></h6>
+
+<blockquote>
+  <ul>
+  <li>Classe abstrata responsável pelos métodos específicos para aplicação de testes unitários em métodos de uma classe de serviço.</li>
+  <li>Ao criar uma classe de teste de serviço deverá ser herdada preferencialmente esta classe.</li>
+  <li>Na <a href="#hierarquia">hierarquia</a>, ela estende a classe <a href="#42"><em>AbstractServiceCrudUnitTest</em></a>.</li>
+  <li>Os métodos podem ser visto na documentação do InepZend: [ <a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.UniotTest.AbstractServiceUnitTest.html">http://desenvphp.inep.gov.br/apidoc/class-InepZend.UniotTest.AbstractServiceUnitTest.html</a> ]</li>
+  </ul>
+</blockquote>
+
+<p><a id="44"></a></p>
+
+
+
+<h6 id="22214-abstractrouteunittest"><strong>2.2.2.1.4. AbstractRouteUnitTest</strong></h6>
+
+<blockquote>
+  <ul>
+  <li>Classe abstrata responsável pelos métodos específicos para aplicação de testes unitários em métodos de uma classe de controller, enviando requisições para rotas/actions e verificando o status das respostas caso seja necessário.</li>
+  <li>Na <a href="#hierarquia">hierarquia</a>, ela estende a classe <a href="#41"><em>AbstractUnitTest</em></a>.</li>
+  <li>Os métodos podem ser visto na documentação do InepZend: [ <a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.UnitTest.AbstractRouteUnitTest.html">http://desenvphp.inep.gov.br/apidoc/class-InepZend.UnitTest.AbstractRouteUnitTest.html</a> ]</li>
+  </ul>
+</blockquote>
+
+<p><a id="45"></a></p>
+
+
+
+<h6 id="22215-abstractcrudunittest"><strong>2.2.2.1.5. AbstractCrudUnitTest</strong></h6>
+
+<blockquote>
+  <ul>
+  <li>Classe abstrata responsável pelos métodos específicos para aplicação de testes unitários em métodos de uma classe de controller que herda a <a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.Controller.AbstractCrudController.html" target="_blank">InepZend\Controller\AbstractCrudController</a>, enviando requisições para rotas e verificando o status das respostas caso seja necessário.</li>
+  <li>Nessa classe são mapeados os testes de alguns métodos utilizados nas classes que herdam da <a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.Controller.AbstractCrudController.html" target="_blank">AbstractCrudController</a>, como por exemplo: <br>
+  <ul><li>Index: public function testIndexActionCanBeAccessed() { … }</li>
+  <li>add: public function testAddActionCanBeAccessed() { … }</li>
+  <li>edit: public function testEditActionCanBeAccessed() { … }</li></ul></li>
+  <li>Na <a href="#hierarquia">hierarquia</a>, ela estende a classe <a href="#44"><em>AbstractRouteUnitTest</em></a>.</li>
+  <li>Os métodos podem ser visto na documentação do InepZend: [ <a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.UnitTest.AbstractCrudUnitTest.html">http://desenvphp.inep.gov.br/apidoc/class-InepZend.UnitTest.AbstractCrudUnitTest.html</a> ]</li>
+  </ul>
+</blockquote>
+
+<p><a id="46"></a></p>
+
+
+
+<h6 id="22216-abstractcrudcontrollerunittest"><strong>2.2.2.1.6. AbstractCrudControllerUnitTest</strong></h6>
+
+<blockquote>
+  <ul>
+  <li>Classe abstrata responsável pelos métodos específicos para aplicação de testes unitários em métodos de uma classe de controller que herda a <a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.Controller.AbstractCrudController.html" target="_blank">InepZend\Controller\AbstractCrudController</a>, enviando requisições para rotas e verificando o status das respostas caso seja necessário.</li>
+  <li>Todas as actions das classes <a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.Controller.AbstractCrudController.html" target="_blank">InepZend\Controller\AbstractCrudController</a> e <a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.Controller.AbstractControllerPaginator.html" target="_blank">InepZend\Controller\AbstractControllerPaginator</a> possuem algum teste unitário implementado.</li>
+  <li>Ao criar uma classe de teste de rota deverá ser herdada preferencialmente esta classe.</li>
+  <li>Na <a href="#hierarquia">hierarquia</a>, ela estende a classe <a href="#45"><em>AbstractCrudUnitTest</em></a>.</li>
+  <li>Os métodos podem ser visto na documentação do InepZend: [ <a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.UnitTest.AbstractCrudControllerUnitTest.html">http://desenvphp.inep.gov.br/apidoc/class-InepZend.UnitTest.AbstractCrudControllerUnitTest.html</a> ]</li>
+  </ul>
+</blockquote>
+
+<hr>
+
+
+
+<h4 id="223-namespace"><i class="icon-sitemap"></i> 2.2.3. Namespace</h4>
+
+<blockquote>
+  <ul>
+  <li>\InepZend\UnitTest</li>
+  </ul>
+</blockquote>
+
+<hr>
+
+
+
+<h3 id="23-apidocunittest"><i class="icon-book"></i> 2.3. APIDoc/UnitTest</h3>
+
+<blockquote>
+  <p></p><ul> <br>
+  <li>APIDoc <br></li></ul><p></p>
+  
+  <blockquote>
+    <p><a href="http://desenvphp.inep.gov.br/apidoc/namespace-InepZend.UnitTest.html"></a><a href="http://desenvphp.inep.gov.br/apidoc/namespace-InepZend.UnitTest.html">http://desenvphp.inep.gov.br/apidoc/namespace-InepZend.UnitTest.html</a>
+    </p>
+  </blockquote>
+</blockquote>
+
+<hr>
+
+
+
+<h2 id="3-como-usar"><i class="icon-terminal"></i> 3. Como usar</h2>
+
+
+
+<h3 id="31-estrutura-de-pastas">3.1. Estrutura de pastas</h3>
+
+<ul>
+<li>Para a estrutura de pastas, o padrão deverá ser o mesmo do módulo onde o teste será desenvolvido, contendo as pastas da <strong>Controller</strong> e <strong>Service</strong>:</li>
+</ul>
+
+<blockquote>
+  <ul>
+  <li><i class="icon-folder-open"></i> SeuModulo <br>
+  <ul><li><i class="icon-folder"></i> config</li>
+  <li><i class="icon-folder-open"></i> src</li>
+  <li><i class="icon-folder-open"></i> SeuModulo <br>
+  <ul><li><i class="icon-folder-open"></i> Controller <br>
+  <ul><li><i class="icon-file"></i> <strong>ArquivoController.php</strong></li></ul></li>
+  <li><i class="icon-folder-open"></i> Service <br>
+  <ul><li><i class="icon-file"></i> <strong>Arquivo.php</strong></li></ul></li></ul></li>
+  <li><i class="icon-folder-open"></i> test <br>
+  <ul><li><i class="icon-folder-open"></i> SeuModuloTest <br>
+  <ul><li><i class="icon-folder-open"></i> Controller <br>
+  <ul><li><i class="icon-file"></i> <strong>ArquivoControllerTest.php</strong></li></ul></li>
+  <li><i class="icon-folder-open"></i> Service <br>
+  <ul><li><i class="icon-file"></i> <strong>ArquivoTest.php</strong></li></ul></li></ul></li></ul></li>
+  <li><i class="icon-folder"></i> view</li>
+  <li><i class="icon-file"></i> <strong>Module.php</strong></li></ul></li>
+  </ul>
+</blockquote>
+
+<p><a id="padra-nomenclatura"></a></p>
+
+
+
+<h3 id="32-padrão-de-nomenclatura-e-asserts-annotation-de-teste">3.2. Padrão de nomenclatura e Asserts (Annotation de teste)</h3>
+
+<ul>
+<li>O padrão de nomenclatura a ser utilizado tanto para os comentários como para os <em>asserts</em> podem ser consultados no manual de nomenclatura localizado em: [ <a href="http://svn.inep.gov.br/svn/DESENV/INEP/ARQUITETURA_PHP/INEPSKELETON/trunk/Docs/Analise/Manual/Annotation/">http://svn.inep.gov.br/svn/DESENV/INEP/ARQUITETURA_PHP/INEPSKELETON/trunk/Docs/Analise/Manual/Annotation/</a> ]</li>
+<li>Os <em>@assert</em> deverão seguir o padrão descrito acima, pois é passível da geração automática de classes e seus métodos serão a partir das <em>annotations</em> declaradas. Abaixo estão os annotations que são utilizadas pelo <a href="#skelgen"><strong>skelgen</strong></a> para a geração dos arquivos:</li>
+</ul>
+
+<blockquote>
+  <ul>
+  <li>case ‘==’: $assertion = ‘Equals’;</li>
+  <li>case ‘!=’: $assertion = ‘NotEquals’;</li>
+  <li>case ‘===’: $assertion = ‘Same’;</li>
+  <li>case ‘!==’: $assertion = ‘NotSame’;</li>
+  <li>case ‘&gt;’: $assertion = ‘GreaterThan’;</li>
+  <li>case ‘&gt;=’: $assertion = ‘GreaterThanOrEqual’;</li>
+  <li>case ‘&lt;’: $assertion = ‘LessThan’;</li>
+  <li>case ‘&lt;=’: $assertion = ‘LessThanOrEqual’;</li>
+  <li>case ‘throws’: $assertion = ‘exception’;</li>
+  </ul>
+</blockquote>
+
+<p><a id="padra-nomenclatura-specific"></a></p>
+
+<ul>
+<li>Para os casos específicos onde os <em>@assert</em> acima não atendam ou para o cenário onde os métodos são protegidos ou privados, deverá ser criada outra classe de teste contendo os métodos específicos com sufixo <strong>Spefic</strong>, como por exemplo <em>PublicacaoSpecificTest</em>. </li>
+<li>Umas das formas mais utilizadas é a verificação se o retorno é uma instância de um Objeto X (assertInstanceOf) ou se existe um Atributo X dentro do Objeto X (assertAttributeContains). Para esse cenário deverá seguir o manual disponibilizado pelo PHPUnit e seus apêndices [ <a href="https://phpunit.de/documentation.html">https://phpunit.de/documentation.html</a>. ]</li>
+</ul>
+
+
+
+<pre class="prettyprint"><code class=" hljs ruby">* <span class="hljs-variable">@assert</span> ( <span class="hljs-number">1</span> !== <span class="hljs-string">'1'</span>)</code></pre>
+
+
+
+<pre class="prettyprint"><code class=" hljs lasso"><span class="hljs-variable">$this</span><span class="hljs-subst">-&gt;</span>assertNotSame(<span class="hljs-number">1</span>, <span class="hljs-string">'1'</span>);</code></pre>
+
+<p><a id="skelgen"></a></p>
+
+
+
+<h3 id="33-skelgen">3.3. Skelgen</h3>
+
+<ul>
+<li>Skelgen é uma ferramenta de geração de esqueleto do PHPUnit a partir de classes com códigos implementadas utilizando <a href="#padra-nomenclatura">annotation</a>. Também é possível o inverso, gerar classes a partir de classes de teste.</li>
+</ul>
+
+
+
+<h4 id="331-instalação">3.3.1 Instalação</h4>
+
+<ul>
+<li>Para a instalação é necessário ter a extensão do PHP <em>PEAR</em> instalado, para instalação do pear acesse [ <a href="http://pear.php.net/manual/en/installation.php">http://pear.php.net/manual/en/installation.php</a> ].</li>
+</ul>
+
+
+
+<pre class="prettyprint"><code class=" hljs cmake">pear <span class="hljs-keyword">install</span> phpunit/PHPUnit_SkeletonGenerator</code></pre>
+
+<ul>
+<li>Após a instalação é necessário criar os <a href="#padra-nomenclatura">@asserts</a> para as classes que serão geradas, observando que os <a href="#padra-nomenclatura">@asserts</a> criados na classe de teste são os especificados no item <a href="#padra-nomenclatura">annotation</a>, para os demais casos a implementação da lógica de teste deverá ser criada na própria classe de teste, como por exemplo o <em>assert</em> <strong>assertInternalType</strong>, na qual realiza a verificação do tipo primitivo. </li>
+</ul>
+
+
+
+<pre class="prettyprint"><code class=" hljs php"><span class="hljs-variable">$this</span>-&gt;assertInternalType(<span class="hljs-string">'array'</span>, <span class="hljs-keyword">array</span>(<span class="hljs-string">'key'</span> =&gt; <span class="hljs-string">'value'</span>));</code></pre>
+
+
+
+<h4 id="332-gerando-as-classes-de-teste">3.3.2 Gerando as classes de teste</h4>
+
+<ul>
+<li><p>Após a instalação deveram ser implementados os <a href="#padra-nomenclatura">@asserts</a> nas classes passíveis de teste. </p>
+
+<blockquote>
+  <p>As classes que contenham métodos <strong>privados</strong> e <strong>protegidos</strong> não são passíveis de geração das classes de teste, para esses cenários deveram seguir as informações do item <a href="#padra-nomenclatura-specific">nomenclatura</a> referente a criação de classe com o sufixo <strong>Specific</strong>.</p>
+</blockquote></li>
+<li><p>Exemplo de criação de  <a href="#padra-nomenclatura">@asserts</a> para os teste:</p></li>
+</ul>
+
+
+
+<pre class="prettyprint"><code class=" hljs java">    <span class="hljs-javadoc">/**
+     * Metodo responsavel em verificar se a data passada como parametro esta na 
+     * string dd/mm/aaaa.
+     *
+     *<span class="hljs-javadoctag"> @example</span> \InepZend\Util\Date::isDateTemplate('18/07/2014')
+     *
+     *<span class="hljs-javadoctag"> @param</span> string $strValue
+     *<span class="hljs-javadoctag"> @return</span> boolean
+     *
+     *<span class="hljs-javadoctag"> @assert</span> ('18/07/2014') === true
+     *<span class="hljs-javadoctag"> @assert</span> ('2014-07-18') !== true
+     *<span class="hljs-javadoctag"> @assert</span> ('20140718') !== true
+     */</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> function <span class="hljs-title">isDateTemplate</span>($strValue)
+    {
+        <span class="hljs-keyword">return</span> self::isDate($strValue, self::TYPE_DATE_TEMPLATE);
+    }</code></pre>
+
+<ul>
+<li>Com os  <a href="#padra-nomenclatura">@asserts</a> acima o código gerado será:</li>
+</ul>
+
+
+
+<pre class="prettyprint"><code class=" hljs java">    <span class="hljs-javadoc">/**
+     * Generated from<span class="hljs-javadoctag"> @assert</span> ('18/07/2014') === true.
+     *
+     *<span class="hljs-javadoctag"> @covers</span> \InepZend\Util\Date::isDateTemplate
+     */</span>
+    <span class="hljs-keyword">public</span> function <span class="hljs-title">testIsDateTemplate</span>()
+    {
+        $<span class="hljs-keyword">this</span>-&gt;assertSame(
+                <span class="hljs-keyword">true</span>
+                , \InepZend\Util\Date::isDateTemplate(<span class="hljs-string">'18/07/2014'</span>)
+        );
+    }
+
+    <span class="hljs-javadoc">/**
+     * Generated from<span class="hljs-javadoctag"> @assert</span> ('2014-07-18') !== true.
+     *
+     *<span class="hljs-javadoctag"> @covers</span> \InepZend\Util\Date::isDateTemplate
+     */</span>
+    <span class="hljs-keyword">public</span> function <span class="hljs-title">testIsDateTemplate2</span>()
+    {
+        $<span class="hljs-keyword">this</span>-&gt;assertNotSame(
+                <span class="hljs-keyword">true</span>
+                , \InepZend\Util\Date::isDateTemplate(<span class="hljs-string">'2014-07-18'</span>)
+        );
+    }
+
+    <span class="hljs-javadoc">/**
+     * Generated from<span class="hljs-javadoctag"> @assert</span> ('20140718') !== true.
+     *
+     *<span class="hljs-javadoctag"> @covers</span> \InepZend\Util\Date::isDateTemplate
+     */</span>
+    <span class="hljs-keyword">public</span> function <span class="hljs-title">testIsDateTemplate3</span>()
+    {
+        $<span class="hljs-keyword">this</span>-&gt;assertNotSame(
+                <span class="hljs-keyword">true</span>
+                , \InepZend\Util\Date::isDateTemplate(<span class="hljs-string">'20140718'</span>)
+        );
+    }</code></pre>
+
+<ul>
+<li><p>O comando para gerar deverá ser executado via linha de comando, visto que os testes unitários seguem o padrão <a href="http://pt.wikipedia.org/wiki/Interpretador_de_comandos" target="_blank">CLI</a> e não <a href="http://pt.wikipedia.org/wiki/Interface_gr%C3%A1fica_do_utilizador" target="_blank">GUI</a>.</p></li>
+<li><p>Exemplo de Comando no Linux:</p></li>
+</ul>
+
+
+
+<pre class="prettyprint"><code class=" hljs lasso">phpunitskelgen generate<span class="hljs-attribute">-test</span> <span class="hljs-subst">--</span>bootstrap<span class="hljs-subst">=</span><span class="hljs-string">"/Path/To/Bootstrap.php"</span> <span class="hljs-string">"InepZend\Util\ArrayCollection"</span> <span class="hljs-string">"/srv/www/htdocs/skeleton/Fontes/vendor/InepZend/library/InepZend/Util/ArrayCollection"</span> <span class="hljs-string">"InepZend\Util\ArrayCollection"</span> <span class="hljs-string">"UtilTest/ArrayCollectionTest.php"</span></code></pre>
+
+<ul>
+<li>Comando no Windows:</li>
+</ul>
+
+
+
+<pre class="prettyprint"><code class=" hljs tex">phpunit-skelgen generate-test --bootstrap="C:<span class="hljs-command">\Path</span><span class="hljs-command">\To</span><span class="hljs-command">\Bootstrap</span>.php" "InepZend<span class="hljs-command">\Util</span><span class="hljs-command">\PhpIni</span>" "C:<span class="hljs-command">\Program</span> Files (x86)<span class="hljs-command">\Zend</span><span class="hljs-command">\Apache</span>2<span class="hljs-command">\htdocs</span><span class="hljs-command">\Novo</span> SVN<span class="hljs-command">\INEP</span><span class="hljs-command">\ARQUITETURA</span>_PHP<span class="hljs-command">\INEPSKELETON</span><span class="hljs-command">\trunk</span><span class="hljs-command">\Fontes</span><span class="hljs-command">\vendor</span><span class="hljs-command">\InepZend</span><span class="hljs-command">\library</span><span class="hljs-command">\InepZend</span><span class="hljs-command">\Util</span><span class="hljs-command">\PhpIni</span>" "InepZend<span class="hljs-command">\Util</span><span class="hljs-command">\PhpIniTest</span>" "PhpIniTest.php"</code></pre>
+
+<ul>
+<li>Os comandos acima seguem a seguinte estrutura: <br>
+
+
+<blockquote>
+  <strong>[COMANDO] </strong> <br>
+  <strong>[BOOTSTRAP] </strong> <br>
+  <strong>[PATH_DA_CLASSE_SEM_EXTENSAO] </strong> <br>
+  <strong>[NAMESPACE_DA_CLASSE] </strong> <br>
+  <strong>[NOME_DA_CLASSE_DE_TESTE]</strong></blockquote></li>
+  </ul>
+  
+
+
+<h5 id="3321-gerando-as-classes-de-teste-a-partir-do-inepzend">3.3.2.1 Gerando as classes de teste a partir do InepZend</h5>
+
+<ul>
+<li>O Skelgen encontra-se mapeado dentro do InepZend, bastando somente referenciar o arquivo, no caso a extensão .sh para o Linux e a extensão .bat para o Windows, localizado em:  <br>
+
+
+<blockquote>
+  Windows: path_windows/vendor/bin/<strong>phpunit-skelgen.bat</strong> <br>
+  Linux: path_linux/vendor/bin/<strong>phpunit-skelgen.sh</strong></blockquote></li>
+  </ul>
+  
+
+
+<h3 id="34-realizando-os-testes-com-o-phpunit">3.4. Realizando os testes com o phpunit</h3>
+
+
+
+
+
+<h4 id="341-instalação">3.4.1 Instalação</h4>
+
+<ul>
+<li>Os testes são executados com o PHPUnit, para a instalação do mesmo acesse [ <a href="https://phpunit.de/manual/current/en/installation.html">https://phpunit.de/manual/current/en/installation.html</a> ] e realize a instalação conforme o sistema operacional que esteja utilizando na estação de trabalho. </li>
+</ul>
+
+
+
+<pre class="prettyprint"><code class=" hljs avrasm"><span class="hljs-preprocessor"># Comando para instalar no Linux</span>
+$ wget https://phar<span class="hljs-preprocessor">.phpunit</span><span class="hljs-preprocessor">.de</span>/phpunit<span class="hljs-preprocessor">.phar</span>
+$ chmod +<span class="hljs-built_in">x</span> phpunit<span class="hljs-preprocessor">.phar</span>
+$ sudo mv phpunit<span class="hljs-preprocessor">.phar</span> /usr/local/bin/phpunit</code></pre>
+
+
+
+<h4 id="342-configurações-xml">3.4.2 Configurações XML</h4>
+
+<ul>
+<li><p>Após a geração ou implementação das classes de teste é necessário mapear o arquivo XML no diretório test do módulo.</p>
+
+<blockquote>
+  <ul><li><i class="icon-folder-open"></i> SeuModulo <br>
+  <ul><li><i class="icon-folder"></i> config</li>
+  <li><i class="icon-folder-open"></i> src <br>
+  <ul><li><i class="icon-folder-open"></i> SeuModulo</li></ul></li>
+  <li><i class="icon-folder-open"></i> test <br>
+  <ul><li><i class="icon-folder-open"></i> SeuModuloTest <br>
+  <ul><li><i class="icon-folder"></i> Controller                </li>
+  <li><i class="icon-folder"></i> Service</li>
+  <li><i class="icon-file"></i> <strong>phpunit.xml</strong></li></ul></li></ul></li>
+  <li><i class="icon-folder"></i> view</li>
+  <li><i class="icon-file"></i> <strong>Module.php</strong></li></ul></li></ul>
+</blockquote></li>
+<li><p>No arquivo XML são definidos as <em>directivas</em> necessárias para o teste, segue o modelo:</p></li>
+</ul>
+
+
+
+<pre class="prettyprint"><code class=" hljs xml"><span class="hljs-pi">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">phpunit</span> <span class="hljs-attribute">xmlns:xsi</span>=<span class="hljs-value">"http://www.w3.org/2001/XMLSchema-instance"</span>
+         <span class="hljs-attribute">xsi:noNamespaceSchemaLocation</span>=<span class="hljs-value">"http://phpunit.de/phpunit.xsd"</span>
+         <span class="hljs-attribute">bootstrap</span>=<span class="hljs-value">"../../../vendor/InepZend/library/InepZend/UnitTest/Bootstrap.php"</span>
+         <span class="hljs-attribute">backupGlobals</span>=<span class="hljs-value">"false"</span>
+         <span class="hljs-attribute">verbose</span>=<span class="hljs-value">"true"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">testsuites</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">testsuite</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"PHPUnit"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">directory</span>&gt;</span>./<span class="hljs-tag">&lt;/<span class="hljs-title">directory</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">testsuite</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">testsuites</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">phpunit</span>&gt;</span></code></pre>
+
+
+
+<h4 id="343-execução-do-comando-phpunit">3.4.3 Execução do comando phpunit</h4>
+
+<ul>
+<li>Para executar os testes unitários é necessário acessar o diretório onde foi realizado o mapeamento do arquivo XML e executando o seguinte comando:</li>
+</ul>
+
+
+
+<pre class="prettyprint"><code class=" hljs ruby"><span class="hljs-variable">$ </span>phpunit</code></pre>
+
+<ul>
+<li>Assim como foi realizado o mapeamento do <a href="#skelgen">Skelgen</a> também foi mapeado no InepZend o PHPUnit, bastando executar referenciando os seus respectivos arquivos conforme o sistema operacional:</li>
+</ul>
+
+<blockquote>
+  <p>Windows: path_windows/vendor/bin/<strong>phpunit.bat</strong> <br>
+  Linux: path_linux/vendor/bin/<strong>phpunit.sh</strong></p>
+</blockquote>
+
+<p></p><ul> <br>
+<li>O resultado após a execução será semelhante ao código abaixo: <br></li></ul><p></p>
+
+<blockquote>
+  <p>PHPUnit 4.2-dev by Sebastian Bergmann. <br>
+   <br>
+  Configuration read from /path/to/test/phpunit.xml
+   <br>
+  ……………………………………………………….. 65 / 68 ( 95%) <br>
+  ….</p>
+  
+  <p>Time: 5.68 seconds, Memory: 76.50Mb</p>
+  
+  <p>OK (68 tests, 66 assertions)</p>
+</blockquote>
+
+
+
+<h4 id="344-código-exemplo-de-teste-de-uma-service">3.4.4 Código exemplo de teste de uma service</h4>
+
+
+
+<pre class="prettyprint"><code class=" hljs xml"><span class="php"><span class="hljs-preprocessor">&lt;?php</span>
+
+<span class="hljs-comment"># Definicao do namespace</span>
+
+<span class="hljs-keyword">namespace</span> <span class="hljs-title">Publicacao</span>\<span class="hljs-title">Service</span>;
+
+<span class="hljs-comment"># Mapeamento das classes que serao utilizadas</span>
+
+<span class="hljs-keyword">use</span> <span class="hljs-title">InepZend</span>\<span class="hljs-title">UnitTest</span>\<span class="hljs-title">AbstractServiceCrudUnitTest</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">InepZend</span>\<span class="hljs-title">Util</span>\<span class="hljs-title">FileSystem</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">InepZend</span>\<span class="hljs-title">Upload</span>\<span class="hljs-title">UploadFile</span>;
+
+<span class="hljs-comment"># Toda classe de servico devera herdar da 'AbstractServiceUnitTest'</span>
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ArquivoTest</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">AbstractServiceUnitTest</span>
+{</span>
+    <span class="hljs-comment"># Definicao dos atributos a serem utilizados</span>
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-variable">$intIdArquivo</span>;
+
+    <span class="hljs-comment"># Definicao das constantes a serem utilizadas no teste</span>
+
+    <span class="hljs-keyword">const</span> PATH_DIR = <span class="hljs-keyword">__DIR__</span>;
+    <span class="hljs-keyword">const</span> PATH_UPLOAD_DEFINITIVE = <span class="hljs-keyword">self</span>::PATH_DIR;
+    <span class="hljs-keyword">const</span> PATH_UPLOAD_TMP = <span class="hljs-keyword">self</span>::PATH_UPLOAD_DEFINITIVE;
+    <span class="hljs-keyword">const</span> FILE_NAME = <span class="hljs-string">'testFile.img'</span>;
+    <span class="hljs-keyword">const</span> ID_ARQUIVO_TESTE = <span class="hljs-number">999</span>;
+    <span class="hljs-keyword">const</span> LIMIT = <span class="hljs-number">1</span>;
+
+    <span class="hljs-comment">/**
+     * Toda classe de teste tem que reescrever o metodo setUp passando como parametro
+     * do construtor o servico a ser testado.
+     * Na classe pai, AbstractServiceCrudUnitTest, foram mapeados os principais
+     * metodos de set e get como o retorno do Service Manager.
+     */</span>
+    <span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">setUp</span><span class="hljs-params">()</span>
+    {</span>
+        <span class="hljs-comment"># Passando o nome do servico a ser testado.</span>
+        <span class="hljs-keyword">parent</span>::setUp();
+
+        <span class="hljs-comment"># Implementado toda a logica que sera feita a cada iteracao.</span>
+        <span class="hljs-keyword">if</span> (is_null(<span class="hljs-keyword">self</span>::<span class="hljs-variable">$intIdArquivo</span>))
+            <span class="hljs-variable">$this</span>-&gt;setIdArquivo(<span class="hljs-variable">$this</span>-&gt;getEntityArquivo()-&gt;getIdArquivo());
+
+        <span class="hljs-comment"># Cria o Entity Manager</span>
+        <span class="hljs-keyword">self</span>::getServiceInstance()-&gt;createEntityManager();
+    }
+
+    <span class="hljs-comment">/**
+     * Toda classe de teste tem que verificar se o retorno eh realmente a classe
+     * que sera testada, utilizando o metodo 'assertInstanceOf'.
+     */</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">testInstanceObject</span><span class="hljs-params">()</span>
+    {</span>
+        <span class="hljs-variable">$this</span>-&gt;assertInstanceOf(<span class="hljs-string">'Publicacao\Service\Arquivo'</span>, <span class="hljs-keyword">self</span>::getServiceInstance());
+    }
+
+    <span class="hljs-comment">/**
+     * Ao criar um teste eh necessario trabalhar com dados reais, sendo assim
+     * devera ser criado um metodo que retorne uma entidade que possa ser utilizada
+     * no teste.
+     * 
+     *<span class="hljs-phpdoc"> @return</span> object
+     */</span>
+    <span class="hljs-keyword">private</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getEntityArquivo</span><span class="hljs-params">()</span>
+    {</span>
+        <span class="hljs-keyword">return</span> reset(<span class="hljs-variable">$this</span>-&gt;getServiceManager()-&gt;get(<span class="hljs-string">'Publicacao\Service\Arquivo'</span>)-&gt;getService(<span class="hljs-string">'Publicacao\Service\Arquivo'</span>)-&gt;findBy(<span class="hljs-keyword">array</span>(), <span class="hljs-keyword">array</span>(<span class="hljs-string">'id_arquivo'</span> =&gt; <span class="hljs-string">'ASC'</span>), <span class="hljs-number">1</span>));
+    }
+
+    <span class="hljs-comment">/**
+     * Ao criar um teste eh necessario criar uma entidade a ser utilizada pelo
+     * teste.
+     * 
+     *<span class="hljs-phpdoc"> @return</span> mix
+     */</span>
+    <span class="hljs-keyword">private</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getDataArquivoToArray</span><span class="hljs-params">(<span class="hljs-variable">$booObject</span> = false, <span class="hljs-variable">$intIdArquivo</span> = self::ID_ARQUIVO_TESTE)</span>
+    {</span>
+        <span class="hljs-variable">$strEntity</span> = <span class="hljs-keyword">self</span>::getServiceInstance()-&gt;getEntityName();
+        <span class="hljs-variable">$arquivo</span> = (<span class="hljs-keyword">new</span> <span class="hljs-variable">$strEntity</span>())
+                -&gt;setIdArquivo(<span class="hljs-variable">$intIdArquivo</span>)
+                -&gt;setPublicacao(<span class="hljs-variable">$this</span>-&gt;getEntityArquivo()-&gt;getPublicacao())
+                -&gt;setNoArquivo(<span class="hljs-string">'no_arquivo_test'</span>)
+                -&gt;setDsCaminhoArquivo(<span class="hljs-string">'./data'</span>)
+                -&gt;setTpArquivo(<span class="hljs-string">'./data'</span>)
+                -&gt;setDtInclusao(date(<span class="hljs-string">'d/m/Y'</span>));
+        <span class="hljs-keyword">if</span> (<span class="hljs-variable">$booObject</span>)
+            <span class="hljs-keyword">return</span> <span class="hljs-variable">$arquivo</span>-&gt;toArray();
+        <span class="hljs-keyword">return</span> <span class="hljs-variable">$arquivo</span>;
+    }
+
+    <span class="hljs-keyword">private</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">setIdArquivo</span><span class="hljs-params">(<span class="hljs-variable">$intIdArquivo</span> = null)</span>
+    {</span>
+        <span class="hljs-keyword">return</span> (<span class="hljs-keyword">self</span>::<span class="hljs-variable">$intIdArquivo</span> = <span class="hljs-variable">$intIdArquivo</span>);
+    }
+
+}</span></code></pre>
+
+
+
+<h4 id="345-código-exemplo-de-teste-de-uma-rota-controller">3.4.5 Código exemplo de teste de uma rota (controller)</h4>
+
+
+
+<pre class="prettyprint"><code class=" hljs xml"><span class="php"><span class="hljs-preprocessor">&lt;?php</span>
+<span class="hljs-comment"># Definicao do namespace</span>
+<span class="hljs-keyword">namespace</span> <span class="hljs-title">Publicacao</span>\<span class="hljs-title">Controller</span>;
+
+<span class="hljs-comment"># Mapeamento das classes que serao utilizadas</span>
+<span class="hljs-keyword">use</span> <span class="hljs-title">InepZend</span>\<span class="hljs-title">UnitTest</span>\<span class="hljs-title">AbstractCrudControllerUnitTest</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">Publicacao</span>\<span class="hljs-title">Entity</span>\<span class="hljs-title">Publicacao</span>;
+
+<span class="hljs-comment"># Toda classe de controller devera herdar da 'AbstractCrudControllerUnitTest'</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PublicacaoControllerTest</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">AbstractCrudControllerUnitTest</span>
+{</span>
+
+    <span class="hljs-comment"># Definicao de atributos e constantes que serao necessarias no teste</span>
+    <span class="hljs-keyword">const</span> LIMIT = <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">const</span> ID_PUBLICACAO_TESTE = <span class="hljs-number">999</span>;
+    <span class="hljs-keyword">const</span> FORM_METHOD = <span class="hljs-string">'POST'</span>;
+
+    <span class="hljs-comment">/**
+     * Ao realizar o teste de rota, o desenvolvedor poderar realizar de duas formas,
+     * sendo essas via '__construct()', para cenarios simples, ou especifica caso
+     * haja a necessidade de uma validacao na passagem dos parametros.
+     */</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span><span class="hljs-params">()</span>
+    {</span>
+        <span class="hljs-comment"># No construtor devera setar os dados de acesso para a autenticacao.</span>
+        <span class="hljs-variable">$this</span>-&gt;setLogin(<span class="hljs-string">'11122233378'</span>);
+        <span class="hljs-variable">$this</span>-&gt;setPassword(<span class="hljs-string">'**********'</span>);
+
+        <span class="hljs-comment">/**
+     * No metodo __construct() da classe de teste faz a chamada ao metodo pai onde 
+     * o mesmo realizando a chamada do metodo 'createAllDataProvider' no qual deve 
+     * ser implementado em todas as classes de teste.
+     */</span>
+        <span class="hljs-keyword">parent</span>::__construct();
+    }
+
+   <span class="hljs-comment">/**
+    * Nas classes de teste de rota deverar ser implementado o metodo abstrato 'createAllDataProvider'
+    * contido na classe pai 'AbstractRouteUnitTest', caso o mesmo nao seja implementado irar gerar
+    * erro.
+    * Segue abaixo um modelo de implementacao do metodo 'createAllDataProvider' que realiza o teste
+    * de rota da classe 'PublicacaoController'.
+    */</span>
+    <span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createAllDataProvider</span><span class="hljs-params">()</span>
+    {</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">array</span>(
+            <span class="hljs-comment"># A chave 'add' eh o nome da action a ser testada e os arrays serao os cenarios a serem testados.</span>
+            <span class="hljs-string">'add'</span> =&gt; <span class="hljs-keyword">array</span>(
+                <span class="hljs-comment">/**
+         * No array devera passar no primeiro parametro os dados a serem persistidos, 
+         * no segundo o tipo de envio, POST ou GET e
+         * no terceiro o parametro informando se eh pra ser realizado a autenticacao true ou false
+         */</span>
+                <span class="hljs-keyword">array</span>(<span class="hljs-variable">$this</span>-&gt;getPublicacaoToArray(<span class="hljs-keyword">self</span>::ID_PUBLICACAO_TESTE), <span class="hljs-keyword">self</span>::FORM_METHOD, <span class="hljs-keyword">true</span>),
+                <span class="hljs-comment"># Nos arrays subsequentes serao os testes para os cenarios passiveis de teste</span>
+                <span class="hljs-keyword">array</span>(),
+            ),
+            <span class="hljs-string">'ajaxPaginator'</span> =&gt; <span class="hljs-keyword">array</span>(
+                <span class="hljs-keyword">array</span>(<span class="hljs-keyword">array</span>(<span class="hljs-string">'page'</span> =&gt; <span class="hljs-number">1</span>, <span class="hljs-string">'rp'</span> =&gt; <span class="hljs-number">20</span>, <span class="hljs-string">'sortname'</span> =&gt; <span class="hljs-string">'id_publicacao'</span>, <span class="hljs-string">'sortorder'</span> =&gt; <span class="hljs-string">'desc'</span>, <span class="hljs-string">'query'</span> =&gt; <span class="hljs-string">''</span>, <span class="hljs-string">'qtype'</span> =&gt; <span class="hljs-string">''</span>)),
+            ),
+            <span class="hljs-string">'ajaxFilter'</span> =&gt; <span class="hljs-keyword">array</span>(
+                <span class="hljs-keyword">array</span>(<span class="hljs-keyword">array</span>(<span class="hljs-string">'tp_situacao_publicacao'</span> =&gt; Publicacao::CONST_TP_SITUACAO_PUBLICACAO_TODAS), <span class="hljs-keyword">self</span>::FORM_METHOD),
+            ),
+            <span class="hljs-string">'ajaxInactivate'</span> =&gt; <span class="hljs-keyword">array</span>(
+                <span class="hljs-keyword">array</span>(<span class="hljs-keyword">array</span>(<span class="hljs-string">'id_publicacao'</span> =&gt; <span class="hljs-variable">$this</span>-&gt;getEntityPublicacao()-&gt;getIdPublicacao()), <span class="hljs-keyword">self</span>::FORM_METHOD),
+            ),
+            <span class="hljs-string">'ajaxShowPreview'</span> =&gt; <span class="hljs-keyword">array</span>(
+                <span class="hljs-keyword">array</span>(<span class="hljs-variable">$this</span>-&gt;getPublicacaoToArray(<span class="hljs-variable">$this</span>-&gt;getEntityPublicacao()-&gt;getIdPublicacao()), <span class="hljs-keyword">self</span>::FORM_METHOD),
+            ),
+        ));
+    }
+
+    <span class="hljs-comment">/**
+     * Para os cenarios especificos, ou seja, que necessitam algum tipo de validacao
+     * os mesmos deveram ser criados conforme segue abaixo.
+     */</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">testEdit</span><span class="hljs-params">()</span>
+    {</span>
+        <span class="hljs-variable">$publicacao</span> = <span class="hljs-variable">$this</span>-&gt;getEntityPublicacao();
+        <span class="hljs-variable">$arrPublicacao</span> = <span class="hljs-variable">$this</span>-&gt;getPublicacaoToArray(<span class="hljs-variable">$publicacao</span>-&gt;getIdPublicacao());
+        <span class="hljs-variable">$this</span>-&gt;checkActionCanBeAccessed(<span class="hljs-variable">$this</span>-&gt;getControllerName(), <span class="hljs-string">'edit'</span>, <span class="hljs-keyword">array</span>(<span class="hljs-string">'id_publicacao'</span> =&gt; <span class="hljs-variable">$publicacao</span>-&gt;getIdPublicacao()), <span class="hljs-variable">$arrPublicacao</span>, <span class="hljs-keyword">true</span>);
+    }
+
+    <span class="hljs-comment">/**
+     * Os dados (entidades) a serem utilizados nao poderam ser valores fixos, devendo
+     * esses atribuidos a um atributo e/ou sendo chamado em um metodo.
+     */</span>
+    <span class="hljs-keyword">private</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getEntityPublicacao</span><span class="hljs-params">()</span>
+    {</span>
+        <span class="hljs-keyword">return</span> reset(<span class="hljs-variable">$this</span>-&gt;getService(<span class="hljs-string">'Publicacao\Service\Publicacao'</span>)-&gt;findBy(<span class="hljs-keyword">array</span>(), <span class="hljs-keyword">array</span>(<span class="hljs-string">'id_publicacao'</span> =&gt; <span class="hljs-string">'ASC'</span>), <span class="hljs-keyword">self</span>::LIMIT));
+    }
+
+    <span class="hljs-comment">/**
+     * Os dados referente a formularios e entidades deveram possuir metodos especializados
+     * contendo as informacoes pertinentes ao cenario que sera testado.
+     */</span>
+    <span class="hljs-keyword">private</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getPublicacaoToArray</span><span class="hljs-params">(<span class="hljs-variable">$intIdPublicacao</span> = self::ID_PUBLICACAO_TESTE, <span class="hljs-variable">$booReturnObject</span> = false)</span>
+    {</span>
+        <span class="hljs-variable">$publicacao</span> = <span class="hljs-variable">$this</span>-&gt;getEntityPublicacao();
+        <span class="hljs-variable">$publicacaoNew</span> = (<span class="hljs-keyword">new</span> Publicacao())
+                -&gt;setIdPublicacao(<span class="hljs-variable">$intIdPublicacao</span>)
+                -&gt;setSubcategoria(<span class="hljs-variable">$publicacao</span>-&gt;getSubcategoria())
+                -&gt;setIdUsuarioInclusao(<span class="hljs-variable">$publicacao</span>-&gt;getIdUsuarioInclusao())
+                -&gt;setNoPublicacao(<span class="hljs-variable">$publicacao</span>-&gt;getNoPublicacao())
+                -&gt;setNoAutorPublicacao(<span class="hljs-variable">$publicacao</span>-&gt;getNoAutorPublicacao())
+                -&gt;setNuVolumePublicacao(<span class="hljs-variable">$publicacao</span>-&gt;getNuVolumePublicacao())
+                -&gt;setNuAnoPublicacao(<span class="hljs-variable">$publicacao</span>-&gt;getNuAnoPublicacao())
+                -&gt;setDsSinopsePublicacao(<span class="hljs-variable">$publicacao</span>-&gt;getDsSinopsePublicacao())
+                -&gt;setInDestaquePublicacao(<span class="hljs-variable">$publicacao</span>-&gt;getInDestaquePublicacao())
+                -&gt;setNuPublicacao(<span class="hljs-variable">$publicacao</span>-&gt;getNuPublicacao())
+                -&gt;setDtPublicacao(<span class="hljs-variable">$publicacao</span>-&gt;getDtPublicacao())
+                -&gt;setTpSituacaoPublicacao(<span class="hljs-variable">$publicacao</span>-&gt;getTpSituacaoPublicacao())
+                -&gt;setPalavrasChave(<span class="hljs-variable">$publicacao</span>-&gt;getPalavrasChave())
+                -&gt;setArquivos(<span class="hljs-variable">$publicacao</span>-&gt;getArquivos())
+                -&gt;setInEnviada(<span class="hljs-variable">$publicacao</span>-&gt;getInEnviada());
+        <span class="hljs-keyword">if</span> (<span class="hljs-variable">$booReturnObject</span>)
+            <span class="hljs-keyword">return</span> <span class="hljs-variable">$publicacaoNew</span>;
+        <span class="hljs-keyword">return</span> <span class="hljs-variable">$publicacaoNew</span>-&gt;toArray();
+    }
+
+}</span></code></pre>
+
+
+
+<h2 id="4-referência"><a id="referencia"></a> <i class="icon-unlink"></i> 4. Referência </h2>
+
+<blockquote>
+  <p><a href="http://desenvphp.inep.gov.br/apidoc/namespace-InepZend.UnitTest.html">http://desenvphp.inep.gov.br/apidoc/namespace-InepZend.UnitTest.html</a> <br>
+  <a href="https://phpunit.de/manual/3.7/en/skeleton-generator.html">https://phpunit.de/manual/3.7/en/skeleton-generator.html</a> <br>
+  <a href="https://phpunit.de/manual/current/en/installation.html">https://phpunit.de/manual/current/en/installation.html</a></p>
+</blockquote></div></body>
+</html>

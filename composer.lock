@@ -1,0 +1,40 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "2b4e3a4b585e04ba4565e387bf373b40",
+    "packages": [
+        {
+            "name": "../public/vendor",
+            "version": "1.5.7",
+            "source": {
+                "type": "svn",
+                "url": "http://ic.inep.gov.br/svn/inepvendor",
+                "reference": "branches/1.5.7/public/vendor/"
+            },
+            "type": "library"
+        },
+        {
+            "name": "../vendor",
+            "version": "1.5.7",
+            "source": {
+                "type": "svn",
+                "url": "http://ic.inep.gov.br/svn/inepvendor",
+                "reference": "branches/1.5.7/vendor/"
+            },
+            "type": "library"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {
+        "php": ">=5.4"
+    },
+    "platform-dev": []
+}

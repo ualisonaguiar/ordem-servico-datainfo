@@ -1,0 +1,50 @@
+<?php
+use InepZend\Module\Log\Service\LogModule as LogModuleService;
+use InepZend\Util\String;
+use InepZend\Util\PhpIni;
+PhpIni::setTimeLimit(0);
+PhpIni::allocatesMemory(-1);
+?>
+<div class="classForm caixaVazada" style="margin-top: 5px;"><h3>Dados do conteúdo</h3>
+    <?php
+    if ((is_array($this->arrInfoLogFile)) && (count($this->arrInfoLogFile) > 0)) {
+        foreach ($this->arrInfoLogFile as $strKeyLog => $arrDataLog) {
+            if ($arrDataLog[LogModuleService::TYPE_KEY_DATA]['usersystem'] == LogModuleService::CO_ANONYMOUS_USER)
+                $strNomeExibicao = LogModuleService::ANONYMOUS_USER;
+            else {
+                $strNomeExibicao = $arrDataLog[LogModuleService::TYPE_KEY_DATA]['usersystem'];
+                if (array_key_exists('cpf', $arrDataLog[LogModuleService::TYPE_KEY_DATA]))
+                    $strNomeExibicao .= ' - ' . $arrDataLog[LogModuleService::TYPE_KEY_DATA]['cpf'];
+                if (array_key_exists('name', $arrDataLog[LogModuleService::TYPE_KEY_DATA]))
+                    $strNomeExibicao .= ' - ' . String::beautifulProperName($arrDataLog[LogModuleService::TYPE_KEY_DATA]['name']);
+            }
+            krsort($arrDataLog['log'], SORT_NUMERIC); ?>
+            <div class="span12">
+                <div class="tree" style="margin-top: -15px;">
+                    <ul>
+                        <li>
+                            <span>
+                                <i class="glyphicon glyphicon-plus-sign visualizar-log-usuario" style="cursor: pointer;"></i>
+                                <strong><?php echo $strNomeExibicao; ?></strong>
+                            </span>
+                            <?php
+                            echo $this->partial(
+                                'inep-zend/log/show-log',
+                                array(
+                                    'strIndentitySession' => $this->strIndentitySession,
+                                    'arrDataLog' => $arrDataLog['log'],
+                                    'intUserSystem' => $arrDataLog[LogModuleService::TYPE_KEY_DATA]['usersystem']
+                                )
+                            );
+                            unset($arrDataLog['log']);
+                            ?>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        <?php }
+    } else
+        echo '<p>Arquivo vazio.</p>';
+    unset($this->arrInfoLogFile);
+    ?>
+</div>

@@ -1,0 +1,19 @@
+<?php
+$strTitle = 'Memcache';
+$this->headTitle($strTitle);
+?>
+<h1><?php echo $this->escapeHtml($strTitle); ?></h1>
+<p>Visualize algumas informações técnicas sobre o uso do memcache nesta instância do servidor.</p>
+<?php if ($this->renderTable) { ?>
+    <div class="caixaVazada">
+        <h2>Informações técnicas</h2>
+        <div class="classForm well" style="overflow: hidden;">
+            <?php $strStyle = (in_array($this->applicationInfo($this)->getModuleTheme(), array('AdministrativeResponsible'))) ? ' style="height: 40px;"' : ''; ?>
+            <label>Instância</label><div class="divRequired"></div><div class="divHeightRow"<?php echo $strStyle; ?>><font style="font-weight: bold; color: red;"><?php echo $this->server; ?></font></div>
+            <?php 
+            echo $this->renderTable;
+            echo $this->button(null, $this->url('memcache'));
+            ?>
+        </div>
+    </div>
+<?php } ?>

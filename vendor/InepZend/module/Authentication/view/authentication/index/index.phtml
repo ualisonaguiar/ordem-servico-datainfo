@@ -1,0 +1,28 @@
+<?php 
+use InepZend\View\Helper\AbstractHtmlHeadHelper;
+
+if (!in_array($this->applicationInfo($this)->getModuleTheme(), array('AdministrativeResponsible'))) { ?>
+    <h1><?php echo $this->escapeHtml('Sistema de Segurança do Inep - SSI'); ?></h1>
+    <p>Para realizar a autenticação no sistema <strong><?php echo $this->applicationInfo()->getApplicationInfoName(); ?></strong> é necessário preencher as informações corretamente.</p><br /><br />
+    <?php echo $this->form()->render($this->form); ?>
+<?php } else { ?>
+    <style>
+        .btn-info {
+            margin-bottom: 10px;
+        }
+        
+        .panel-content {
+            background-color: transparent !important;
+            border: 0px;
+            box-shadow: none;
+        }
+    </style>
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2 col-lg-4 col-lg-offset-4">
+            <?php $this->angular()->addController(array('url' => getRenderScriptUrl(null, 'Authentication', null, 'js', 'LoginController' . AbstractHtmlHeadHelper::getSufixJsMin()), 'dependence' => 'Controller/AbstractFormController', 'html' => $this->form()->render($this->form))); ?>
+        </div>
+    </div>
+<?php } ?>
+<script type="text/javascript">
+    setCookie('indexMenu', '');
+</script>

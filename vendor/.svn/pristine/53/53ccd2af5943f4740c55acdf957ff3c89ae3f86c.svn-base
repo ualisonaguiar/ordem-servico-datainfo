@@ -1,0 +1,8 @@
+<?php
+$strTitle = 'Envio dos Dados';
+$this->headTitle($strTitle);
+?>
+<h1><?php echo $this->escapeHtml($strTitle); ?></h1>
+<p>Realize o envio dos dados via upload de arquivo com formato XML ou TXT, sempre compactado via ZIP.<br />
+Após este procedimento, acompanhe o arquivo via funcionalidade de "Acompanhamento do Envio".</p>
+<?php echo $this->form()->render($this->form); ?>

@@ -1,0 +1,1 @@
+delete from tb_justificava_ponto WHERE  dt_justificativa = '2017-03-27' and hr_justificada = '12:05' and id_usuario = 8;

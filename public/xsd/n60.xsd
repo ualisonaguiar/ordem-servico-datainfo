@@ -1,0 +1,742 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://inepskeleton.local/xsd" xmlns="http://inepskeleton.local/xsd" elementFormDefault="qualified">
+    <xs:element name="registers">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="register" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="CO_PROJETO">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:minInclusive value="1000000"/>
+                                        <xs:maxInclusive value="9999999"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="TP_ORIGEM">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="P"/>
+                                        <xs:enumeration value="G"/>
+                                        <xs:enumeration value="I"/>
+                                        <xs:enumeration value="C"/>
+                                        <xs:enumeration value="R"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="CO_LOCAL">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:minLength value="1"/>
+                                        <xs:maxLength value="20"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_INSTITUICAO_ENSINO">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="TP_INSTITUICAO">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                        <xs:enumeration value="2"/>
+                                        <xs:enumeration value="3"/>
+                                        <xs:enumeration value="4"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="TP_NST_PRIVADA">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                        <xs:enumeration value="2"/>
+                                        <xs:enumeration value="3"/>
+                                        <xs:enumeration value="4"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="CO_ETAPAS_ENSINO">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:length value="5"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_OUTRA_ENTRADA">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_MESMO_ENDERECO_SISTEMA">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_SIRENE">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_PREVISAO_REFORMA">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="DT_INICIO_OBRA" nillable="true" minOccurs="0">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:date">
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="DT_FIM_OBRA" nillable="true" minOccurs="0">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:date">
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="QT_ELEVADORES">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:minInclusive value="1"/>
+                                        <xs:maxInclusive value="99999"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="QT_BANHEIRO_FEMININO">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:minInclusive value="1"/>
+                                        <xs:maxInclusive value="99999"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="QT_BANHEIRO_MASCULINO">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:minInclusive value="1"/>
+                                        <xs:maxInclusive value="99999"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="QT_BANHEIRO_ADAPTADOS_FEM">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:minInclusive value="1"/>
+                                        <xs:maxInclusive value="99999"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="QT_BANHEIRO_ADAPTADOS_MASC">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:minInclusive value="1"/>
+                                        <xs:maxInclusive value="99999"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_TRANSPORTE_PROXIMO">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="CO_TIPO_TRANSPORTE">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:length value="5"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_ACESSIBILIDADE">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="CO_TIPO_ACESSIBILIDADE">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:length value="4"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_FACIL_ACESSO_ENTORNO">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_CALCADAS_ENTORNO">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_RAMPA_ENTORNO">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_INFRA_ACESSIBILIDADE">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_SEMAFORO">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_RAMPA_ACESSO_ENTORNO">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_PASSAGENS">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_RAMPA_ACESSO_LOCAL">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_PISO_ADEQUADO">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_SINALIZACAO">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_CIRCULACAO">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_ELEVADOR">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_CORREDORES_LARGOS">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_SALA_ADAPTADA">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_BEBEDOUROS_ADAPTADOS">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_PORTAS_ADEQUADAS">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_MOBILIARIO_ADEQUADO">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_CADEIRAS_SEM_BRACOS">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_MESA_CADEIRANTE">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_APOIO_PERNAS">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_SALA_ACESSIVEL">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_VENTILADOR">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_JANELAS">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_AR_CONDICIONADO">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_POLICIAMENTO">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_ALTA_CRIMINALIDADE">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_HOSPITAL">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_LOCAL_CERCADO">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_PRIMEIROS_SOCORROS">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_SAIDA_EMERGENCIA">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_SINALIZACAO_EMERGENCIA">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_EXTINTOR">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_HIDRANTE">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_RISCO_AMBIENTAL">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_EVENTOS_SAZONAIS">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="CO_TIPO_EVENTO_SAZONAL">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:length value="5"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="TP_TELHADO">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="1"/>
+                                        <xs:enumeration value="2"/>
+                                        <xs:enumeration value="3"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="TP_PAREDES_INTERNAS">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="1"/>
+                                        <xs:enumeration value="2"/>
+                                        <xs:enumeration value="3"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="TP_PISO">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="1"/>
+                                        <xs:enumeration value="2"/>
+                                        <xs:enumeration value="3"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="TP_PORTAS">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="1"/>
+                                        <xs:enumeration value="2"/>
+                                        <xs:enumeration value="3"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="TP_JANELAS">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="1"/>
+                                        <xs:enumeration value="2"/>
+                                        <xs:enumeration value="3"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="TP_BANHEIROS">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="1"/>
+                                        <xs:enumeration value="2"/>
+                                        <xs:enumeration value="3"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="TP_INSTALACAO_HIDRAULICA">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="1"/>
+                                        <xs:enumeration value="2"/>
+                                        <xs:enumeration value="3"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="TP_INSTALACAO_ELETRICA">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="1"/>
+                                        <xs:enumeration value="2"/>
+                                        <xs:enumeration value="3"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="TP_ENTRADA_PREDIO">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="1"/>
+                                        <xs:enumeration value="2"/>
+                                        <xs:enumeration value="3"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="TP_PAREDE_EXTERNA">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="1"/>
+                                        <xs:enumeration value="2"/>
+                                        <xs:enumeration value="3"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="TP_PATIO">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="1"/>
+                                        <xs:enumeration value="2"/>
+                                        <xs:enumeration value="3"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="TP_CORREDORES">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="1"/>
+                                        <xs:enumeration value="2"/>
+                                        <xs:enumeration value="3"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="TP_SALA_AULA">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="1"/>
+                                        <xs:enumeration value="2"/>
+                                        <xs:enumeration value="3"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="TP_ILUMINACAO">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="1"/>
+                                        <xs:enumeration value="2"/>
+                                        <xs:enumeration value="3"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="TP_BEBEDOUROS">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="1"/>
+                                        <xs:enumeration value="2"/>
+                                        <xs:enumeration value="3"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="TP_ESCADAS_CORRIMAO">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="1"/>
+                                        <xs:enumeration value="2"/>
+                                        <xs:enumeration value="3"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="TP_ILUMINACAO_SALA">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="1"/>
+                                        <xs:enumeration value="2"/>
+                                        <xs:enumeration value="3"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="TP_MOBILIARIO_CONSERVACAO_SALA">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="1"/>
+                                        <xs:enumeration value="2"/>
+                                        <xs:enumeration value="3"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="TP_ACUSTICO_SALA">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="1"/>
+                                        <xs:enumeration value="2"/>
+                                        <xs:enumeration value="3"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="TP_PISO_SALA">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="1"/>
+                                        <xs:enumeration value="2"/>
+                                        <xs:enumeration value="3"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="TP_MOBILIARIO_ADEQUADO_SALA">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="1"/>
+                                        <xs:enumeration value="2"/>
+                                        <xs:enumeration value="3"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_AUDITORIO">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_TELEVISAO">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_DVD">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_APARELHO_SOM">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_PROJETOR">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="IN_COMPUTADOR">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:enumeration value="0"/>
+                                        <xs:enumeration value="1"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="TP_INFRA_LOCAL_PROVA">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="1"/>
+                                        <xs:enumeration value="2"/>
+                                        <xs:enumeration value="3"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="NU_PONTOS_LOCAL_PROVA">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:integer">
+                                        <xs:minInclusive value="1"/>
+                                        <xs:maxInclusive value="9"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="NO_ARQUIVO_IMAGEM_FORMULARIO">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:minLength value="1"/>
+                                        <xs:maxLength value="200"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

@@ -1,0 +1,1 @@
+delete from tb_justificava_ponto where id_justificava_ponto = 4 and id_usuario = 22;

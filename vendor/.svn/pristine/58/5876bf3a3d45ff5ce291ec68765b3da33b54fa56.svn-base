@@ -1,0 +1,9 @@
+<?php
+use InepZend\View\Helper\AbstractHtmlHeadHelper;
+
+$strTitle = 'Monitoramento do Envio';
+$this->headTitle($strTitle);
+?>
+<h1><?php echo $this->escapeHtml($strTitle); ?></h1>
+<p>Visualize os andamentos do envio dos dados (fases, resultados, erros) e reinicie alguns procedimentos caso seja necessário.</p>
+<?php $this->angular()->addController(array('url' => getRenderScriptUrl(null, 'TrocaArquivo', null, 'js', 'MonitoramentoEnvioController' . AbstractHtmlHeadHelper::getSufixJsMin()), 'dependence' => 'Controller/AbstractCoreController', 'html' => $this->form()->render($this->form))); ?>

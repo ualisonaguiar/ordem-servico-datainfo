@@ -1,0 +1,9 @@
+<?php
+$strTitle = 'Logs';
+$this->headTitle($strTitle);
+?>
+</script>
+<h1><?php echo $this->escapeHtml($strTitle); ?></h1>
+<p>Configure as opções de auditoria de logs gerados automaticamente pelo InepZend lembrando que quanto maior o nível de auditoria, menor a performance da aplicação.<br />
+Também é possível visualizar o histórico de alterações nas opções para auditoria.</p>
+<?php echo $this->form()->render($this->form); ?>

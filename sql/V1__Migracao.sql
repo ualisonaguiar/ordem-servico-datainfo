@@ -1,0 +1,2 @@
+INSERT INTO tb_demanda_servico SELECT d2.id_demanda, d2.id_atividade, d2.vl_complexidade, d2.vl_impacto, d2.vl_criticidade, d2.vl_fator_ponderacao, d2.vl_facim, d2.vl_qma
+FROM tb_demanda d2 WHERE d2.vl_qma IS NOT NULL AND d2.id_demanda NOT IN (SELECT id_demanda FROM tb_demanda_servico) AND id_atividade != 0;

@@ -1,0 +1,8 @@
+<pre>
+Prezado <?php echo $this->noUsuario; ?> foi encontrado o(s) seguinte(s) erro(s) no lan&ccedil;amento autom&aacute;tico no APEX pelo sistema Ordem de Servi&ccedil;o.</pre>
+
+<ul>
+    <?php foreach ($arrErro as $strErro) : ?>
+        <li><?php echo $strErro; ?></li>
+    <?php endforeach;?>
+</ul>

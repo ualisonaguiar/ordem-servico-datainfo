@@ -1,0 +1,7 @@
+<?php
+$strTitle = 'Administração de Crons';
+$this->headTitle($strTitle);
+?>
+<h1><?php echo $this->escapeHtml($strTitle); ?></h1>
+<p>Realize a administração de crons, podendo manipular seus períodos e a inativar/ativar.</p>
+<?php echo $this->form()->render($this->form); ?>

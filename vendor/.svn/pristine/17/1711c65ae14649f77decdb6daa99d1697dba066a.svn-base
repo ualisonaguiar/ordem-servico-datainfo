@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Service</title>
+<link rel="stylesheet" href="https://stackedit.io/res-min/themes/default.css" />
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body><div class="container"><h1 id="service"><strong><i class="icon-folder-open"></i> Service</strong></h1>
+
+
+
+<h2 id="1-índice">1. Índice</h2>
+
+<p><div class="toc"><div class="toc">
+<ul>
+<li><a href="#service"> Service</a><ul>
+<li><a href="#1-índice">1. Índice</a></li>
+<li><a href="#2-definição"> 2. Definição</a><ul>
+<li><a href="#21-conceito"> 2.1. Conceito</a><ul>
+<li><a href="#211-service-service-layer">2.1.1 Service (Service Layer)</a></li>
+<li><a href="#212-service-locator-e-service-manager">2.1.2 Service Locator e Service Manager </a></li>
+</ul>
+</li>
+<li><a href="#22-principais-características"> 2.2. Principais características</a><ul>
+<li><a href="#221-classes-do-componente">2.2.1. Classes do componente</a></li>
+<li><a href="#222-estrutura-hierárquica">2.2.2. Estrutura hierárquica</a><ul>
+<li><a href="#2221-classes-inepzendservice">2.2.2.1. Classes \InepZend\Service</a><ul>
+<li><a href="#22211-abstractservicecore">2.2.2.1.1. AbstractServiceCore</a></li>
+<li><a href="#22212-abstractservicecorecache">2.2.2.1.2. AbstractServiceCoreCache</a></li>
+<li><a href="#22213-abstractservicemanager">2.2.2.1.3. AbstractServiceManager</a></li>
+<li><a href="#22214-abstractservicerepository">2.2.2.1.4. AbstractServiceRepository</a></li>
+<li><a href="#22215-abstractservice">2.2.2.1.5. AbstractService</a></li>
+<li><a href="#22216-abstractservicecontrolcache">2.2.2.1.6. AbstractServiceControlCache</a></li>
+<li><a href="#22217-abstractservicecache">2.2.2.1.7. AbstractServiceCache</a></li>
+<li><a href="#22218-abstractservicefile">2.2.2.1.8. AbstractServiceFile</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#223-namespace"> 2.2.3. Namespace</a></li>
+</ul>
+</li>
+<li><a href="#23-apidocunittest"> 2.3. APIDoc/UnitTest</a></li>
+</ul>
+</li>
+<li><a href="#3-como-usar"> 3. Como usar</a><ul>
+<li><a href="#31-registrando-uma-service-modulephp">3.1. Registrando uma Service - Module.php</a></li>
+<li><a href="#32-criando-uma-service">3.2. Criando uma Service</a></li>
+<li><a href="#33-consumindo-um-serviço">3.3. Consumindo um serviço</a></li>
+<li><a href="#34-exemplo-de-código-annotation-example">3.4. Exemplo de código - annotation @example</a></li>
+</ul>
+</li>
+<li><a href="#4-referência">  4. Referência </a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</p>
+
+
+
+<h2 id="2-definição"><i class="icon-th"></i> 2. Definição</h2>
+
+<hr>
+
+
+
+<h3 id="21-conceito"><i class="icon-pencil"></i> 2.1. Conceito</h3>
+
+<blockquote>
+  <p><em>Service</em> é uma biblioteca disponibilizada no <strong>InepZend</strong> na qual contém classe e trait que facilitam o desenvolvimento de funcionalidades, podendo ser utilizadas em camadas onde sejam necessárias a suas utilizações.</p>
+  
+  <p>Visando a facilidade do uso da biblioteca, a mesma foi desenvolvida aplicando o conceito de Trait [<a href="http://br1.php.net/trait">http://br1.php.net/trait</a> ].</p>
+</blockquote>
+
+<p><a id="definicao-service"></a></p>
+
+
+
+<h4 id="211-service-service-layer"><strong>2.1.1 Service (Service Layer)</strong></h4>
+
+<ul>
+<li>Camada de Serviço é um padrão de projeto aplicado dentro do <a href="http://serviceorientation.com/serviceorientation/the_service_orientation_design_paradigm" target="_blank">paradigma <em>service-orientation</em></a>, que tem como objetivo organizar os serviços utilizados pela aplicação. </li>
+<li>Dentro do modelo arquitetural <strong><em><a href="http://en.wikipedia.org/wiki/Hierarchical_model%E2%80%93view%E2%80%93controller" target="_blank">HMVC</a></em></strong>, a <em>Service</em> é implementada na camada de <em>Modelo</em>.</li>
+<li>Uma das principais responsabilidades é a transação de dados entre a <em>controller</em> e a <em>repository</em>, mas não se limita somente a esse escopo, pois uma Service pode ser chamada por outra Service ou mesmo dentro de um Form ou uma Navigation. <br>
+
+
+<blockquote>
+  <strong>Obs.:</strong> As regras de negócio devem ser implementadas na camada de serviço, onde a controladora envia os dados, a service as valida e envia para o modelo persistir na base de dados caso seja necessário.</blockquote></li>
+  </ul>
+  
+
+
+<h4 id="212-service-locator-e-service-manager"><strong>2.1.2 Service Locator e Service Manager </strong></h4>
+
+<ul>
+<li>O ServiceLocator é uma <em>interface</em>. </li>
+<li>O ZF2 foi desenvolvido com <em>design</em> por contrato, o que significa que se pode confiar em interfaces ao invés vez de classes. Nesse cenário, o ServiceManager é uma implementação padrão do ServiceLocator.</li>
+<li>O ServiceManager é basicamente a implementação da interface ServiceLocator. </li>
+<li>Quando é solicitado o <em>getServiceManager()</em>, seu retorno é a explícita implementação ServiceManager. </li>
+<li>Quando é solicitado o  <em>getServiceLocator()</em>, está solicitando qualquer implementação de interface do ServiceLocator que pode ser a implementação pelo ServiceManager ou a sua própria. </li>
+</ul>
+
+<blockquote>
+  <p><strong>Obs.:</strong> O retorno de ambos é o mesmo objeto.</p>
+</blockquote>
+
+
+
+<h3 id="22-principais-características"><a id="principais-caracteristicas"></a><i class="icon-info"></i> 2.2. Principais características</h3>
+
+
+
+<h4 id="221-classes-do-componente">2.2.1. Classes do componente</h4>
+
+<blockquote>
+  <ul>
+  <li>\InepZend\Service\AbstractServiceCore; </li>
+  <li>\InepZend\Service\AbstractServiceCoreCache;</li>
+  <li>\InepZend\Service\AbstractServiceManager;</li>
+  <li>\InepZend\Service\AbstractServiceRepository;</li>
+  <li>\InepZend\Service\AbstractService;</li>
+  <li>\InepZend\Service\AbstractServiceControlCache;</li>
+  <li>\InepZend\Service\AbstractServiceCache;</li>
+  <li>\InepZend\Service\AbstractServiceFile;</li>
+  </ul>
+</blockquote>
+
+<ul>
+<li>Todos as classes do componente da Service do <em>InepZend</em> <strong>são abstratas</strong>.</li>
+</ul>
+
+<p><a id="hierarquia"></a></p>
+
+
+
+<h4 id="222-estrutura-hierárquica">2.2.2. Estrutura hierárquica</h4>
+
+<blockquote>
+  <ul>
+  <li><a href="#41">AbstractServiceCore</a>  <br>
+  <ul><li><a title="extend AbstractServiceCore" href="#42">AbstractServiceCoreCache</a><a> <br>
+  </a><ul><li><a title="extend AbstractServiceCoreCache" href="#43">AbstractServiceManager</a> <br>
+  <ul><li><a title="extend AbstractServiceManager" href="#44">AbstractServiceRepository</a> <br>
+  <ul><li><a title="extend AbstractServiceRepository" href="#45">AbstractService</a> <br>
+  <ul><li><a title="extend AbstractService" href="#46">AbstractServiceControlCache</a> <br>
+  <ul><li><a title="extend AbstractServiceControlCache" href="#47">AbstractServiceCache</a></li>
+  <li><a title="extend AbstractServiceControlCache" href="#48">AbstractServiceFile</a></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li>
+  </ul>
+  
+  <blockquote>
+    <p>A classe  abaixo herda a classe acima. <br>
+    Sendo assim, a classe <em>AbstractServiceCore</em> é a classe de primeiro nível, e a classe <em>AbstractServiceCoreCache</em> herda/estende a <em>AbstractServiceCore</em>.</p>
+  </blockquote>
+</blockquote>
+
+
+
+<h5 id="2221-classes-inepzendservice">2.2.2.1. Classes \InepZend\Service</h5>
+
+<p><a id="41"></a></p>
+
+
+
+<h6 id="22211-abstractservicecore"><strong>2.2.2.1.1. AbstractServiceCore</strong></h6>
+
+<blockquote>
+  <ul>
+  <li><p>Classe abstrata responsável pelos métodos considerados essenciais aos serviços.</p></li>
+  <li><p>Na <a href="#hierarquia">hierarquia</a>, ela é estendida por todas as classes do componente Service.</p></li>
+  <li><p>Utiliza em seu escopo a Trait <em>\InepZend\Util\DebugExec</em>: [ <a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.Util.DebugExec.html">http://desenvphp.inep.gov.br/apidoc/class-InepZend.Util.DebugExec.html</a> ]</p></li>
+  <li><p>Os métodos podem ser visto na documentação do InepZend: [ <a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.Service.AbstractServiceCore.html">http://desenvphp.inep.gov.br/apidoc/class-InepZend.Service.AbstractServiceCore.html</a> ]</p></li>
+  </ul>
+</blockquote>
+
+<p><a id="42"></a></p>
+
+
+
+<h6 id="22212-abstractservicecorecache"><strong>2.2.2.1.2. AbstractServiceCoreCache</strong></h6>
+
+<blockquote>
+  <ul>
+  <li><p>Classe abstrata responsável pelos métodos considerados essenciais aos serviços que utilizam algum tipo de cache, como por exemplo o <em><a href="http://memcached.org/" target="_blank">memcache</a></em>.</p></li>
+  <li><p>Na <a href="#hierarquia">hierarquia</a>, ela estende a classe <a href="#41"><em>AbstractServiceCore</em></a>.</p></li>
+  <li><p>Os métodos podem ser visto na documentação do InepZend: [ <a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.Service.AbstractServiceCoreCache.html">http://desenvphp.inep.gov.br/apidoc/class-InepZend.Service.AbstractServiceCoreCache.html</a> ]</p></li>
+  </ul>
+</blockquote>
+
+<p><a id="43"></a></p>
+
+
+
+<h6 id="22213-abstractservicemanager"><strong>2.2.2.1.3. AbstractServiceManager</strong></h6>
+
+<blockquote>
+  <ul>
+  <li><p>Classe abstrata responsável pelos métodos invocadores do <em><a href="#definicao-service">ServiceManager</a></em>, sobretudo para acionar outros serviços.</p></li>
+  <li><p>Em seu escopo a classe utiliza as traits <em>ServiceManagerTrait</em> e <em>LogCall</em>.</p>
+  
+  <blockquote>
+    <ul><li>A Trait <strong>ServiceManagerTrait</strong> é responsável em manipular o <a href="#definicao-service"><em>ServiceManager</em></a>. A trait pode ser utilizada onde seja necessário a manipulação do ServiceManager, como por exemplo <em>Navigation</em>. <br>
+    <ul><li><a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.Service.ServiceManagerTrait.html">http://desenvphp.inep.gov.br/apidoc/class-InepZend.Service.ServiceManagerTrait.html</a></li></ul></li>
+    <li>A Trait <em>LogCall</em> é responsável em manipular o método mágico <a href="http://php.net/manual/pt_BR/language.oop5.overloading.php#object.call" target="_blank">__call()</a>. <br>
+    <ul><li><a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.Log.LogCall.html">http://desenvphp.inep.gov.br/apidoc/class-InepZend.Log.LogCall.html</a></li></ul></li></ul>
+  </blockquote></li>
+  <li><p>Ao estender a classe <em>AbstractServiceManager</em> os métodos da trait <em>ServiceManagerTrait</em> ficam disponíveis.</p></li>
+  <li><p>Na <a href="#hierarquia">hierarquia</a>, ela estende a classe <a href="#42"><em>AbstractServiceCoreCache</em></a>.</p></li>
+  <li><p>Os métodos podem ser visto na documentação do InepZend: [ <a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.Service.AbstractServiceManager.html">http://desenvphp.inep.gov.br/apidoc/class-InepZend.Service.AbstractServiceManager.html</a> ]</p></li>
+  </ul>
+</blockquote>
+
+<p><a id="44"></a></p>
+
+
+
+<h6 id="22214-abstractservicerepository"><strong>2.2.2.1.4. AbstractServiceRepository</strong></h6>
+
+<blockquote>
+  <ul>
+  <li><p>Classe abstrata responsável pelos métodos invocadores do <em>Repository</em>, incluindo o <a href="#definicao-service"><em>EntityManager</em></a>, para acionar interações com o banco de dados.</p></li>
+  <li><p>Ao estender a classe <em>AbstractServiceRepository</em> ficam disponíveis os principais métodos utilizados no desenvolvimento do dia a dia como:</p>
+  
+  <blockquote>
+    <ul><li>find()</li>
+    <li>findBy()</li>
+    <li>insert()</li>
+    <li>update()</li>
+    <li>delete()</li>
+    <li>deleteBy()</li>
+    <li>fetchPairs()</li>
+    <li>fetchPairsToXmlJson()</li>
+    <li>findByPaged() e <strong>outros</strong></li></ul>
+  </blockquote></li>
+  <li><p>Na <a href="#hierarquia">hierarquia</a>, ela estende a classe <a href="#43"><em>AbstractServiceManager</em></a>.</p></li>
+  <li><p>Os métodos podem ser visto na documentação do InepZend: [ <a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.Service.AbstractServiceRepository.html">http://desenvphp.inep.gov.br/apidoc/class-InepZend.Service.AbstractServiceRepository.html</a> ]</p></li>
+  </ul>
+</blockquote>
+
+<p><a id="45"></a></p>
+
+
+
+<h6 id="22215-abstractservice"><strong>2.2.2.1.5. AbstractService</strong></h6>
+
+<blockquote>
+  <ul>
+  <li><p>Classe abstrata responsável pelos métodos básicos para a implementação de um CRUD.</p></li>
+  <li><p>Apesar da classe não ter em seu escopo métodos implementados, ela herda a <a href="#44"><em>AbstractServiceRepository</em></a>.</p></li>
+  <li><p>A <strong>AbstractService</strong> foi a primeira classe a ser implementada no componente Service do InepZend. Ao surgirem necessidades específicas foi necessário criar as demais classes no componente.</p></li>
+  <li><p>Na <a href="#hierarquia">hierarquia</a>, ela estende a classe <em><a href="#44">AbstractServiceRepository</a></em>.</p></li>
+  <li><p>Os métodos herdados podem ser visto na documentação do InepZend: [ <a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.Service.AbstractService.html">http://desenvphp.inep.gov.br/apidoc/class-InepZend.Service.AbstractService.html</a> ]</p></li>
+  </ul>
+</blockquote>
+
+<p><a id="46"></a></p>
+
+
+
+<h6 id="22216-abstractservicecontrolcache"><strong>2.2.2.1.6. AbstractServiceControlCache</strong></h6>
+
+<blockquote>
+  <ul>
+  <li><p>Classe abstrata responsável pelos métodos controladores do uso de cache, como por exemplo <a href="http://memcached.org/" target="_blank">memcache</a>, nos resultados dos demais métodos da classe.</p></li>
+  <li><p>A principal característica da classe é a manipulação de cache, pois ao utiliza-lo há um ganho de desempenho na aplicação. Como exemplificação é o cacheamento de resultado de banco de dados ficando disponível sem ser necessário realizar nova busca na base de dados.</p></li>
+  </ul>
+  
+  <blockquote>
+    <ul>
+    <li>Ao executar um método que faz uma pesquisa no banco de dados é possível através da <em>annotation</em>  <strong>“@cache”</strong> com parâmetro <strong>“true, 1, sim ou yes</strong> cachear os dados da filtragem.</li>
+    </ul>
+  </blockquote>
+</blockquote>
+
+<p>Exemplo da utilização <strong><em>@cache true</em></strong>:</p>
+
+
+
+<pre class="prettyprint"><code class=" hljs java"><span class="hljs-javadoc">/**
+ *<span class="hljs-javadoctag"> @cache</span> true
+ */</span>
+ <span class="hljs-keyword">protected</span> function <span class="hljs-title">findBySubcategoriaAnnotationCache</span>($intCoSubcategoria = <span class="hljs-keyword">null</span>)
+    {
+        <span class="hljs-keyword">return</span> $<span class="hljs-keyword">this</span>-&gt;findBy(array(<span class="hljs-string">'co_subcategoria'</span> =&gt; $intCoSubcategoria));
+    }</code></pre>
+
+<blockquote>
+  <blockquote>
+    <ul>
+    <li>Ao ser executado novamente o mesmo método, não alterando a assinatura do método e os parâmetros passados, a aplicação vai no cache e retorna o valor armazenado, assim evita um consumo de rede e banco gerando performance.</li>
+    </ul>
+  </blockquote>
+  
+  <ul>
+  <li><p>Na <a href="#hierarquia">hierarquia</a>, ela estende a classe <a href="#45"><em>AbstractService</em></a>.</p></li>
+  <li><p>Os métodos herdados podem ser visto na documentação do InepZend: [ <a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.Service.AbstractServiceControlCache.html">http://desenvphp.inep.gov.br/apidoc/class-InepZend.Service.AbstractServiceControlCache.html</a> ]</p></li>
+  </ul>
+</blockquote>
+
+<p><a id="47"></a></p>
+
+
+
+<h6 id="22217-abstractservicecache"><strong>2.2.2.1.7. AbstractServiceCache</strong></h6>
+
+<blockquote>
+  <ul>
+  <li><p>Classe abstrata responsável pelos métodos invocadores do <em>Repository</em>, incluindo o <em><a href="#&lt;a href=">EntityManager</a></em>, para acionar interações com o banco de dados com uso controlado de cache, como por exemplo o <a href="http://memcached.org/" target="_blank">memcache</a>, nos seus resultados.</p></li>
+  <li><p>Todos os metodos são manipulações no cache. </p></li>
+  <li><p>Caso a chamada do método não esteja cacheado, o mesmo será cacheado e ficara disponível para uma outra chamada, evitando assim o custo da utilização do banco de dados.</p></li>
+  <li><p>Apesar da nomenclatura dos métodos serem semelhantes a <em><a href="#44">AbstractServiceRepository</a></em>, os métodos fazem a execução dos métodos contidos na <em>AbstractServiceRepository</em> e os cacheia, e de forma transparente são executados os métodos da <em><a href="#46">AbstractServiceControlCache</a></em>, como por exemplo o método <em>controlCache()</em> que é responsável em inserir os dados, método e resultado no cache.</p></li>
+  <li><p>Na <a href="#hierarquia">hierarquia</a>, ela estende a classe <a href="#46"><em>AbstractServiceControlCache</em></a>.</p></li>
+  <li><p>Os métodos podem ser visto na documentação do InepZend: [ <a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.Service.AbstractServiceCache.html">http://desenvphp.inep.gov.br/apidoc/class-InepZend.Service.AbstractServiceCache.html</a> ]</p></li>
+  </ul>
+</blockquote>
+
+<p><a id="48"></a></p>
+
+
+
+<h6 id="22218-abstractservicefile"><strong>2.2.2.1.8. AbstractServiceFile</strong></h6>
+
+<blockquote>
+  <ul>
+  <li><p>Classe abstrata responsável pelos métodos invocadores do <em>Repository</em>, incluindo  o <em>EntityManager</em>, para acionar interações com o banco de dados persistido internamente em arquivos de sistema (<strong>FileSystem</strong>).</p></li>
+  <li><p>A classe segue a mesma implementação do item anterior <em><a href="#47">AbstractServiceCache</a></em>, a diferença principal é que ao invés de manipular um banco de dados, como por exemplo Oracle, a manipulação é em arquivos.</p></li>
+  <li><p>Na <a href="#hierarquia">hierarquia</a>, ela estende a classe <a href="#46"><em>AbstractServiceControlCache</em></a>.</p></li>
+  <li><p>Os métodos podem ser visto na documentação do InepZend: [ <a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.Service.AbstractServiceFile.html]">http://desenvphp.inep.gov.br/apidoc/class-InepZend.Service.AbstractServiceFile.html]</a></p></li>
+  </ul>
+</blockquote>
+
+<hr>
+
+
+
+<h4 id="223-namespace"><i class="icon-sitemap"></i> 2.2.3. Namespace</h4>
+
+<blockquote>
+  <ul>
+  <li>\InepZend\Service</li>
+  </ul>
+</blockquote>
+
+<hr>
+
+
+
+<h3 id="23-apidocunittest"><i class="icon-book"></i> 2.3. APIDoc/UnitTest</h3>
+
+<blockquote>
+  <ul>
+  <li><p>APIDoc</p>
+  
+  <blockquote>
+    <p><a href="http://desenvphp.inep.gov.br/apidoc/namespace-InepZend.Service.html">http://desenvphp.inep.gov.br/apidoc/namespace-InepZend.Service.html</a></p>
+  </blockquote></li>
+  <li><p>UnitTest</p>
+  
+  <blockquote>
+    <ul><li>Diretório no InepZend: /vendor/InepZend/module/UnitTest/test/UnitTest/Service/.</li>
+    <li><a href="http://desenvphp.inep.gov.br/apidoc/namespace-InepZend.Module.UnitTest.Service.html">http://desenvphp.inep.gov.br/apidoc/namespace-InepZend.Module.UnitTest.Service.html</a></li></ul>
+  </blockquote></li>
+  </ul>
+</blockquote>
+
+<hr>
+
+
+
+<h2 id="3-como-usar"><i class="icon-terminal"></i> 3. Como usar</h2>
+
+
+
+<h3 id="31-registrando-uma-service-modulephp">3.1. Registrando uma Service - Module.php</h3>
+
+<ul>
+<li><p>É necessário observar que no item um, <a href="#definicao-service">Conceito de Service</a>, a mesma deve conter as regras de negócio especializadas no contexto do desenvolvimento. Nesse sentido o exemplo a seguir o contexto adotado será o serviço responsável pela manipulação da entidade Pessoa.</p></li>
+<li><p>Toda Service precisa ser mapeada no projeto, e o mapeamento é realizado no arquivo <strong>Module.php</strong> contido na raiz do módulo.</p>
+
+<blockquote>
+  <ul><li><i class="icon-folder-open"></i> SeuModulo <br>
+  <ul><li><i class="icon-folder"></i> config</li>
+  <li><i class="icon-folder"></i> src</li>
+  <li><i class="icon-folder"></i> test</li>
+  <li><i class="icon-folder"></i> view</li>
+  <li><i class="icon-file"></i> <strong>Module.php</strong></li></ul></li></ul>
+</blockquote></li>
+<li><p>Mapeando o seu serviço:</p>
+
+<blockquote>
+  <p>Ao desenvolver o serviço na qual será realizado manipulação com a base de dados deverá ser estendido as classes a partir da <em><a href="#44">\InepZend\Service\AbstractServiceRepository()</a></em>, respeitando a <a href="#hierarquia">hierarquia</a> do componente. Nesse cenário deverá passar como parâmetro a <em>entityManager</em>.</p>
+  
+  <p>Caso no contexto da <a href="#criando-o-servico">criação da service</a> não haja manipulação de banco de dados, não é necessário passar como parâmetro a <em>entityManager</em>.</p>
+</blockquote></li>
+</ul>
+
+
+
+<pre class="prettyprint"><code class=" hljs php"><span class="hljs-comment"># Quando ha manipulacao de dados.</span>
+<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Pessoa(<span class="hljs-variable">$this</span>-&gt;getEntityManager(<span class="hljs-variable">$serviceManager</span>));</code></pre>
+
+
+
+<pre class="prettyprint"><code class=" hljs vala"><span class="hljs-preprocessor"># Quando nao ha manipulacao de dados.</span>
+<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Pessoa();</code></pre>
+
+
+
+<pre class="prettyprint"><code class=" hljs php"><span class="hljs-keyword">namespace</span> <span class="hljs-title">Pessoa</span>;
+
+<span class="hljs-comment"># Eh necessario extender ModuleConfig.</span>
+<span class="hljs-keyword">use</span> <span class="hljs-title">InepZend</span>\<span class="hljs-title">ModuleConfig</span>\<span class="hljs-title">ModuleConfig</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">SeuModulo</span>\<span class="hljs-title">Service</span>\<span class="hljs-title">Pessoa</span>;
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Module</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">ModuleConfig</span>
+{</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getServiceConfig</span><span class="hljs-params">()</span>
+    {</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">array</span>(
+            <span class="hljs-string">'factories'</span> =&gt; <span class="hljs-keyword">array</span>(
+                <span class="hljs-string">'SeuModulo\Service\Pessoa'</span> =&gt; <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-variable">$serviceManager</span>)</span> {</span>
+                    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Pessoa(<span class="hljs-variable">$this</span>-&gt;getEntityManager(<span class="hljs-variable">$serviceManager</span>));
+                },
+                )
+        );
+    }
+}</code></pre>
+
+<p><a id="criando-o-servico"></a></p>
+
+
+
+<h3 id="32-criando-uma-service">3.2. Criando uma Service</h3>
+
+<ul>
+<li><p>O arquivo service deverá ser criado dentro do diretório Service: </p>
+
+<blockquote>
+  <ul><li><i class="icon-folder-open"></i> SeuModulo <br>
+  <ul><li><i class="icon-folder-open"> src <br>
+  </i><ul><li><i class="icon-folder-open"> SeuModulo <br>
+  </i><ul><li><i class="icon-folder-open"> Service <br>
+  </i><ul><li><i class="icon-file"> ServiceName.php</i></li></ul></li></ul></li></ul></li></ul></li></ul>
+</blockquote>
+
+<ul><li><p>Toda classe Service de um módulo deve estender alguma classe abstrata do componente <strong>Service</strong>, na qual será explicada com maiores detalhes no item <strong><a href="#principais-caracteristicas">Principais Características</a></strong>.</p>
+
+<blockquote>
+  <p><strong>Obs.:</strong> As classes do componente Service contém métodos como <strong>insert(), update(), delete(), findBy(), deleteBy(), fetchPairs(), findByPaged(), begin(), commit(), rollback(), getIdentity(), getService()</strong> e outros que realizam a manipulação de dados e objetos, não sendo necessário criar novamente esses métodos, a não ser que seja necessário realizar uma reescrita, polimorfismo, do método.</p>
+</blockquote></li>
+<li><p>Todo método de uma classe de serviço deve possuir a visibilidade <strong>protected</strong> para que o <strong>InepZend</strong> audite automaticamente em arquivo de logs, exceto o método mágico <a href="http://php.net/manual/pt_BR/language.oop5.decon.php" target="_blank"><em>__construct()</em></a>.</p></li></ul></li>
+</ul>
+
+
+
+<pre class="prettyprint"><code class=" hljs php"><span class="hljs-keyword">namespace</span> <span class="hljs-title">SeuModulo</span>\<span class="hljs-title">Service</span>;
+
+<span class="hljs-keyword">use</span> <span class="hljs-title">InepZend</span>\<span class="hljs-title">Service</span>\<span class="hljs-title">AbstractService</span>;
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Pessoa</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">AbstractService</span>
+{</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span><span class="hljs-params">(<span class="hljs-variable">$entityManager</span> = null)</span>
+    {</span>
+        <span class="hljs-comment"># Passagem da Entity Manager via contrutor</span>
+        <span class="hljs-keyword">parent</span>::__construct(<span class="hljs-variable">$entityManager</span>, <span class="hljs-keyword">__CLASS__</span>);
+        <span class="hljs-comment"># Definindo a(s) PK da entidade</span>
+        <span class="hljs-variable">$this</span>-&gt;arrPk = <span class="hljs-keyword">array</span>(<span class="hljs-string">'id_pessoa'</span>);
+    }
+
+    <span class="hljs-comment"># Visibilidade protegida</span>
+    <span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">seuMetodo</span><span class="hljs-params">(<span class="hljs-variable">$parametros</span>)</span>
+    {</span>
+        <span class="hljs-comment"># Suas regras</span>
+    }
+}</code></pre>
+
+
+
+<h3 id="33-consumindo-um-serviço">3.3. Consumindo um serviço</h3>
+
+<ul>
+<li>A partir de uma Controller,  Service, Helper, Form, Navigation ou qualquer outra classe que seja necessário a utilização da trait <em>InepZend\Service\ServiceManagerTrait</em>, pode-se utilizar as seguintes formas de chamadas:</li>
+</ul>
+
+
+
+<pre class="prettyprint"><code class=" hljs coffeescript"><span class="hljs-comment"># Passando o nome do nameSpace como parametro.</span>
+$<span class="hljs-keyword">this</span>-&gt;getService<span class="hljs-function"><span class="hljs-params">(<span class="hljs-string">'SeuModulo\Service\Pessoa'</span>)</span>-&gt;</span>method();</code></pre>
+
+
+
+<pre class="prettyprint"><code class=" hljs coffeescript"> <span class="hljs-comment"># Via nameSpace da Controller, para maiores detalhes consultar o _README.md do componente Controller.</span>
+ <span class="hljs-comment"># ESPECIFICO para classes de Controller</span>
+$<span class="hljs-keyword">this</span>-&gt;getService<span class="hljs-function"><span class="hljs-params">()</span>-&gt;</span>method();</code></pre>
+
+
+
+<h3 id="34-exemplo-de-código-annotation-example">3.4. Exemplo de código - <em>annotation @example</em></h3>
+
+<p></p><ul> <br>
+<li>Os exemplos da utilização de cada método estão contidos em seus comentários após a <em>annotation</em> <strong>@example</strong>: <br></li></ul><p></p>
+
+<blockquote>
+  <p><a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.Service.AbstractServiceControlCache.html"></a><a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.Service.AbstractServiceControlCache.html">http://desenvphp.inep.gov.br/apidoc/class-InepZend.Service.AbstractServiceControlCache.html</a>
+  </p>
+</blockquote>
+
+<h2 id="4-referência"><a id="referencia"></a> <i class="icon-unlink"></i> 4. Referência </h2>
+
+<blockquote>
+  <p><a href="http://desenvphp.inep.gov.br/apidoc/namespace-InepZend.Service.html">http://desenvphp.inep.gov.br/apidoc/namespace-InepZend.Service.html</a></p>
+</blockquote></div></body>
+</html>

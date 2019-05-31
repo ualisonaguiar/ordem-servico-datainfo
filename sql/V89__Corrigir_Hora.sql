@@ -1,0 +1,1 @@
+update tb_justificava_ponto set hr_justificada = '18:25' where id_usuario = 14 and dt_justificativa = '2019-02-08' and hr_justificada = '08:25';

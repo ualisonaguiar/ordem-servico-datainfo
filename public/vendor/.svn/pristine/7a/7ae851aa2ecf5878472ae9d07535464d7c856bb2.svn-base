@@ -1,0 +1,203 @@
+<?php 
+$intLastModifiedTime = filemtime(__FILE__);
+$strETag = md5_file(__FILE__);
+header("Last-Modified: " . gmdate("D, d M Y H:i:s", $intLastModifiedTime) . " GMT");
+header("Etag: " . $strETag);
+header("Content-Type: text/javascript");
+header("Cache-Control: max-age=604800, public, must-revalidate");
+header("Pragma: max-age=604800, public, must-revalidate");
+if ((is_null($mixZlib = ini_get("zlib.output_compression"))) || ($mixZlib == ""))
+    ini_set("zlib.output_compression", true);
+header("Accept-Encoding: gzip");
+if ((@strtotime($_SERVER["HTTP_IF_MODIFIED_SINCE"]) == $intLastModifiedTime) || (trim(@$_SERVER["HTTP_IF_NONE_MATCH"]) == $strETag)) {
+    header("HTTP/1.1 304 Not Modified");
+    exit;
+}
+?>
+/**
+ * Concatena todos os itens de um array ligando-os por um string
+ *
+ * @param STRING strGlue
+ * @param ARRAY arrPieces
+ * @return STRING
+ */
+function implode(strGlue, arrPieces)
+{
+    if (empty(arrPieces))
+        return 'undefined';
+    var strResult = '';
+    for (var intCount = 0; intCount < arrPieces.length; ++intCount) {
+        if (strResult !== '')
+            strResult += strGlue;
+        strResult += arrPieces[intCount];
+    }
+    return strResult;
+}
+
+/**
+ * Quebra uma expressao (com uma string de separacao) em array
+ *
+ * @param STRING strSeparator
+ * @param STRING strText
+ * @return ARRAY
+ */
+function explode(strSeparator, strText)
+{
+    strText += '';
+    strSeparator += '';
+    var intCount = 0;
+    var intCountMax = strText.length;
+    var arrResult = [];
+    var intSeparatorPos = strText.indexOf(strSeparator);
+    var boolInsert = true;
+    var strBefore;
+    var strAfter;
+    while ((intSeparatorPos != -1) && (intCount < intCountMax)) {
+        if (intSeparatorPos === 0) {
+            strBefore = strText.substr(0, 1);
+            strAfter = strText.substr(1);
+            boolInsert = false;
+        } else {
+            strBefore = strText.substr(0, intSeparatorPos);
+            strAfter = strText.substr(intSeparatorPos + 1);
+        }
+        if (!empty(strBefore))
+            arrResult.push(strBefore);
+        strText = strAfter;
+        intSeparatorPos = strText.indexOf(strSeparator);
+        ++intCount;
+    }
+    if (boolInsert)
+        arrResult.push(strText);
+    return arrResult;
+}
+
+/**
+ * Funcao que realiza um cast array, ou seja, converte um objeto em array
+ *
+ * @param OBJECT object
+ * @param BOOLEAN booOriginalKey
+ * @return ARRAY
+ */
+function parseArray(object, booOriginalKey)
+{
+    if (empty(object))
+        return false;
+    if (empty(booOriginalKey))
+        booOriginalKey = false;
+    var arrNew = [];
+    if (object.length) {
+        for (var intCount = 0; intCount < object.length; ++intCount)
+            arrNew[intCount] = object[intCount];
+    } else {
+        for (var strAttribute in object) {
+            if (!isFunction(object[strAttribute]))
+                arrNew[(booOriginalKey) ? strAttribute : arrNew.length] = object[strAttribute];
+        }
+    }
+    return arrNew;
+}
+
+/**
+ * Funcao que realiza um cast array, ou seja, converte um objeto em array
+ *
+ * @param MIX mixElement
+ * @param INTEGER intDepthOfRecursive
+ * @return ARRAY
+ */
+function parseArrayRecursive(mixElement, intDepthOfRecursive)
+{
+    if (empty(intDepthOfRecursive))
+        intDepthOfRecursive = -1;
+    if (intDepthOfRecursive > 0)
+        --intDepthOfRecursive;
+    else {
+        if (intDepthOfRecursive === 0)
+            return mixElement;
+        if (intDepthOfRecursive < 0)
+            return null;
+    }
+    var arrNew = [];
+    if (empty(mixElement)) {
+        // mixElemento vazio
+    } else if (isString(mixElement) || isNumber(mixElement) || isBoolean(mixElement))
+        arrNew[arrNew.length] = mixElement;
+    else if (mixElement.length) {
+        for (var intCount = 0; intCount < mixElement.length; ++intCount)
+            arrNew[intCount] = parseArrayRecursive(mixElement[intCount], intDepthOfRecursive);
+    }
+    else if (mixElement.innerHTML)
+        arrNew = mixElement.innerHTML;
+    else if (isObject(mixElement)) {
+        for (var strAttribute in mixElement) {
+            if (!isFunction(mixElement[strAttribute]))
+                arrNew[arrNew.length] = parseArrayRecursive(mixElement[strAttribute], intDepthOfRecursive);
+        }
+    } else
+        arrNew = null;
+    return arrNew;
+}
+
+/**
+ * Procura por um elemento no array e retorna sua posicao caso seja 
+ * encontrado, ou -1 caso nao encontre
+ *
+ * @param MIX mixElement
+ * @param ARRAY arrContainer
+ * @param INTEGER intNumElementsArray
+ * @param INTEGER
+ */
+function array_search(mixElement, arrContainer, intNumElementsArray)
+{
+    if (!arrContainer)
+        return -1;
+    for (var intCount = 0; intCount < arrContainer.length; ++intCount) {
+        if (empty(intNumElementsArray)) {
+            if (arrContainer[intCount] == mixElement)
+                return intCount;
+        } else {
+            var mixNumElementsArrayParam = [];
+            if ((isArray(mixElement)) && (isArray(arrContainer[intCount]))) {
+                mixNumElementsArrayParam = intNumElementsArray;
+                if (mixElement.length < intNumElementsArray)
+                    mixNumElementsArrayParam = mixElement.length;
+                if (arrContainer[intCount].length < intNumElementsArray)
+                    mixNumElementsArrayParam = arrContainer[intCount].length;
+            }
+            var boolEqual = true;
+            for (var intCount2 = 0; intCount2 < mixNumElementsArrayParam; ++intCount2) {
+                if (mixElement[intCount2] != arrContainer[intCount][intCount2]) {
+                    boolEqual = false;
+                    break;
+                }
+            }
+            if (boolEqual)
+                return intCount;
+        }
+    }
+    return -1;
+}
+
+/**
+ * Insere um valor no array caso o valor nao exista no mesmo.
+ *
+ * @param ARRAY arrElements
+ * @param MIX mixValue
+ * @return ARRAY
+ */
+function insertDistinctValueIntoArray(arrElements, mixValue)
+{
+    if ((empty(arrElements)) || (empty(mixValue)))
+        return false;
+    if (array_search(mixValue, arrElements) == -1)
+        arrElements[arrElements.length] = mixValue;
+    return arrElements;
+}
+
+function clearEmptyParam(arrParam)
+{
+	for (var mixKey in arrParam)
+		if (empty(arrParam[mixKey]))
+			delete arrParam[mixKey];
+	return arrParam;
+}

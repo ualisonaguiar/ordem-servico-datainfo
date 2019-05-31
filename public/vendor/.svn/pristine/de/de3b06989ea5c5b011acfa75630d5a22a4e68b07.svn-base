@@ -1,0 +1,14 @@
+include_once('/vendor/InepZend/js/array.js');
+include_once('/vendor/InepZend/js/client.js');
+include_once('/vendor/InepZend/js/event.js');
+include_once('/vendor/InepZend/js/cookie.js');
+include_once('/vendor/InepZend/js/date.js');
+include_once('/vendor/InepZend/js/dom.js');
+include_once('/vendor/InepZend/js/format.js');
+include_once('/vendor/InepZend/js/json.js');
+include_once('/vendor/InepZend/js/native.js');
+include_once('/vendor/InepZend/js/popup.js');
+include_once('/vendor/InepZend/js/print.js');
+include_once('/vendor/InepZend/js/string.js');
+include_once('/vendor/InepZend/js/validate.js');
+include_once('/vendor/InepZend/js/xml.js');

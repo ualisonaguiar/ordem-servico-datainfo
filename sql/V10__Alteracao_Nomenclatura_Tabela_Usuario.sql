@@ -1,0 +1,1 @@
+update tb_demanda set no_executor = 'Sandro Araújo Dantas' where no_executor = 'Sandro Araujo Dantas';

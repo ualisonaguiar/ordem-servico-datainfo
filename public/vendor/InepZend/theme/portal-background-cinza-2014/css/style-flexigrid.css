@@ -1,0 +1,18 @@
+.flexigrid {
+    overflow:scroll!important;
+}
+
+.hDivBox th{width:auto}
+
+.gBlock{width: auto}
+
+.flexigrid .hDiv .pDiv2 {
+    width:auto;
+    height:auto;
+}
+
+.flexigrid div.pDiv input {
+    top: -5px;
+    vertical-align: text-top;
+    display: inline;
+}

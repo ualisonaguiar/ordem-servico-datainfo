@@ -1,0 +1,1 @@
+delete from tb_ferias where id_usuario = 14 and dt_inicio BETWEEN '2018-01-01' and '2018-12-31';

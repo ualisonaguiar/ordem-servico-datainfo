@@ -1,0 +1,1 @@
+update tb_ordem_servico set tp_situacao = 2 where nu_ordem_servico in (873,874,879,881,882,883,885,889,899,900,901,902,908,910,911,912,915,918,920,921,922,927);

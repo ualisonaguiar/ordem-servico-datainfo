@@ -1,0 +1,1 @@
+var strController="MonitoramentoEnvioController";angular.module(strController,["AbstractCoreController"]).controller(strController,["$scope","$controller",function(r,o){angular.extend(r,o("AbstractCoreController",{$scope:r}))}]);try{angular.bootstrap($("."+strController),[strController])}catch(r){}

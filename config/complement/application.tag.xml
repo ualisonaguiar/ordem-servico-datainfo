@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RELEASE>
+	<TAG>
+		<VERSION>1.0.0.1</VERSION>
+		<COMMENT>
+			<ITEM>Correções diversas no InepSkeleton</ITEM>
+			<ITEM>Adaptações diversas no InepSkeleton</ITEM>
+		</COMMENT>
+	</TAG>
+	<TAG>
+		<VERSION>1.0.0.0</VERSION>
+		<COMMENT>
+			<ITEM>Primeira versão do InepSkeleton</ITEM>
+		</COMMENT>
+	</TAG>
+</RELEASE>

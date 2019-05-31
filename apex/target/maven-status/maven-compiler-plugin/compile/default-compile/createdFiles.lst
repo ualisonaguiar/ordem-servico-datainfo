@@ -1,0 +1,7 @@
+br/gov/inep/RestVerticle.class
+br/gov/inep/FormParamsBuilder.class
+br/gov/inep/GerarUpdateCarencia.class
+br/gov/inep/Carentes.class
+br/gov/inep/Projeto.class
+br/gov/inep/Main.class
+br/gov/inep/ApexVerticle.class

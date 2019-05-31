@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<project name="ordemservico" default="build">
+
+    <property name="buildnumber" value="${env.BUILD_NUMBER}" />
+    <property name="buildtag" value="${env.BUILD_TAG}" />
+    <property name="svnrevision" value="${env.SVN_REVISION}" />
+    <property name="tagname" value="${Complemento_da_Estrutura}" />
+    <property name="svnusername" value="${svnusername}" />
+    <property name="svnpassword" value="${svnpassword}" />
+    <property name="svnrepository" value="${svnrepository}" />
+    <property name="svnexportdir" value="/tmp/exportedsystem/${applicationdir}" />
+
+    <target name="build" depends="prepare" description="Target excutado por padrão">
+      	  <echo msg="Phing para o build localizado" />
+    </target>
+    
+    <target name="prepare" depends="clean" description="Preparação para o build">
+        <echo msg="prepare..." />
+    </target>
+
+    <target name="clean" description="Limpeza de artefatos para build">
+      <echo msg="clean..." /> 
+    </target>
+
+    <target name="svnexport">
+        <delete dir="${svnexportdir}"/>
+        <svnexport
+           username="${svnusername}"
+           password="${svnpassword}"
+           nocache="true"
+           repositoryurl="${svnrepository}"
+           todir="${svnexportdir}"/>
+    </target>
+
+    <target name="version">
+        <tstamp>
+            <format property="DATE" pattern="%c" locale="pt_BR.utf8" />
+        </tstamp>
+        <property name="fileinfo" value="${pathfileinfo}/config/complement/application.info.xml"/>
+        <echo msg="Atualizando informação de versão..." /> 
+        <echo msg="builddate: ${DATE}" /> 
+        <echo msg="tagname: ${tagname}" /> 
+        <echo msg="buildnumber: ${buildnumber}" />
+        <echo msg="svnrevision: ${svnrevision}" />
+        <echo msg="buildtag: ${buildtag}" />
+        <echo msg="fileinfo: ${fileinfo}" />
+        <move file="${fileinfo}" tofile="${fileinfo}-tmp" overwrite="true">
+            <filterchain>
+                <replacetokens begintoken="@" endtoken="@">
+                    <token key="VERSION" value="${tagname}"/>
+                    <token key="BUILD_NUMBER" value="${buildnumber}"/>
+                    <token key="REVISION" value="${svnrevision}"/>
+                    <token key="BUILD_TAG" value="${buildtag}"/>
+                    <token key="BUILD_DATE" value="${DATE}"/>
+                </replacetokens>
+            </filterchain>
+        </move>
+        <move file="${fileinfo}-tmp" tofile="${fileinfo}" overwrite="true"/>
+    </target>
+
+</project>

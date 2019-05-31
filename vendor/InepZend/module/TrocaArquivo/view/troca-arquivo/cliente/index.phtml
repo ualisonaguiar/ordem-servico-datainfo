@@ -1,0 +1,8 @@
+<?php
+$strTitle = 'Preprocessamento';
+$this->headTitle($strTitle);
+?>
+<h1><?php echo $this->escapeHtml($strTitle); ?></h1>
+<p>Realize o preprocessamento para troca de arquivos de dados (validação estrutural e preparação de arquivo padronizado para envio).<br />
+O arquivo deve estar no formato TXT ou XML/TXT compactado via ZIP.</p>
+<?php echo $this->form()->render($this->form); ?>

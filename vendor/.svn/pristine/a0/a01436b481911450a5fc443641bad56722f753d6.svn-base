@@ -1,0 +1,22 @@
+<?php
+$strTitle = 'Sistema de Segurança do Inep - SSI';
+$this->headTitle($strTitle);
+?>
+<script type="text/javascript">
+    function editForm()
+    {
+        var arrElement = new Array('nu_cpf', 'no_email');
+        for (var intCount = 0; intCount < arrElement.length; ++intCount) {
+            var strId = arrElement[intCount];
+            setNotPaste(strId);
+            setAutocomplete(strId, 'off');
+        }
+        return true;
+    }
+</script>
+<h1><?php echo $this->escapeHtml($strTitle); ?></h1>
+<p>Para realizar a recuperação de senha é necessário preencher as informações corretamente e aguardar o recebimento do e-mail contendo a senha temporária.</p>
+<?php echo $this->form()->render($this->form); ?>
+<script type="text/javascript">
+    editForm();
+</script>

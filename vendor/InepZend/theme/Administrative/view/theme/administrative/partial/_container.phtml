@@ -1,0 +1,41 @@
+<?php
+use InepZend\Theme\Administrative\View\Helper\MenuHelper;
+use InepZend\Util\String;
+$booHasIdentity = $this->authentication()->hasIdentity();
+?>
+<div class="container" id="contentBackground">
+    <?php
+    if ($booHasIdentity) {
+        if ((MenuHelper::getMenuName() == MenuHelper::MENU_DDSMOOTH) && ($this->barraBrasil()->getShowFile()))
+            echo '<script language="javascript">initMenuInepZend("' . $strMenuOrientation . '");</script>';
+        if (is_array($mixDivMenu)) { ?>
+            <div>
+                <?php echo $mixDivMenu['Horizontal']; ?>
+            </div>
+            <div style="float: left; width: 25%;">
+                <?php echo $mixDivMenu['Vertical']; ?>
+            </div>
+        <?php } else { ?>
+            <div style="<?php echo ($strMenuOrientation == MenuHelper::MENU_TYPE_VERTICAL) ? 'float: left;' : ''; ?>">
+                <?php echo $mixDivMenu; ?>
+            </div>
+        <?php }
+    }
+    ?>
+    <div style="float: left;<?php echo $strContainerWidth; ?>">
+        <div id="contentContainer" class="controlFontSize">
+            <?php if ($booHasIdentity) { ?>
+                <div id="loginContainer">
+                    Usuário(a) Logado(a):
+                    <span style="font-weight: normal;">
+                        <?php echo strtoupper(String::beautifulProperName($this->authentication()->getIdentity()->usuarioSistema->usuario->nome, true)); ?>
+                    </span>
+                </div>
+                <?php
+            }
+            echo $this->message()->showMessage();
+            echo $strContent;
+            ?>
+        </div>
+    </div>
+</div>

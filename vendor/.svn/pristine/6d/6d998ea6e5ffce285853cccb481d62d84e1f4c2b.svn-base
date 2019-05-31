@@ -1,0 +1,15 @@
+<?php
+$strTitle = 'Sistema de Segurança do Inep - SSI';
+$this->headTitle($strTitle);
+?>
+<script type="text/javascript" src="<?php echo $this->basePath() . getRenderScriptUrl('Ssi/js/script'); ?>"></script>
+<script type="text/javascript">
+execFunctionOnLoadEvent('reloadHistory("ssi-acl-form-element");');
+</script>
+<h1><?php echo $this->escapeHtml($strTitle); ?></h1>
+<p>Será possível administrar o controle de acesso aos elementos de formulário das funcionalidades dos módulos do sistema.</p>
+<?php 
+echo $this->form()->render($this->form);
+if (is_object($this->formModal))
+    echo $this->form()->render($this->formModal);
+?>

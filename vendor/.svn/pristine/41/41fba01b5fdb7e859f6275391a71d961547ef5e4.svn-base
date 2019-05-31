@@ -1,0 +1,50 @@
+<?php
+
+if ((is_array($this->arrData)) && (!empty($this->arrData))) {
+    $strCallback = ($this->strCallback) ? $this->strCallback : 'drawVisualization';
+    $strDivId = (!empty($this->strDivId)) ? $this->strDivId : 'divChartWrapper';
+    $strChartOption = (!empty($this->strChartOption)) ? $this->strChartOption : '{}';
+    $arrItem = array("''");
+    foreach ($this->arrData as $arrInfo) {
+        if ((!array_key_exists(0, $arrInfo)) || (!array_key_exists(1, $arrInfo)) || (array_key_exists($arrInfo[0], $arrItem)))
+            continue;
+        $arrItem[$arrInfo[0]] = "'" . $arrInfo[0] . "'";
+    }
+    $arrItem = array_values($arrItem);
+    $strItem = '[' . implode(',', $arrItem) . ']';
+    $arrData = array();
+    foreach ($this->arrData as $arrInfo) {
+        if ((!array_key_exists(0, $arrInfo)) || (!array_key_exists(1, $arrInfo)))
+            continue;
+        if (!array_key_exists($arrInfo[0], $arrData))
+            $arrData[$arrInfo[0]] = null;
+        $arrData[$arrInfo[0]] = $arrInfo[1];
+    }
+    $strData = '';
+    if (count($arrData) > 0) {
+        $strData .= ",[''";
+        foreach ($arrData as $mixValue)
+            $strData .= ',' . $mixValue;
+        $strData .= ']';
+    }
+    ?>
+    <script type="text/javascript">
+        var <?php echo $strCallback; ?> = function drawVisualization()
+        {
+            var options = <?php echo $strChartOption; ?>;
+            if (options.width == undefined)
+                options.width = 700;
+            if (options.height == undefined)
+                options.height = 400;
+            var chart = new google.visualization.ChartWrapper({
+                chartType: 'ColumnChart',
+                dataTable: [<?php echo $strItem . $strData; ?>],
+                options: options,
+                containerId: '<?php echo $strDivId; ?>'
+            });
+            chart.draw();
+        }
+    </script>
+    <script src="https://www.google.com/jsapi?autoload={modules:[{name: 'visualization', version: '1', language: 'pt-BR', callback: <?php echo $strCallback ?>}]}"></script>
+    <div id='<?php echo $strDivId; ?>'></div>
+<?php } ?>

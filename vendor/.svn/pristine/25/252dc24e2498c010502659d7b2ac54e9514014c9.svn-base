@@ -1,0 +1,68 @@
+<script type="text/javascript">
+function validatePass(booShowMessage)
+{
+    var inputNewPass = getObject('no_senha_nova');
+    if (inputNewPass == undefined)
+        return false;
+    if (booShowMessage == undefined)
+        booShowMessage = false;
+    var booValidatePass = true;
+    var arrValidation = new Array();
+    arrValidation[0] = new Array('divPassValidationMinusculo', 'regex', '.*[a-z]+.*');
+    arrValidation[1] = new Array('divPassValidationMaiusculo', 'regex', '.*[A-Z]+.*');
+    arrValidation[2] = new Array('divPassValidationNumero', 'regex', '.*[\\d]+.*');
+    arrValidation[3] = new Array('divPassValidationSimbolo', 'regex', '.*[!@#$%&*]+.*');
+    arrValidation[4] = new Array('divPassValidationTamanho', 'size', 6, 20);
+    for (var i = 0; i < arrValidation.length; ++i) {
+        var arrValidationInfo = arrValidation[i];
+        var divPassValidation = getObject(arrValidationInfo[0]);
+        if (divPassValidation == undefined)
+            continue;
+        var booValid = true;
+        switch (arrValidationInfo[1].toLowerCase())
+        {
+            case 'regex': {
+                var regex = new RegExp(arrValidationInfo[2]);
+                booValid = regex.test(inputNewPass.value);
+                break;
+            }
+            case 'size': {
+                if ((arrValidationInfo[2] != undefined) && (arrValidationInfo[3] != undefined))
+                    booValid = ((inputNewPass.value.length >= arrValidationInfo[2]) && (inputNewPass.value.length <= arrValidationInfo[3]));
+                else if ((arrValidationInfo[2] != undefined) && (arrValidationInfo[3] == undefined))
+                    booValid = (inputNewPass.value.length >= arrValidationInfo[2]);
+                else if ((arrValidationInfo[2] == undefined) && (arrValidationInfo[3] != undefined))
+                    booValid = (inputNewPass.value.length <= arrValidationInfo[3]);
+                break;
+            }
+        }
+        divPassValidation.style.backgroundColor = (booValid) ? 'green' : '#9A0000';
+        if (booValid === false)
+            booValidatePass = false;
+    }
+
+    if ($('#frm').valid() == false )
+        return false;
+
+    if ((booShowMessage === true) && (booValidatePass === false))
+        alertDialog('É necessário atender a todos os critérios da validação para realizar a operação!', 'Aviso', 350, 160);
+
+    return booValidatePass;
+}
+
+function initPassValidation()
+{
+    var inputOldPass = getObject('no_senha_antiga');
+    var inputNewPass = getObject('no_senha_nova');
+    var inputConfirmPass = getObject('no_senha_confirmacao');
+    if (inputOldPass != undefined)
+        inputOldPass.value = '';
+    if (inputNewPass != undefined)
+        inputNewPass.value = '';
+    if (inputConfirmPass != undefined)
+        inputConfirmPass.value = '';
+    return validatePass();
+}
+
+execFunctionOnLoadEvent('initPassValidation();');
+</script>

@@ -1,0 +1,117 @@
+<?php
+$strTitle = 'Memcache';
+$this->headTitle($strTitle);
+?>
+<style>
+.lista-arvore ul {
+    list-style: none;
+    padding-left:15px;
+    margin-left: 5px;
+}
+</style>
+<h1><?php echo $this->escapeHtml($strTitle); ?></h1>
+<p>Visualize o percentual do consumo de memória de armazenamento de cada instância do servidor memcache configurado para esta aplicação.<br />
+Clique no velocímetro para visualizar algumas informações técnicas sobre o uso do memcache em uma instância do servidor e no botão de Exclusão Completa para limpar todos os dados da aplicação no servidor de Memcache.<br />
+Caso existam, também é possível visualizar/limpar cada informação armazenada por classe e método no servidor memcache ou no <i>cluster</i> caso existam mais de uma instância.</p>
+<?php if ($this->gaugeChart) { ?>
+    <div class="caixaVazada">
+        <h2>Informações técnicas por instância</h2>
+        <div class="well" style="overflow: hidden;">
+        <?php foreach ($this->gaugeChart as $strHostServer => $strHtml) { ?>
+             <div class="caixaVazada" style="float: left; text-align: center; width: 196px; margin-right: 5px;">
+                <font style="color: #000000; font-weight: bold;"><?php echo $strHostServer; ?></font>
+                <a href="<?php echo $this->basePath() . "/memcache/detail-cache/" . str_replace(array('.',':'), array('-','/'), $strHostServer); ?>" target="_self"><?php echo $strHtml; ?></a>
+             </div>
+        <?php } ?>
+        </div>
+        <?php echo $this->button('<button class="btnDefault btnLimpar btn-inep" id="btnLimparMemcache" name="btnLimparMemcache" title="Realizar a exclusão completa dos dados da aplicação no servidor de Memcache" type="button">Exclusão Completa</button>'); ?>
+    </div>
+    <?php if ($this->cacheAll) { ?>
+        <div class="caixaVazada" style="margin-top: 10px;">
+            <h2>Informações armazenadas por classe e método</h2>
+            <?php foreach ($this->cacheAll as $strKeyClass => $arrResult) { ?>
+                 <div class="caixaVazada" style="margin-top: 10px;">
+                    <font style="color: #000000; font-size: 15px; font-weight: bold;"><u><?php echo $strKeyClass; ?></u></font>
+                    <?php foreach($arrResult as $strKey => $strValue) { ?>
+                    <div class="span11">
+                        <div class="lista-arvore">
+                            <ul>
+                                <li>
+                                    <?php
+                                    $strClassPlus = (in_array($this->applicationInfo($this)->getModuleTheme(), array('AdministrativeResponsible'))) ? 'fa fa-plus-circle' : 'icon-plus-sign';
+                                    $strClassMinus = (in_array($this->applicationInfo($this)->getModuleTheme(), array('AdministrativeResponsible'))) ? 'fa fa-minus-circle' : 'icon-minus-sign';
+                                    ?>
+                                    <i id="<?php echo $strKey; ?>" class="<?php echo $strClassPlus; ?>" style="cursor: pointer;"></i>
+                                    <strong><?php echo $strKey; ?></strong>
+                                    <div class="<?php echo $strKey; ?>" style="display: none; max-width: 73%;">
+                                        <?php 
+                                        echo $this->button('<button key="' . base64_encode($strKey) . '" keyClass="' . base64_encode($strKeyClass) . '" class="btnDefault btnLimpar btn-inep" style="margin-top: 10px; margin-right: 10px; margin-left: 10px;" name="btnLimpar" title="Limpar" type="button">Limpar</button>');
+                                        var_dump($strValue);
+                                        ?>
+                                    </div>
+                                </li>
+                            </ul> 
+                        </div>
+                    </div>
+                    <?php } ?>
+                 </div>
+            <?php } ?>
+        </div>
+    <?php } ?>
+    <script type="text/javascript">
+    $(document).ready(function(){
+        $('i').click(function(){
+            var strId = $(this).attr('id');
+            if ($(this).hasClass('<?php echo $strClassMinus; ?>')) {
+                $(this).removeClass('<?php echo $strClassMinus; ?>').addClass('<?php echo $strClassPlus; ?>');
+                $('.' + strId).hide();
+            } else {
+                $(this).removeClass('<?php echo $strClassPlus; ?>').addClass('<?php echo $strClassMinus; ?>');
+                $('.' + strId).show();
+            }
+        });
+        $('button').click(function(){
+            var strName = $(this).attr('name');
+            var strKey = $(this).attr('key');
+            var strKeyClass = $(this).attr('keyClass');
+            if ((strKey == undefined) || (strKeyClass == undefined)) {
+                var strTitle = 'Exclusão Completa no Memcache';
+                var strEvalOk = 'clearCache();';
+            } else {
+                var strTitle = 'Limpar chave : ' + strKey;
+                var strEvalOk = "clearCache('" + strKey + "', '" + strKeyClass + "');";
+            }
+            var strText = "Realmente você deseja limpar o cache?";
+            confirmDialog(strText, strTitle, 400, 150, strEvalOk);
+        });
+    });
+
+    function clearCache(strKey, strKeyClass) {
+        var strUrl = '/memcache/ajax-clear-cache';
+        var booFull = true;
+        var arrUrlParam = new Array();
+        if ((strKey != undefined) && (strKeyClass != undefined)) {
+            arrUrlParam['key'] = strKey;
+            arrUrlParam['keyClass'] = strKeyClass;
+            booFull = false;
+        }
+        var booResult = ajaxRequest(strUrl, arrUrlParam, undefined, undefined, undefined, 'json', true);
+        if (booResult) {
+            alertDialog('Operação realizada com <span style="color: green;">sucesso</span>.', 'Sucesso');
+            if (!booFull) {
+                var arrButton = getElementsByAttribute(document.body, 'BUTTON', 'key', strKey);
+                if (arrButton.length > 0) {
+                    var button = arrButton[0];
+                    var li = button.parentNode.parentNode;
+                    var ul = li.parentNode;
+                    var div = ul.parentNode.parentNode.parentNode;
+                    $(li).remove();
+                    if ($(div).children('DIV').length == 1)
+                        $(div).remove();
+                }
+            } else
+                window.location.reload();
+        }
+    }
+    </script>
+<?php } ?>

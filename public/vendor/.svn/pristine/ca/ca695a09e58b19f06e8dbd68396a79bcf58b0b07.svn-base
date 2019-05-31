@@ -1,0 +1,25 @@
+<?php 
+$intLastModifiedTime = filemtime(__FILE__);
+$strETag = md5_file(__FILE__);
+header("Last-Modified: " . gmdate("D, d M Y H:i:s", $intLastModifiedTime) . " GMT");
+header("Etag: " . $strETag);
+header("Content-Type: text/css");
+header("Cache-Control: max-age=604800, public, must-revalidate");
+header("Pragma: max-age=604800, public, must-revalidate");
+if ((is_null($mixZlib = ini_get("zlib.output_compression"))) || ($mixZlib == ""))
+    ini_set("zlib.output_compression", true);
+header("Accept-Encoding: gzip");
+if ((@strtotime($_SERVER["HTTP_IF_MODIFIED_SINCE"]) == $intLastModifiedTime) || (trim(@$_SERVER["HTTP_IF_NONE_MATCH"]) == $strETag)) {
+    header("HTTP/1.1 304 Not Modified");
+    exit;
+}
+?>
+@media
+screen{.nav-sidebar
+ul{list-style:none}#menu-administrative-responsible{overflow:visible}#menu-administrative-responsible .fa-caret-down,
+#menu-administrative-responsible .fa-caret-right{border-left:5px solid transparent}#menu-administrative-responsible .nav-sidebar
+i{font-size:18px;min-width:24px;text-align:center;vertical-align:middle}#menu-administrative-responsible .nav-sidebar > li
+ul{background-color:rgba(0, 0, 0, 0.1) !important;list-style:none outside none;padding-left:0px}#menu-administrative-responsible .nav-sidebar > li ul li
+a{display:block;padding:10px;padding-left:30px}#menu-administrative-responsible .nav-sidebar > li ul li ul li
+a{padding-left:45px}#menu-administrative-responsible a:focus,
+#menu-administrative-responsible a:hover{text-decoration:none;background-color:#94d7e4}.container-menu-responsible{margin-left:210px}}

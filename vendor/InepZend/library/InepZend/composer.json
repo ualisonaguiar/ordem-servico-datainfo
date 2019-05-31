@@ -1,0 +1,34 @@
+{
+    "name": "InepZend/library",
+    "description": "InepZend Framework PHP from Inep",
+    "type": "library",    
+    "keywords": [
+        "framework",
+        "zf2",
+        "doctrine",
+        "InepZend"
+    ],
+    "homepage": "http://www.inep.gov.br/",
+    "autoload": {
+        "psr-0": {
+            "InepZend\\": ""
+        }
+    },
+    "target-dir": "InepZend",
+    "require": {
+        "php": ">=5.4",
+        "zendframework/zendframework": "2.*",
+        "zendframework/zendoauth": "dev-master",
+        "doctrine/annotations": ">=1.0",
+        "doctrine/doctrine-orm-module": "dev-master",
+        "phpoffice/phpexcel": "dev-master",
+        "psr/log": "dev-master",
+        "mpdf/mpdf": "dev-master",
+        "kriansa/openboleto": "dev-master"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "dev-master",
+        "phpunit/phpunit-skeleton-generator": "dev-master"
+    },
+    "minimum-stability": "dev"
+}

@@ -1,0 +1,13 @@
+<?php
+$strTitle = 'Administração de Atividades';
+$this->headTitle($strTitle);
+?>
+<h1><?php echo $this->escapeHtml($strTitle); ?></h1>
+<p>Insira as devidas informações e observe o símbolo <font style="color: red;">*</font> para aquelas entradas de dados que são de preenchimento obrigatório.</p>
+<?php
+$form = $this->form;
+$form->setAttribute('action', $this->url('atividade', array('action' => 'add'))); 
+$this->angular()
+    ->addService(array('url' => getRenderScriptUrl('InepSkeleton/OrdemServico/js/AtividadeService'), 'dependence' => 'Service/AbstractService'))
+    ->addController(array('url' => getRenderScriptUrl('InepSkeleton/OrdemServico/js/AtividadeFormController'), 'dependence' => 'Controller/AbstractFormController', 'html' => $this->form()->render($form))); 
+?>

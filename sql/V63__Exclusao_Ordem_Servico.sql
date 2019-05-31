@@ -1,0 +1,1 @@
+delete from tb_ordem_servico where id_ordem_servico in (468, 469, 470);

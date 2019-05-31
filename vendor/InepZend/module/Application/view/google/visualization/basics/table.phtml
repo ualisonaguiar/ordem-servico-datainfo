@@ -1,0 +1,40 @@
+<?php
+
+if ((is_array($this->arrData)) && (!empty($this->arrData))) {
+    $strCallback = ($this->strCallback) ? $this->strCallback : 'drawVisualization';
+    $strCallback .= str_replace(['.', ' '], '', microtime());
+    $strDivId = (!empty($this->strDivId)) ? $this->strDivId : 'divTable';
+    $strChartOption = (!empty($this->strChartOption)) ? $this->strChartOption : '{}';
+    $arrTitleStyle = (is_array($this->arrOptionEdited)) ? (array) @$this->arrOptionEdited['titleStyle'] : null;
+    $booShowNoRegister = (is_bool($this->booShowNoRegister)) ? $this->booShowNoRegister : false;
+    $strCallbackOnLoad = (!empty($this->strCallbackOnLoad)) ? $this->strCallbackOnLoad : null;
+    $strSetProperty = '';
+    if (!empty($arrTitleStyle)) {
+        foreach ($this->arrData as $intRow => $mixData) {
+            if ($intRow == 0)
+                continue;
+            foreach ($arrTitleStyle as $intCol => $strTitleStyle)
+                $strSetProperty .= 'data.setProperty(' . ($intRow - 1) . ', ' . $intCol . ', "style", "' . $strTitleStyle . '");';
+        }
+    }
+    ?>
+    <script type="text/javascript">
+        var <?php echo $strCallback; ?> = function drawVisualization()
+        {
+        	if ((typeof google != 'undefined') && (google) && (google.visualization) && (typeof google.visualization.arrayToDataTable == 'function') && (google.load)) {
+        		 var data = google.visualization.arrayToDataTable(<?php echo json_encode($this->arrData); ?>);
+                 var chart = new google.visualization.Table(document.getElementById('<?php echo $strDivId; ?>'));
+                 var options = <?php echo $strChartOption; ?>;
+                 <?php echo $strSetProperty; ?>
+                 chart.draw(data, options);
+                 <?php if (!empty($strCallbackOnLoad)) { echo 'eval("' . $strCallbackOnLoad . '");'; } ?>
+            } else
+                setTimeout(<?php echo $strCallback; ?>, 30);
+        };
+    </script>
+    <script type="text/javascript" src="https://www.google.com/jsapi?autoload={modules:[{name: 'visualization', version: '1', language: 'pt-BR', packages: ['table'], callback: <?php echo $strCallback ?>}]}"></script>
+    <link rel="stylesheet" type="text/css" href="https://www.google.com/uds/api/visualization/1.0/6c949f633e5fea3b7da305214b82195c/ui+pt_BR,table+pt_BR.css" />
+    <div class="divTableGoogle" id='<?php echo $strDivId; ?>' style="<?php echo ((count($this->arrData) == 1) ? 'display: none;' : ''); ?>"></div>
+    <?php if (($booShowNoRegister) && (count($this->arrData) == 1))
+        echo '<div class="divTableGoogleMessage" id="' . $strDivId . 'Message">Não existe registro.</div>'; ?>
+<?php } ?>

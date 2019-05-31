@@ -1,0 +1,49 @@
+<?php
+use InepZend\Util\Date;
+use InepZend\Util\FileSystem;
+$strTitle = 'Logs';
+$this->headTitle($strTitle);
+$strDsPath = base64_decode($this->strDsPath);
+$strNoFile = end($arrExplode = explode('/', $strDsPath));
+$arrNoFile = explode('-', $strNoFile);
+$strFilesize = FileSystem::filesizeFormated($strDsPath);
+$strDtCreate = Date::convertDate($arrNoFile[0], 'd/m/Y');
+$strTpLevel = reset($arrExplode = explode('.', $arrNoFile[1]));
+?>
+<link href="<?php echo $this->basePath() . getRenderScriptUrl('Log/css/visualizar-informacao'); ?>"
+      media="screen" rel="stylesheet" type="text/css">
+<script
+    defer type="text/javascript"
+    src="<?php echo $this->basePath() . getRenderScriptUrl('Log/js/visualizar-informacao'); ?>">
+</script>
+<h1><?php echo $this->escapeHtml($strTitle); ?></h1>
+<p>Visualize algumas informações sobre o <strong>arquivo de log</strong> e manuseie seu conteúdo dinamicamente pela árvore dos "Dados do conteúdo".</p>
+<div class="caixaVazada">
+    <h2>Visualização</h2>
+    <div class="classForm well" style="overflow: hidden;"><h3>Dados do arquivo de log</h3>
+        <?php
+        $arrInfo = array(
+            'Arquivo' => $strNoFile,
+            'Caminho' => '<a href="' . $this->url('log', array('action' => 'downloadFile', 'ds_path' => $this->strDsPath)) . '" target="_self">' . $strDsPath . '</a>',
+            'Tamanho' => $strFilesize,
+            'Criação' => $strDtCreate,
+            'Level' => $strTpLevel,
+        );
+        foreach ($arrInfo as $strLabel => $strValue) {
+            $strStyle = (in_array($this->applicationInfo($this)->getModuleTheme(), array('AdministrativeResponsible'))) ? ' style="height: 40px;"' : '';
+            echo '<label>' . $strLabel . '</label><div class="divRequired"></div><div class="divHeightRow"' . $strStyle . '>' . $strValue . '</div>';
+        }
+        echo $this->button(null, $this->url('log-index', array('ds_path' => base64_encode($this->strDsPath))));
+        ?>
+    </div>
+    <?php 
+    echo $this->partial(
+        'inep-zend/log/partial-detalhe-log',
+        array(
+            'arrInfoLogFile' => $this->arrInfoLogFile,
+            'strIndentitySession' => $this->strDateFile,
+            'strDsPath' => $strNoFile
+        )
+    );
+    ?>
+</div>

@@ -1,0 +1,10 @@
+update tb_ordem_servico set nu_ordem_servico=978, ds_svn = 'http://ic.inep.gov.br/svn/atsi-doc/OS/2017/OS0978-JAVA_ENEM16_HomologacaoVistaPedagogica'  where nu_ordem_servico=989;
+update tb_ordem_servico set nu_ordem_servico=979, ds_svn = 'http://ic.inep.gov.br/svn/atsi-doc/OS/2017/OS0979-Jenkins-abril'  where nu_ordem_servico=1035;
+update tb_ordem_servico set nu_ordem_servico=980, ds_svn = 'http://ic.inep.gov.br/svn/atsi-doc/OS/2017/OS0980-PHP-Avaliação-Abril'  where nu_ordem_servico=1036;
+update tb_ordem_servico set nu_ordem_servico=981, ds_svn = 'http://ic.inep.gov.br/svn/atsi-doc/OS/2017/OS0981-SVN-Abril'  where nu_ordem_servico=1037;
+update tb_ordem_servico set nu_ordem_servico=982, ds_svn = 'http://ic.inep.gov.br/svn/atsi-doc/OS/2017/OS0982-PHP-Investigacao-Abril'  where nu_ordem_servico=1038;
+update tb_ordem_servico set nu_ordem_servico=983, ds_svn = 'http://ic.inep.gov.br/svn/atsi-doc/OS/2017/OS0983-Java-Suporte-Abril'  where nu_ordem_servico=1040;
+update tb_ordem_servico set nu_ordem_servico=984, ds_svn = 'http://ic.inep.gov.br/svn/atsi-doc/OS/2017/OS0984-Reuniao-Abril'  where nu_ordem_servico=1041;
+update tb_ordem_servico set nu_ordem_servico=985, ds_svn = 'http://ic.inep.gov.br/svn/atsi-doc/OS/2017/OS0985-Java-Investigacao-Abril'  where nu_ordem_servico=1039;
+update tb_ordem_servico set nu_ordem_servico=986, ds_svn = 'http://ic.inep.gov.br/svn/atsi-doc/OS/2017/OS0986-AN-CENSO_SUPERIOR_Apoio_Atividades_Gerenciais_Marco'  where nu_ordem_servico=1042;
+update tb_ordem_servico set nu_ordem_servico=987, ds_svn = 'http://ic.inep.gov.br/svn/atsi-doc/OS/2017/OS0987-JAVA_ENEM_ConsultaCertificadoras' where nu_ordem_servico=1034;

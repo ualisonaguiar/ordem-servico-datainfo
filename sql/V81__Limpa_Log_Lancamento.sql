@@ -1,0 +1,1 @@
+delete from tb_log_lancamento where id_usuario = 22 and dt_ponto = '2018-10-19';

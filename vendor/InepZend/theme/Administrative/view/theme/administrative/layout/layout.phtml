@@ -1,0 +1,17 @@
+<?php
+use InepZend\Theme\Administrative\View\Helper\MenuHelper;
+$this->html($this)->open();
+$arrHtmlHeadInfo = $this->htmlHead()->render()[1];
+$this->htmlBody()->open();
+echo $this->barraBrasil()->getHtml();
+$this->htmlBody()->renderNavBar();
+echo $this->applicationInfo()->showHeader();
+echo $this->partial('container', array_merge($arrHtmlHeadInfo, array('strContent' => $this->content)));
+$this->htmlBody()->renderFooter('container');
+if ((MenuHelper::getMenuName() == MenuHelper::MENU_DDSMOOTH) && ($this->authentication()->hasIdentity()) && (!$this->barraBrasil()->getShowFile()))
+    echo '<script language="javascript">initMenuInepZend();</script>';
+echo $this->barraBrasil()->getHtml(true);
+echo $this->inlineScript();
+$this->htmlBody()->close();
+$this->html()->close();
+?>

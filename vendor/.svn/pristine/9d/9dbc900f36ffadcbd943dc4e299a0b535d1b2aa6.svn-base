@@ -1,0 +1,20 @@
+<?php use InepZend\Util\String; ?>
+<dl class="dl-horizontal">
+    <?php
+    foreach ($this->arrInfoLog as $arrLog) :
+        foreach ($arrLog as $strParametroLog => $strInformacaoLog) :
+            unset ($arrLog[$strParametroLog]);
+            if (String::isNullEmpty($strInformacaoLog))
+                continue; ?>
+            <dt><?php echo $strParametroLog; ?>:</dt>
+            <dd class="information-log">
+                <?php
+                echo ($strParametroLog == 'context') ? '<span class="context-erro">' . $strInformacaoLog . '</span>' : $strInformacaoLog;
+                ?>
+            </dd>
+            <?php
+        endforeach;
+        echo '<hr />';
+    endforeach;
+    ?>
+</dl>

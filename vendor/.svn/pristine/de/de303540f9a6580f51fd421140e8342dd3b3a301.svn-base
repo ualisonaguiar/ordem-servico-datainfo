@@ -1,0 +1,51 @@
+<?php if ($this->pageCount): ?>
+    <div align="center">
+        <div class="paginationControl">
+            <div>
+                <select class="selectPaginationControl" onchange="window.location.href = '/<?php echo $this->route; ?>/page/<?php echo $this->current; ?>/item_page/' + this.value + '/<?php echo $this->action; ?>';">
+                    <option<?php if ($this->itemCountPerPage == 1) {?> selected="selected"<?php }?> value="1">1</option>
+                    <option<?php if ($this->itemCountPerPage == 2) {?> selected="selected"<?php }?> value="2">2</option>
+                    <option<?php if ($this->itemCountPerPage == 3) {?> selected="selected"<?php }?> value="3">3</option>
+                    <option<?php if ($this->itemCountPerPage == 4) {?> selected="selected"<?php }?> value="4">4</option>
+                    <option<?php if ($this->itemCountPerPage == 5) {?> selected="selected"<?php }?> value="5">5</option>
+                    <option<?php if ($this->itemCountPerPage == 10) {?> selected="selected"<?php }?> value="10">10</option>
+                    <option<?php if ($this->itemCountPerPage == 15) {?> selected="selected"<?php }?> value="15">15</option>
+                    <option<?php if ($this->itemCountPerPage == 20) {?> selected="selected"<?php }?> value="20">20</option>
+                    <option<?php if ($this->itemCountPerPage == 30) {?> selected="selected"<?php }?> value="30">30</option>
+                    <option<?php if ($this->itemCountPerPage == 50) {?> selected="selected"<?php }?> value="50">50</option>
+                    <option<?php if ($this->itemCountPerPage == 100) {?> selected="selected"<?php }?> value="100">100</option>
+                </select>&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;Listando <?php echo $this->firstItemNumber; ?> até <?php echo $this->lastItemNumber; ?> de <?php echo $this->totalItemCount; ?> <?php echo (($this->totalItemCount <= 1) ? 'registro' : 'registros'); ?>
+            </div>
+            <div>
+                <?php if (isset($this->previous)): ?>
+                    <a target="_self" href="<?php echo $this->url($this->route, array('page' => $this->first, 'item_page' => $this->itemCountPerPage, 'action' => $this->action)); ?>">
+                        Primeira
+                    </a> |
+                <?php else: ?>
+                    <span class="disabled">Primeira</span> |
+                <?php endif; ?>
+                <?php if (isset($this->previous)): ?>
+                    <a target="_self" href="<?php echo $this->url($this->route, array('page' => $this->previous, 'item_page' => $this->itemCountPerPage, 'action' => $this->action)); ?>">
+                        < Anterior
+                    </a> |
+                <?php else: ?>
+                    <span class="disabled">< Anterior</span> |
+                <?php endif; ?>
+                <?php if (isset($this->next)): ?>
+                    <a target="_self" href="<?php echo $this->url($this->route, array('page' => $this->next, 'item_page' => $this->itemCountPerPage, 'action' => $this->action)); ?>">
+                        Próxima >
+                    </a> |
+                <?php else: ?>
+                    <span class="disabled">Próxima ></span> |
+                <?php endif; ?>
+                <?php if (isset($this->next)): ?>
+                    <a target="_self" href="<?php echo $this->url($this->route, array('page' => $this->last, 'item_page' => $this->itemCountPerPage, 'action' => $this->action)); ?>">
+                        Última
+                    </a>
+                <?php else: ?>
+                    <span class="disabled">Última</span>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>

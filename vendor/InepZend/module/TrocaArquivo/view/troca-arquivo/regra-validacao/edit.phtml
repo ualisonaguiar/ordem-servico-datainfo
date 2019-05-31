@@ -1,0 +1,7 @@
+<?php
+$strTitle = 'Regras de Validação';
+$this->headTitle($strTitle);
+?>
+<h1><?php echo $this->escapeHtml($strTitle); ?></h1>
+<p>Edite as informações necessárias e observe o símbolo <font style="color: red;">*</font> para aquelas entradas de dados que são de preenchimento obrigatório.</p>
+<?php echo $this->form()->render($this->form); ?>

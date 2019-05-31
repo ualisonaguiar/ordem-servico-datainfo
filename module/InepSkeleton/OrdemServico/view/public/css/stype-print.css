@@ -1,0 +1,36 @@
+.lista-demanda {
+    font-weight: bold;
+}
+
+table {
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+.lista-demanda li span {
+    font-weight: normal;
+}
+
+td, th, div, p {
+    font-size: 12px;
+}
+
+td, th {
+    border: 1px solid black;
+}
+
+.sem-borda {
+    border: 0px !important;
+}
+
+body {
+    margin: 0px;
+}
+
+.page {
+    width: 1000px;
+    background-color: #FFFFFF;
+    text-align: left;
+    margin-bottom: 20px;
+    padding: 10px;
+}

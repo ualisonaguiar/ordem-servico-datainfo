@@ -1,0 +1,32 @@
+<?php
+
+if ((is_array($this->arrData)) && (!empty($this->arrData))) {
+    $strCallback = ($this->strCallback) ? $this->strCallback : 'drawVisualization';
+    $strDivId = (!empty($this->strDivId)) ? $this->strDivId : 'divPieChart';
+    $strChartOption = (!empty($this->strChartOption)) ? $this->strChartOption : '{}';
+    $strData = '';
+    foreach ($this->arrData as $arrInfo) {
+        if ((!array_key_exists(0, $arrInfo)) || (!array_key_exists(1, $arrInfo)))
+            continue;
+        $strData .= ",['" . $arrInfo[0] . "'," . $arrInfo[1] . "]";
+    }
+    ?>
+    <script type="text/javascript">
+        var <?php echo $strCallback; ?> = function drawVisualization()
+        {
+            var data = google.visualization.arrayToDataTable([
+                ['Label', 'Value']
+                <?php echo $strData; ?>
+            ]);
+            var chart = new google.visualization.PieChart(document.getElementById('<?php echo $strDivId; ?>'));
+            var options = <?php echo $strChartOption; ?>;
+            if (options.width == undefined)
+                options.width = 700;
+            if (options.height == undefined)
+                options.height = 400;
+            chart.draw(data, options);
+        }
+    </script>
+    <script src="https://www.google.com/jsapi?autoload={modules:[{name: 'visualization', version: '1', language: 'pt-BR', packages: ['corechart'], callback: <?php echo $strCallback ?>}]}"></script>
+    <div id='<?php echo $strDivId; ?>'></div>
+<?php } ?>

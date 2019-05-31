@@ -1,0 +1,1 @@
+update tb_usuario set ds_hash_apex = null where id_usuario = 14;

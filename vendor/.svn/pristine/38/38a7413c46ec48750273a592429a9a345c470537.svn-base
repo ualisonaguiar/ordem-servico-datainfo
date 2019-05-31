@@ -1,0 +1,31 @@
+<?php
+$strTitle = 'OPCache';
+$this->headTitle($strTitle);
+?>
+<h1><?php echo $this->escapeHtml($strTitle); ?></h1>
+<?php 
+if (!function_exists('opcache_reset'))
+    echo '<p>O PHP instalado servidor web <b>NÃO</b> possui a extensão OPCache.</p>';
+else { ?>
+    <p>Clique no botão de Exclusão Completa para limpar todos os dados da aplicação na extensão OPCache do PHP (caso esteja instalada).</p>
+    <?php echo $this->button('<button class="btnDefault btnLimpar btn-inep" id="btnLimparOPCache" name="btnLimparOPCache" title="Realizar a exclusão completa dos dados da aplicação na extensão OPCache" type="button">Exclusão Completa no OPCache</button>'); ?>
+    <script type="text/javascript">
+    $(document).ready(function(){
+        $('button').click(function(){
+            var strTitle = 'Exclusão Completa no OPCache';
+            var strEvalOk = 'clearCache();';
+            var strText = "Realmente você deseja limpar o cache?";
+            confirmDialog(strText, strTitle, 400, 150, strEvalOk);
+        });
+    });
+
+    function clearCache() {
+        var strUrl = '/opcache/ajax-clear-cache';
+        var arrUrlParam = new Array();
+        arrUrlParam['opcache'] = '1';
+        var booResult = ajaxRequest(strUrl, arrUrlParam, undefined, undefined, undefined, 'json', true);
+        if (booResult)
+            alertDialog('Operação realizada com <span style="color: green;">sucesso</span>.', 'Sucesso');
+    }
+    </script>
+<?php } ?>

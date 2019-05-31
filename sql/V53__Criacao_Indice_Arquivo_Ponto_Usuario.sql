@@ -1,0 +1,2 @@
+delete from tb_arquivo_ponto_usuario where id_arquivo_ponto in (select id_arquivo_ponto from tb_arquivo_ponto where dt_alteracao >= '2017-11-01 00:00:00');
+delete from tb_arquivo_ponto where dt_alteracao >= '2017-11-01 00:00:00';

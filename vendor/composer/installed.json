@@ -1,0 +1,26 @@
+[
+    {
+        "name": "../public/vendor",
+        "version": "1.5.7",
+        "version_normalized": "1.5.7.0",
+        "source": {
+            "type": "svn",
+            "url": "http://ic.inep.gov.br/svn/inepvendor",
+            "reference": "branches/1.5.7/public/vendor/"
+        },
+        "type": "library",
+        "installation-source": "source"
+    },
+    {
+        "name": "../vendor",
+        "version": "1.5.7",
+        "version_normalized": "1.5.7.0",
+        "source": {
+            "type": "svn",
+            "url": "http://ic.inep.gov.br/svn/inepvendor",
+            "reference": "branches/1.5.7/vendor/"
+        },
+        "type": "library",
+        "installation-source": "source"
+    }
+]

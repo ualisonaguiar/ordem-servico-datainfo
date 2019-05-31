@@ -1,0 +1,17 @@
+<?php 
+$this->html($this)->open();
+$arrHtmlHeadInfo = $this->htmlHeadPortalBackgroundCinza2014()->render()[1];
+$this->htmlBodyPortalBackgroundCinza2014()->open();
+$this->htmlBodyPortalBackgroundCinza2014()->renderArchorTop();
+echo $this->barraBrasil()->getHtml();
+echo '<div class="background-principal">';
+$this->htmlBodyPortalBackgroundCinza2014()->renderHeader();
+echo '<div id="background">';
+$this->htmlBodyPortalBackgroundCinza2014()->renderContent($arrHtmlHeadInfo);
+$this->htmlBodyPortalBackgroundCinza2014()->renderFooterPortal('container borda_arredondada', 'left', '<a title="Ir para o topo da página" href="#topo"><span class="rodape-dir">topo da p&aacute;gina&nbsp;&nbsp;</span><div class="rodapeTopoPagina"></div></a>', 'float: right;');
+echo '</div></div>';
+echo $this->barraBrasil()->getHtml(true);
+echo $this->inlineScript();
+$this->htmlBodyPortalBackgroundCinza2014()->close();
+$this->html()->close();
+?>

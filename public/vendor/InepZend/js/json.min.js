@@ -1,0 +1,1 @@
+function getJsonObject(strJson){return eval('('+strJson+')')}

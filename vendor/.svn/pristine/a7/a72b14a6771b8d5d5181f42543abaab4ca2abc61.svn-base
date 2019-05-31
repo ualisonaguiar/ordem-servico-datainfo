@@ -1,0 +1,14 @@
+<?php
+$strTitle = 'Sistema de Segurança do Inep - SSI';
+$this->headTitle($strTitle);
+?>
+<h1><?php echo $this->escapeHtml($strTitle); ?></h1>
+<p>Para realizar a atualização de alguns dados armanzenados no SSI é necessário preencher corretamente as informações abaixo.</p>
+<?php echo $this->form()->render($this->form); ?>
+<div class="hidden">
+    <?php echo $this->form()->render($this->formPersonalInfoCompare); ?>
+</div>
+<script
+    defer type="text/javascript"
+    src="<?php echo $this->basePath() . getRenderScriptUrl('Ssi/js/personal-info'); ?>">
+</script>

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WebService</title>
+<link rel="stylesheet" href="https://stackedit.io/res-min/themes/default.css" />
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body><div class="container"><h1 id="webservice"><strong><i class="icon-folder-open"></i> WebService</strong></h1>
+
+
+
+<h2 id="1-índice">1. Índice</h2>
+
+<p><div class="toc">
+<ul>
+<li><a href="#webservice"> WebService</a><ul>
+<li><a href="#1-índice">1. Índice</a></li>
+<li><a href="#2-definição"> 2. Definição</a><ul>
+<li><a href="#21-conceito"> 2.1. Conceito</a><ul>
+<li><a href="#211-webservice">2.1.1 WebService</a></li>
+<li><a href="#212-principais-características">2.1.2 Principais Características</a></li>
+</ul>
+</li>
+<li><a href="#22-principais-características"> 2.2. Principais características</a><ul>
+<li><a href="#221-classes">2.2.1. Classes</a></li>
+<li><a href="#222-estrutura-principal">2.2.2. Estrutura Principal</a></li>
+<li><a href="#223-namespace"> 2.2.3. Namespace</a></li>
+</ul>
+</li>
+<li><a href="#23-apidocunittest"> 2.3. APIDoc/UnitTest</a></li>
+</ul>
+</li>
+<li><a href="#3-como-usar"> 3. Como usar</a><ul>
+<li><a href="#31-onde-utilizar-o-componente">3.1. Onde utilizar o componente</a><ul>
+<li><a href="#311-camadas">3.1.1 Camadas</a></li>
+</ul>
+</li>
+<li><a href="#32-utilizando-o-componente">3.2. Utilizando o componente</a><ul>
+<li><a href="#321-executando-os-métodos-da-formgenerator">3.2.1 Executando os métodos da FormGenerator</a><ul>
+<li><a href="#3211-assinatura-do-método">3.2.1.1 Assinatura do método</a></li>
+<li><a href="#3212-parametrizado-via-array">3.2.1.2 Parametrizado via array()</a></li>
+<li><a href="#3213-parametrizado-via-parâmetros">3.2.1.3 Parametrizado via parâmetros</a></li>
+</ul>
+</li>
+<li><a href="#322-métodos-customizados">3.2.2 Métodos customizados</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#4-referência">  4. Referência </a></li>
+</ul>
+</li>
+</ul>
+</div>
+</p>
+
+
+
+<h2 id="2-definição"><i class="icon-th"></i> 2. Definição</h2>
+
+
+
+<h3 id="21-conceito"><i class="icon-pencil"></i> 2.1. Conceito</h3>
+
+<blockquote>
+  <p>O componente <strong>WebService</strong> é responsável por reunir diversos métodos para acesso e consumo de serviços. <br>
+  Toda troca de informações, seja ele interno ou externo, através de serviços deve estar mapeado no componente.</p>
+</blockquote>
+
+<h4 id="211-webservice">2.1.1 WebService</h4>
+
+
+
+<h4 id="212-principais-características">2.1.2 Principais Características</h4>
+
+
+
+<h3 id="22-principais-características"><i class="icon-info"></i> 2.2. Principais características</h3>
+
+<ul>
+<li>O componente WebService consiste nas classes com métodos para consumo de serviços.</li>
+</ul>
+
+
+
+<h4 id="221-classes">2.2.1. Classes</h4>
+
+<blockquote>
+  <ul>
+  <li>Classes: <br>
+  <ul><li>InepZend\WebService\Client\Corporative <br>
+  <ul><li>BancoDoBrasil <br>
+  <ul><li>AgenciasBb</li></ul></li>
+  <li>Correios <br>
+  <ul><li>Dne</li></ul></li>
+  <li>Febraban <br>
+  <ul><li>Febraban</li></ul></li>
+  <li>Inep <br>
+  <ul><li>RestCorp <br>
+  <ul><li>Cartorio</li>
+  <li>Cep</li>
+  <li>CodigoBarra</li>
+  <li>CodigoSeguranca</li>
+  <li>Cpf</li>
+  <li>Distrito</li>
+  <li>Email</li>
+  <li>EstadoCivil</li>
+  <li>Etnia</li>
+  <li>Municipio</li>
+  <li>OrgaoEmissor</li>
+  <li>Pais</li>
+  <li>Pessoa</li>
+  <li>Programa</li>
+  <li>Projeto</li>
+  <li>Regiao</li>
+  <li>Sms</li>
+  <li>Sqi</li>
+  <li>SubDistrito</li>
+  <li>Uf</li></ul></li></ul></li>
+  <li>Mec</li>
+  <li>Mpog <br>
+  <ul><li>Mpog</li></ul></li>
+  <li>ReceitaFederal <br>
+  <ul><li>CertidaoConjunta</li>
+  <li>PessoaFisica</li>
+  <li>PessoaJuridica</li></ul></li></ul></li></ul></li>
+  </ul>
+</blockquote>
+
+
+
+<h4 id="222-estrutura-principal">2.2.2. Estrutura Principal</h4>
+
+<blockquote>
+  <ul>
+  <li><i class="icon-folder-open"></i> Client/ <br>
+  <ul><li><i class="icon-folder-open"></i> Corporative/ <br>
+  <ul><li><i class="icon-folder-open"></i> … <br>
+  <ul><li><i class="icon-file"></i> …</li></ul></li></ul></li>
+  <li><i class="icon-folder-open"></i> Soap/ <br>
+  <ul><li><i class="icon-folder-open"></i> … <br>
+  <ul><li><i class="icon-file"></i> …</li></ul></li></ul></li>
+  <li><i class="icon-file"></i> AbstractWebService.php</li>
+  <li><i class="icon-file"></i> Rest.php</li>
+  <li><i class="icon-file"></i> Soap.php</li></ul></li>
+  <li><i class="icon-folder-open"></i> Server/ <br>
+  <ul><li><i class="icon-folder-open"></i> … <br>
+  <ul><li><i class="icon-file"></i> …</li></ul></li></ul></li>
+  </ul>
+</blockquote>
+
+<h4 id="223-namespace"><i class="icon-sitemap"></i> 2.2.3. Namespace</h4>
+
+<blockquote>
+  <ul>
+  <li>\InepZend\WebService</li>
+  </ul>
+</blockquote>
+
+
+
+<h3 id="23-apidocunittest"><i class="icon-book"></i> 2.3. APIDoc/UnitTest</h3>
+
+<blockquote>
+  <p></p><ul> <br>
+  <li>APIDoc <br></li></ul><p></p>
+  
+  <blockquote>
+    <p><a href="http://desenvphp.inep.gov.br/apidoc/namespace-InepZend.WebService.html"></a><a href="http://desenvphp.inep.gov.br/apidoc/namespace-InepZend.WebService.html">http://desenvphp.inep.gov.br/apidoc/namespace-InepZend.WebService.html</a>
+    </p>
+  </blockquote>
+</blockquote>
+
+
+
+<h2 id="3-como-usar"><i class="icon-terminal"></i> 3. Como usar</h2>
+
+
+
+<h3 id="31-onde-utilizar-o-componente">3.1. Onde utilizar o componente</h3>
+
+<h4 id="311-camadas">3.1.1 Camadas</h4>
+
+<blockquote>
+  <ul>
+  <li>Todas as classes referentes a WebService deve estender a classe InepZend\WebService\Client\Soap quando se tratar de serviços SOAP e InepZend\WebService\Client\Rest quando se tratar de serviços REST</li>
+  <li>As classes são agrupadas nos grupo CLIENT e SERVER.</li>
+  <li>Esses grupos são subdivididos em subgrupos de fornecedores dos serviços. <br>
+  <ul><li>Banco do Brasil</li>
+  <li>Correios</li>
+  <li>Febraban</li>
+  <li>Inep</li>
+  <li>Mec</li>
+  <li>Mpog</li>
+  <li>Receita Federal</li></ul></li>
+  </ul>
+</blockquote>
+
+<h3 id="32-utilizando-o-componente">3.2. Utilizando o componente</h3>
+
+<blockquote>
+  <p>As classes para consumo dos serviços são utilizadas de acordo com a necessidade da aplicação para obter/processar determinados dados. <br>
+  O fluxo deve ser iniciado na camada controladora.</p>
+</blockquote>
+
+<h4 id="321-executando-os-métodos-do-webservice">3.2.1 Executando os métodos do WebService</h4>
+
+<h5 id="3211-chamada-do-método">3.2.1.1 Chamada do método</h5>
+
+<blockquote>
+  <p>Para execução de um método deve primeiramente instanciar um objeto da classe do serviço a ser executado e a partir dele chamar o método.</p>
+</blockquote>
+
+<pre class="prettyprint"><code class=" hljs lasso"><span class="hljs-variable">$objWs</span> <span class="hljs-subst">=</span> <span class="hljs-literal">new</span> Classe();
+
+<span class="hljs-variable">$result</span> <span class="hljs-subst">=</span> <span class="hljs-variable">$objWs</span><span class="hljs-subst">-&gt;</span>metodo(<span class="hljs-variable">$params</span>);</code></pre>
+
+<h3 id="33-restcorp">3.3. RestCorp</h3>
+
+<blockquote>
+  <p>Métodos mais utilizados como busca por CPF, endereços por CEP e listas para composição de combos UFs e Municípios estão mapeados no diretório RestCorp. <br>
+  Para execução desses métodos deve-se instanciar a classe RestCorp.</p>
+</blockquote>
+
+<pre class="prettyprint"><code class=" hljs php"><span class="hljs-variable">$objWs</span> = <span class="hljs-keyword">new</span> RestCorp();</code></pre>
+
+
+
+<h4 id="331-exemplo">3.3.1 Exemplo</h4>
+
+
+
+<h4 id="3311-cpf">3.3.1.1 Cpf</h4>
+
+
+
+<pre class="prettyprint"><code class=" hljs lasso"><span class="hljs-variable">$result</span> <span class="hljs-subst">=</span> <span class="hljs-variable">$objWs</span><span class="hljs-subst">-&gt;</span>cpf(<span class="hljs-variable">$strCpf</span>);</code></pre>
+
+<h4 id="3312-cep">3.3.1.2 Cep</h4>
+
+
+
+<pre class="prettyprint"><code class=" hljs lasso"><span class="hljs-variable">$result</span> <span class="hljs-subst">=</span> <span class="hljs-variable">$objWs</span><span class="hljs-subst">-&gt;</span>cep(<span class="hljs-variable">$intCep</span>);</code></pre>
+
+<h4 id="3313-país">3.3.1.3 País</h4>
+
+
+
+<pre class="prettyprint"><code class=" hljs lasso"><span class="hljs-variable">$result</span> <span class="hljs-subst">=</span> <span class="hljs-variable">$objWs</span><span class="hljs-subst">-&gt;</span>pais();</code></pre>
+
+<h4 id="3314-uf">3.3.1.4 UF</h4>
+
+
+
+<pre class="prettyprint"><code class=" hljs lasso"><span class="hljs-variable">$result</span> <span class="hljs-subst">=</span> <span class="hljs-variable">$objWs</span><span class="hljs-subst">-&gt;</span>uf(<span class="hljs-variable">$strCoUf</span>);</code></pre>
+
+<h4 id="3315-estado-civil">3.3.1.5 Estado Civil</h4>
+
+<pre class="prettyprint"><code class=" hljs lasso"><span class="hljs-variable">$result</span> <span class="hljs-subst">=</span> <span class="hljs-variable">$objWs</span><span class="hljs-subst">-&gt;</span>estadoCivil();</code></pre>
+
+<h2 id="4-referência"><i class="icon-link"></i> 4. Referência </h2>
+
+<blockquote>
+  <p><a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.WebService.WebService.html">http://desenvphp.inep.gov.br/apidoc/class-InepZend.WebService.WebService.html</a></p>
+</blockquote></div></body>
+</html>

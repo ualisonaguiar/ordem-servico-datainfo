@@ -1,0 +1,16 @@
+<?php
+$this->html($this)->open();
+$arrHtmlHeadInfo = $this->htmlHeadConsultaPublica()->render(false)[1];
+$this->htmlBodyConsultaPublica()->open();
+$this->htmlBodyConsultaPublica()->renderArchorTop();
+echo $this->barraBrasil()->getHtml();
+$this->htmlBodyConsultaPublica()->renderNavBar();
+echo '<div id="background">';
+$this->htmlBodyConsultaPublica()->renderContent($arrHtmlHeadInfo);
+$this->htmlBodyConsultaPublica()->renderFooter();
+echo '</div>';
+echo $this->barraBrasil()->getHtml(true);
+echo $this->inlineScript();
+$this->htmlBodyConsultaPublica()->close();
+$this->html()->close();
+?>

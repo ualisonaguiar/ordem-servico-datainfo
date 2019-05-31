@@ -1,0 +1,50 @@
+{
+  "name": "inep/inepsimpleskeleton",
+  "description": "Simple Skeleton Application from Inep",
+  "license": "BSD-3-Clause",
+  "keywords": [
+    "framework",
+    "zf2",
+    "doctrine",
+    "InepZend"
+  ],
+  "homepage": "http://www.inep.gov.br/",
+  "config": {
+    "process-timeout": 3000,
+    "secure-http": false
+  },
+  "repositories": [
+    {
+      "type": "package",
+      "package": {
+        "name": "../public/vendor",
+        "version": "1.5.7",
+        "source": {
+          "url": "http://ic.inep.gov.br/svn/inepvendor",
+          "type": "svn",
+          "reference": "branches/1.5.7/public/vendor/"
+        }
+      },
+      "packagist": false
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "../vendor",
+        "version": "1.5.7",
+        "source": {
+          "url": "http://ic.inep.gov.br/svn/inepvendor",
+          "type": "svn",
+          "reference": "branches/1.5.7/vendor/"
+        }
+      },
+      "packagist": false
+    }
+  ],
+  "require": {
+    "php": ">=5.4",
+    "../public/vendor": "1.5.7",
+    "../vendor": "1.5.7"
+  },
+  "minimum-stability": "stable"
+}

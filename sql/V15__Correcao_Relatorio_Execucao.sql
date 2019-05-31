@@ -1,0 +1,1 @@
+update tb_ordem_servico set tp_situacao = 1 where nu_ordem_servico in (818, 799)

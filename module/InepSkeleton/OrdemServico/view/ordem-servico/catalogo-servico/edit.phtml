@@ -1,0 +1,16 @@
+<?php
+$strTitle = 'Catálogo de Serviço';
+$this->headTitle($strTitle);
+?>
+<h1><?php echo $this->escapeHtml($strTitle); ?></h1>
+<p>Edite as informações necessárias e observe o símbolo <font style="color: red;">*</font> para aquelas entradas de dados que são de preenchimento obrigatório.</p>
+<?php
+$form = $this->form;
+$form->setAttribute('action', $this->url('catologoservico', array('action' => 'edit', 'id_atividade' => $form->get('id_catalogo_servico')->getValue())));
+$this->angular()
+    ->addService(array('url' => getRenderScriptUrl('InepSkeleton/OrdemServico/js/CatalogoService'), 'dependence' => 'Service/AbstractService'))
+    ->addService(array('url' => getRenderScriptUrl('InepSkeleton/OrdemServico/js/AtividadeService'), 'dependence' => 'Service/AbstractService'))
+    ->addService(array('url' => getRenderScriptUrl('InepSkeleton/OrdemServico/js/CatalogoServicoAtividade'), 'dependence' => 'Service/AbstractService'))
+    ->addService(array('url' => getRenderScriptUrl('InepSkeleton/OrdemServico/js/DemandaService'), 'dependence' => 'Service/AbstractService'))
+    ->addController(array('url' => getRenderScriptUrl('InepSkeleton/OrdemServico/js/CatalogoFormController'), 'dependence' => 'Controller/AbstractGridController', 'html' => $this->form()->render($this->form)));
+?>

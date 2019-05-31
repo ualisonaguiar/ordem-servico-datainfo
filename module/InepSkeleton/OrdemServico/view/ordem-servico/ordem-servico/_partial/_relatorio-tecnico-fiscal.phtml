@@ -1,0 +1,148 @@
+<?php
+
+use InepZend\Util\Server;
+use InepZend\Util\Date;
+
+$renderDescricaoDemanda = $this->renderDescricaoDemandaHelper();
+?>
+    <head>
+        <meta http-equiv="cache-control" content="max-age=0"/>
+        <meta http-equiv="cache-control" content="no-cache"/>
+        <meta http-equiv="expires" content="0"/>
+        <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT"/>
+        <meta http-equiv="pragma" content="no-cache"/>
+        <meta charset="UTF-8">
+    </head>
+    <style>
+        .lista-demanda {
+            font-weight: bold;
+        }
+
+        table {
+            border-spacing: 0;
+            border-collapse: collapse;
+        }
+
+        .lista-demanda li span {
+            font-weight: normal;
+        }
+
+        td, th, div, p {
+            font-size: 12px;
+        }
+
+        td, th {
+            border: 1px solid black;
+        }
+
+        .sem-borda {
+            border: 0px !important;
+        }
+
+        body {
+            margin: 0px;
+        }
+
+        .page {
+            width: 1000px;
+            background-color: #FFFFFF;
+            text-align: left;
+            margin-bottom: 20px;
+            padding: 10px;
+        }
+    </style>
+    <div class="page">
+        <table style="width: 100%;">
+            <tr>
+                <td class="brasao sem-borda" align="center"><img
+                        src="<?php echo Server::getHost(true) . '/vendor/InepZend/images/brasaoNacional2.jpg'; ?>"
+                        style="height: 100px;"></td>
+            </tr>
+            <tr>
+                <td class="sem-borda" align="center"><strong>Ministério da Educação</strong></td>
+            </tr>
+            <tr>
+                <td class="sem-borda" align="center"><strong>Instituto Nacional de Estudos e Pesquisas Educacionais
+                        Anísio Teixeira</strong></td>
+            </tr>
+            <tr>
+                <td class="sem-borda" align="center"><strong>Diretoria de Tecnologia e Disseminação de Informações
+                        Educacionais</strong></td>
+            </tr>
+            <tr>
+                <td class="sem-borda"></td>
+            </tr>
+            <tr>
+                <td class="sem-borda"></td>
+            </tr>
+            <tr>
+                <td class="sem-borda" align="center"><strong>Relatório Técnico Fiscal (resumido)</strong></td>
+            </tr>
+        </table>
+        <br/>
+        <table style="width: 100%;" cellpadding="3" cellspacing="1">
+            <tr>
+                <td style="width: 200px;">
+                    <strong>Contrato: </strong><?php echo $this->ordem_servico->getDsContrato(); ?>
+                </td>
+                <td>
+                    <strong>OS Nº <?php echo $this->ordem_servico->getNuOrdemServico(); ?></strong>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <table style="width: 100%;" cellpadding="3" cellspacing="1">
+                        <tr>
+                            <th align="center">ID</th>
+                            <th style="width: 100%;">Atividade</th>
+                            <th>CO</th>
+                            <th>I</th>
+                            <th>CR</th>
+                            <th>FP</th>
+                            <th>FACIM</th>
+                            <th>QMA</th>
+                        </tr>
+                        <?php
+                        foreach ($this->arrDemandas as $mixDemanda) :
+                            $intPosicao = $mixDemanda['demanda']->sequencia;
+                            foreach ($mixDemanda['atividade'] as $intSequencia => $arrAtividade) :
+                                $intNuSequencia = $arrAtividade['nu_sequencia'];
+                                ?>
+                                <tr>
+                                    <td align="center"><?php echo $arrAtividade['co_atividade']; ?></td>
+                                    <td><?php echo $arrAtividade['no_atividade'] . ' - Atividade ' . $intPosicao . (($intNuSequencia) ? '.' . $intNuSequencia : ''); ?></td>
+                                    <td align="center"><?php echo $arrAtividade['vl_complexidade']; ?></td>
+                                    <td align="center"><?php echo $arrAtividade['vl_impacto']; ?></td>
+                                    <td align="center"><?php echo $arrAtividade['vl_criticidade']; ?></td>
+                                    <td align="center"><?php echo $arrAtividade['vl_fator_ponderacao']; ?></td>
+                                    <td align="center"><?php echo $arrAtividade['vl_facim']; ?></td>
+                                    <td align="center"><?php echo $arrAtividade['vl_qma']; ?></td>
+                                </tr>
+                                <?php
+                            endforeach;
+                        endforeach;
+                        ?>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <p>
+                        <strong>Legenda:</strong> CO (Complexidade), I (Impacto), CR (Criticidade), FP (Fator de
+                        Ponderação), FACIM (Fator de Conhecimento Interno e Maturidade), B (Baixo), M (Médio), A (Alto),
+                        N (Normal), C(Crítico), D (Definido), PD (Parcialmente Definido) e I (Indefinido).
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <p><strong>Justificativa:</strong></p>
+
+                    <p><?php echo $renderDescricaoDemanda->renderDescricaoDemanda($this->ordem_servico->getDsJustificativa()); ?></p>
+                </td>
+            </tr>
+        </table>
+    </div>
+<?php
+echo $this->partial('ordem-servico/ordem-servico/_relatorio-tecnico');
+?>

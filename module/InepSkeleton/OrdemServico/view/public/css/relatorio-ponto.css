@@ -1,0 +1,24 @@
+.justificar-ponto-texto {
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    color: #a94442;
+}
+
+.justificar-ponto-texto-cell {
+    background-image: linear-gradient(to bottom, #f2dede 0px, #e7c3c3 100%);
+    background-repeat: repeat-x;
+    border-color: #dca7a7;
+}
+
+.sugestao-ponto-texto {
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+    color: #31708f;
+}
+
+
+.sugestao-ponto-texto-cell {
+    background-image: linear-gradient(to bottom, #beedf2 0px, #97dfe7 100%);
+    background-repeat: repeat-x;
+    border-color: #31708f;
+}

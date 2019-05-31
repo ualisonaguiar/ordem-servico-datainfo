@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTTP</title>
+<link rel="stylesheet" href="https://stackedit.io/res-min/themes/default.css" />
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body><div class="container"><h1 id="http"><strong><i class="icon-folder-open"></i> HTTP</strong></h1>
+
+
+
+<h2 id="1-índice">1. Índice</h2>
+
+<p><div class="toc"><div class="toc">
+<ul>
+<li><a href="#http"> HTTP</a><ul>
+<li><a href="#1-índice">1. Índice</a></li>
+<li><a href="#2-definição"> 2. Definição</a><ul>
+<li><a href="#21-conceito">2.1. Conceito</a></li>
+<li><a href="#22-principais-características"> 2.2. Principais características</a><ul>
+<li><a href="#221-namespace"> 2.2.1. Namespace</a></li>
+</ul>
+</li>
+<li><a href="#23-apidocunittest"> 2.3. APIDoc/UnitTest</a></li>
+</ul>
+</li>
+<li><a href="#3-como-usar"> 3. Como usar</a><ul>
+<li><a href="#31-invocando-request">3.1. Invocando Request</a></li>
+<li><a href="#32-invocando-requesttrait">3.2. Invocando RequestTrait</a></li>
+<li><a href="#33-exemplo-de-código-annotation-example">3.3. Exemplo de código - annotation @example</a></li>
+</ul>
+</li>
+<li><a href="#4-referência">  4. Referência </a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</p>
+
+
+
+<h2 id="2-definição"><i class="icon-th"></i> 2. Definição</h2>
+
+
+
+<h3 id="21-conceito"><i class="icon-pencil"></i>2.1. Conceito</h3>
+
+<blockquote>
+  <p><em>HTTP</em> é uma biblioteca disponibilizada no <strong>InepZend</strong> na qual contém classe e trait que facilitam o desenvolvimento de funcionalidades, podendo ser utilizadas em camadas onde sejam necessárias a suas utilizações.</p>
+  
+  <p>Visando a facilidade do uso da biblioteca, a mesma foi desenvolvida aplicando o conceito de Trait [<a href="http://br1.php.net/trait">http://br1.php.net/trait</a> ].</p>
+</blockquote>
+
+<hr>
+
+
+
+<h3 id="22-principais-características"><i class="icon-info"></i> 2.2. Principais características</h3>
+
+<ul>
+<li><p>A biblioteca disponibiliza uma classe <strong><em>\InepZend\Http\Request</em></strong> contendo em seu escopo a utilização da trait <strong><em>\InepZend\Http\RequestTrait</em></strong>.</p></li>
+<li><p>O uso dos métodos da \InepZend\Http\RequestTrait é aplicado em dois contextos:</p></li>
+</ul>
+
+<blockquote>
+  <p>1 - Manipulação de informações de ambiente representadas pela classe \Zend\Http\PhpEnvironment\Request, ou seja, tratamento dos dados do $_SERVER como exemplo a baseUrl. </p>
+  
+  <blockquote>
+    <p><a href="http://framework.zend.com/manual/2.2/en/tutorials/config.advanced.html">http://framework.zend.com/manual/2.2/en/tutorials/config.advanced.html</a> <br>
+    <a href="http://php.net/manual/en/reserved.variables.server.php">http://php.net/manual/en/reserved.variables.server.php</a></p>
+  </blockquote>
+  
+  <p>2 - Manipulação de informações de uma requisição de tráfego de dados em protocolos HTTP ou HTTPS, representadas pela classe \Zend\Http\Request, tendo como resposta um objeto \Zend\Http\Response.</p>
+  
+  <blockquote>
+    <p><a href="http://framework.zend.com/manual/2.0/en/modules/zend.http.response.html">http://framework.zend.com/manual/2.0/en/modules/zend.http.response.html</a> <br>
+    <a href="http://framework.zend.com/manual/2.0/en/modules/zend.http.request.html">http://framework.zend.com/manual/2.0/en/modules/zend.http.request.html</a></p>
+  </blockquote>
+</blockquote>
+
+<hr>
+
+
+
+<h4 id="221-namespace"><i class="icon-sitemap"></i> 2.2.1. Namespace</h4>
+
+<blockquote>
+  <ul>
+  <li>\InepZend\Http</li>
+  </ul>
+</blockquote>
+
+<hr>
+
+
+
+<h3 id="23-apidocunittest"><i class="icon-book"></i> 2.3. APIDoc/UnitTest</h3>
+
+<blockquote>
+  <ul>
+  <li><p>APIDoc</p>
+  
+  <blockquote>
+    <p><a href="http://desenvphp.inep.gov.br/apidoc/namespace-InepZend.Http.html">http://desenvphp.inep.gov.br/apidoc/namespace-InepZend.Http.html</a></p>
+  </blockquote></li>
+  <li><p>UnitTest</p>
+  
+  <blockquote>
+    <p><a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.Http.RequestTrait.html">http://desenvphp.inep.gov.br/apidoc/class-InepZend.Http.RequestTrait.html</a></p>
+  </blockquote></li>
+  </ul>
+</blockquote>
+
+<hr>
+
+<h2 id="3-como-usar"><i class="icon-terminal"></i> 3. Como usar</h2>
+
+
+
+<h3 id="31-invocando-request">3.1. Invocando Request</h3>
+
+
+
+<pre class="prettyprint"><code class=" hljs php"><span class="hljs-keyword">use</span> \<span class="hljs-title">InepZend</span>\<span class="hljs-title">Http</span>\<span class="hljs-title">Request</span>;
+....
+<span class="hljs-variable">$request</span> = <span class="hljs-keyword">new</span> Request(); 
+<span class="hljs-variable">$request</span>-&gt;getPost();</code></pre>
+
+
+
+<h3 id="32-invocando-requesttrait">3.2. Invocando RequestTrait</h3>
+
+
+
+<pre class="prettyprint"><code class=" hljs php"> <span class="hljs-keyword">use</span> \<span class="hljs-title">InepZend</span>\<span class="hljs-title">Http</span>\<span class="hljs-title">RequestTrait</span>;
+ ....
+ <span class="hljs-keyword">use</span> <span class="hljs-title">RequestTrait</span>; 
+ <span class="hljs-variable">$this</span>-&gt;getPost();
+</code></pre>
+
+
+
+<h3 id="33-exemplo-de-código-annotation-example">3.3. Exemplo de código - <em>annotation @example</em></h3>
+
+<p></p><ul> <br>
+<li>Os exemplos da utilização de cada método estão contidos em seus comentários após a <em>annotation</em> <strong>@example</strong>: <br></li></ul><p></p>
+
+<blockquote>
+  <a href="http://desenvphp.inep.gov.br/apidoc/class-InepZend.Http.RequestTrait.html#_getPost">http://desenvphp.inep.gov.br/apidoc/class-InepZend.Http.RequestTrait.html#_getPost</a>
+  
+  </blockquote>
+
+<h2 id="4-referência"><a id="referencia"></a> <i class="icon-unlink"></i> 4. Referência </h2>
+
+<blockquote>
+  <p><a href="http://desenvphp.inep.gov.br/apidoc/namespace-InepZend.Http.html">http://desenvphp.inep.gov.br/apidoc/namespace-InepZend.Http.html</a></p>
+</blockquote></div></body>
+</html>

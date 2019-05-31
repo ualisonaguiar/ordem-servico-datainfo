@@ -1,0 +1,52 @@
+<?php
+$strTitle = 'Readme';
+$this->headTitle($strTitle);
+?>
+<script type="text/javascript">
+include_once('/vendor/jquery-base64/jquery-base64-0.1/jquery.base64.min.js' + strGlobalSufixJsGzip);
+function getContentFromReadme(strPath)
+{
+	try {
+        document.getElementById('divContainerReadme').innerHTML = '<iframe id="iframeContainerReadme" style="border: 0px; width: 100%; height: 100%;" src="' + strGlobalBasePath + '/readme/ajaxGetContentFromReadme/' + base64Encode(strPath) + '"></iframe>';
+        document.getElementById('iframeContainerReadme').onload = function() {
+            var iframeContainerReadme = getDocumentFromIframe('iframeContainerReadme');
+            var arrDivContainer = getElementsFromAttribute(iframeContainerReadme.body, 'DIV', 'class', 'container');
+            if (arrDivContainer.length > 0) {
+                var divContainer = arrDivContainer[0];
+                divContainer.style.width = '100%';
+                divContainer.style.marginTop = '-50px';
+            }
+        };
+	} catch (exception) {
+		window.location.href = strGlobalBasePath + '/readme';
+	}
+    return true;
+}
+</script>
+<style>
+#loginContainer {
+    display: none;
+}
+.cellHeader {
+    width: 50%;
+}
+#divContainerReadme {
+    min-height: 425px;
+    margin-top: 5px;
+}
+#iframeContainerReadme {
+    height: 415px !important;
+}
+div.caixaVazada > div {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+</style>
+<h1><?php echo $this->escapeHtml($strTitle); ?></h1>
+<p>Clique nos itens do menu para acessar algumas funcionalidades administrativas (caso tenha permissão) e também visualizar algumas informações técnicas sobre o uso de componentes do InepZend.</p>
+<div id="divContainerReadme" class="caixaVazada">
+    <div id="divRevisionApp">
+        <h2>Informações de revisão do sistema</h2>
+        <?php echo $this->strHtmlGrid; ?>
+    </div>
+</div>

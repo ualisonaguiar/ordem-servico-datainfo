@@ -1,0 +1,33 @@
+<div class="well form-group">
+    <h3>Informação do Usuário</h3>
+    <div class="text-left">
+        <label class="block">Usuário:</label>
+        <strong><?php echo $this->noUsuario; ?></strong>
+        <br /><br />
+        <label class="block">Horário da execução:</label>        
+        <strong><?php echo $this->datExecucao; ?></strong>
+    </div>    
+</div>
+<br />
+<div class="well form-group">
+    <h3>Operação realizada</h3>
+    <div class="text-left">
+        <strong><?php echo $this->query; ?></strong>
+    </div>
+</div>
+<br />
+<div class="well form-group">
+    <h3>Parâmetro Informado</h3>
+    <div class="text-left">
+        <dl class="dl-horizontal">
+            <?php foreach ($this->parametro as $strBind => $strValue) : ?>
+                <dt><?php echo $strBind; ?></dt>
+                <dd><?php echo $strValue; ?></dd>
+            <?php endforeach;?>
+        </dl>
+    </div>
+</div>
+<br />
+<div>
+    <?php echo $this->form()->render($this->form); ?>
+</div>

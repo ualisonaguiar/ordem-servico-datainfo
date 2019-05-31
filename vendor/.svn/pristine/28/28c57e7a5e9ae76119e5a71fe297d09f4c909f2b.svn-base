@@ -1,0 +1,9 @@
+<?php
+$strTitle = 'Layout Estrutural';
+$this->headTitle($strTitle);
+?>
+<script type="text/javascript" src="<?php echo $this->basePath() . getRenderScriptUrl('TrocaArquivo/js/script'); ?>"></script>
+<script type="text/javascript" src="<?php echo $this->basePath() . getRenderScriptUrl('TrocaArquivo/js/mount-tree'); ?>"></script>
+<h1><?php echo $this->escapeHtml($strTitle); ?></h1>
+<p>Realiza o cadastro dos arquivos XSD responsáveis pelas validações estruturais no envio de dados.</p>
+<?php echo $this->form()->render($this->form); ?>

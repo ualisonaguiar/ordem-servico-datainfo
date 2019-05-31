@@ -1,0 +1,30 @@
+<?php
+use InepZend\Util\Date;
+$strTitle = 'Logs';
+$this->headTitle($strTitle);
+?>
+<link href="<?php echo $this->basePath() . getRenderScriptUrl('Log/css/visualizar-informacao'); ?>"
+      media="screen" rel="stylesheet" type="text/css">
+<script
+    defer type="text/javascript"
+    src="<?php echo $this->basePath() . getRenderScriptUrl('Log/js/visualizar-informacao'); ?>">
+</script>
+<h1><?php echo $this->escapeHtml($strTitle); ?></h1>
+<p>Visualize algumas informações <strong>por data</strong> e manuseie o conteúdo de todos os arquivos de log dinamicamente pela árvore dos "Dados do conteúdo".</p>
+<div class="caixaVazada">
+    <h2 class="h-form">Visualização</h2>
+    <div class="classForm well" style="overflow: hidden;"><h3>Dados da data</h3>
+        <label>Criação</label><div class="divRequired"></div><div class="divHeightRow"><?php echo Date::convertDate($this->strDateFile, 'd/m/Y'); ?></div>
+        <?php echo $this->button(null, $this->url('log-index', array('ds_path' => base64_encode($this->strDateFile)))); ?>
+    </div>
+    <?php
+    echo $this->partial(
+        'inep-zend/log/partial-detalhe-log',
+        array(
+            'arrInfoLogFile' => $this->arrInfoLogFile,
+            'strIndentitySession' => $this->strDateFile,
+            'strDsPath' => $this->strDateFile
+        )
+    );
+    ?>
+</div>

@@ -1,0 +1,11 @@
+<?php
+$strTitle = 'Relatório para Gestor/Preposto';
+$this->headTitle($strTitle);
+?>
+<h1><?php echo $this->escapeHtml($strTitle); ?></h1>
+<p>Realize geração do relatório de gestor/projeto.</p>
+<?php
+$this->angular()
+    ->addService(array('url' => getRenderScriptUrl('InepSkeleton/OrdemServico/js/RelatorioGestorProjetoService'), 'dependence' => 'Service/AbstractService'))
+    ->addController(array('url' => getRenderScriptUrl('InepSkeleton/OrdemServico/js/RelatorioGestorProjetoFormController'), 'dependence' => 'Controller/AbstractGridController', 'html' => $this->form()->render($form)));
+?>

@@ -1,0 +1,21 @@
+@media screen {
+	.flexigrid .tDiv2 .add,
+	.flexigrid .tDiv2 .show,
+	.flexigrid .tDiv2 .update,
+	.flexigrid .tDiv2 .delete,
+	.flexigrid .pFirst,
+	.flexigrid .pPrev,
+	.flexigrid .pNext,
+	.flexigrid .pLast,
+	.flexigrid .pReload,
+	.flexigrid .flexigridColButtonAction .add,
+	.flexigrid .flexigridColButtonAction .show,
+	.flexigrid .flexigridColButtonAction .update,
+	.flexigrid .flexigridColButtonAction .delete {
+	    background-image: none !important;
+	}
+	
+	.flexigrid .fbutton button {
+	    padding-left: 10px !important;
+	}
+}

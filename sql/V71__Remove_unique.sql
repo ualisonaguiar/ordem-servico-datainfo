@@ -1,0 +1,1 @@
+DROP INDEX uk_demanda_validar_;

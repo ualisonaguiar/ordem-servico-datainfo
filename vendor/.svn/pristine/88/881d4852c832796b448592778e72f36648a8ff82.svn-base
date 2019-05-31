@@ -1,0 +1,64 @@
+<?php if ($this->pageCount) {
+    echo $this->flexigrid()->getHtmlInclude(); ?>
+    <div class="flexigrid">    
+        <div class="pDiv">
+            <div class="pDiv2">
+                <div class="pGroup">
+                    <select name="rp" onchange="window.location.href = '/<?php echo $this->route; ?>/page/<?php echo $this->current; ?>/item_page/' + this.value + '/<?php echo $this->action; ?>';">
+                        <option<?php if ($this->itemCountPerPage == 1) {?> selected="selected"<?php }?> value="1">1&nbsp;&nbsp;</option>
+                        <option<?php if ($this->itemCountPerPage == 2) {?> selected="selected"<?php }?> value="2">2&nbsp;&nbsp;</option>
+                        <option<?php if ($this->itemCountPerPage == 3) {?> selected="selected"<?php }?> value="3">3&nbsp;&nbsp;</option>
+                        <option<?php if ($this->itemCountPerPage == 4) {?> selected="selected"<?php }?> value="4">4&nbsp;&nbsp;</option>
+                        <option<?php if ($this->itemCountPerPage == 5) {?> selected="selected"<?php }?> value="5">5&nbsp;&nbsp;</option>
+                        <option<?php if ($this->itemCountPerPage == 10) {?> selected="selected"<?php }?> value="10">10&nbsp;&nbsp;</option>
+                        <option<?php if ($this->itemCountPerPage == 15) {?> selected="selected"<?php }?> value="15">15&nbsp;&nbsp;</option>
+                        <option<?php if ($this->itemCountPerPage == 20) {?> selected="selected"<?php }?> value="20">20&nbsp;&nbsp;</option>
+                        <option<?php if ($this->itemCountPerPage == 30) {?> selected="selected"<?php }?> value="30">30&nbsp;&nbsp;</option>
+                        <option<?php if ($this->itemCountPerPage == 50) {?> selected="selected"<?php }?> value="50">50&nbsp;&nbsp;</option>
+                        <option<?php if ($this->itemCountPerPage == 100) {?> selected="selected"<?php }?> value="100">100&nbsp;&nbsp;</option>
+                    </select>
+                </div>
+                <div class="btnseparator">
+                </div>
+                <div class="pGroup">
+                    <div class="pFirst pButton"<?php if (isset($this->previous)) { ?> onclick="window.location.href = '<?php echo $this->url($this->route, array('page' => $this->first, 'item_page' => $this->itemCountPerPage, 'action' => $this->action)); ?>';"<?php }?>>
+                        <span>
+                        </span>
+                    </div>
+                    <div class="pPrev pButton"<?php if (isset($this->previous)) { ?> onclick="window.location.href = '<?php echo $this->url($this->route, array('page' => $this->previous, 'item_page' => $this->itemCountPerPage, 'action' => $this->action)); ?>';"<?php }?>>
+                        <span>
+                        </span>
+                    </div>
+                </div>
+                <div class="btnseparator">
+                </div>
+                <div class="pGroup" style="width: 110px; text-align: center;">
+                    <span class="pcontrol">
+                        Página <?php echo $this->current; ?> de <?php echo $this->pageCount; ?>
+                    </span>
+                </div>
+                <div class="btnseparator">
+                </div>
+                <div class="pGroup">
+                    <div class="pNext pButton"<?php if (isset($this->next)) { ?> onclick="window.location.href = '<?php echo $this->url($this->route, array('page' => $this->next, 'item_page' => $this->itemCountPerPage, 'action' => $this->action)); ?>';"<?php }?>>
+                        <span>
+                        </span>
+                    </div>
+                    <div class="pLast pButton"<?php if (isset($this->next)) { ?> onclick="window.location.href = '<?php echo $this->url($this->route, array('page' => $this->last, 'item_page' => $this->itemCountPerPage, 'action' => $this->action)); ?>';"<?php }?>>
+                        <span>
+                        </span>
+                    </div>
+                </div>
+                <div class="btnseparator">
+                </div>
+                <div class="pGroup">
+                    <span class="pPageStat">
+                        Listando <?php echo $this->firstItemNumber; ?> até <?php echo $this->lastItemNumber; ?> de <?php echo $this->totalItemCount; ?> <?php echo (($this->totalItemCount <= 1) ? 'registro' : 'registros'); ?>
+                    </span>
+                </div>
+            </div>
+            <div style="clear:both">
+            </div>
+        </div>
+    </div>
+<?php } ?>

@@ -1,0 +1,253 @@
+@media screen {
+    body.contrast .col-xs-6,
+    body.contrast .col-sm-9,
+    body.contrast .panel-info {
+        background-color: #000000;
+    }
+
+    body.contrast #nav {
+        color: #FFFFFF !important;
+    }
+
+    body.contrast #menu-administrative-responsible a {
+        color: #FFFFFF;
+    }
+
+    body.contrast #menu-administrative-responsible a:focus,
+    body.contrast #menu-administrative-responsible a:hover {
+        background-color: #333333;
+        color: #F0AD4E;
+    }
+
+    body.contrast footer {
+        background-color: #222222 !important;
+    }
+
+    body.contrast .caixaVazada,
+    body.contrast .well {
+        background: none;
+        border: 1px solid #222222;
+    }
+
+    body.contrast h1,
+    body.contrast .h1 {
+        border-bottom: 1px solid #EEEEEE !important;
+    }
+
+    body.contrast .h-form,
+    body.contrast table th {
+        background-color: #333333 !important;
+        border-bottom: 1px solid #444444;
+    }
+
+    body.contrast .dropdown-menu > li > a:focus,
+    body.contrast .dropdown-menu > li > a:hover,
+    body.contrast .multi-level > a:focus,
+    body.contrast .multi-level > a:hover {
+        background-color: #333333 !important;
+        color: #F0AD4E;
+        border-radius: 3px;
+    }
+
+    body.contrast .dropdown-menu > .active > a,
+    body.contrast .dropdown-menu > .active > a:focus,
+    body.contrast .dropdown-menu > .active > a:hover {
+        background-color: #333333 !important;
+        color: #F0AD4E !important;
+    }
+
+    body.contrast .nav .open > a,
+    body.contrast .nav .open > a:focus,
+    body.contrast .nav .open > a:hover {
+        background-color: #333333;
+        border-color: #333333;
+    }
+
+    body.contrast .sidebar,
+    body.contrast .breadcrumb,
+    body.contrast .dropdown-menu {
+        background-color: #111111 !important;
+        color: #FFFFFF;
+    }
+
+    body.contrast .google-visualization-table-table * {
+        background-color: #111111;
+        background-image: -moz-linear-gradient(top, #111111, #111111);
+        background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#111111), to(#111111));
+        background-image: -webkit-linear-gradient(top, #111111, #111111);
+        background-image: -o-linear-gradient(top, #111111, #111111);
+        background-image: linear-gradient(to bottom, #111111, #111111);
+        background-repeat: repeat-x;
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#111111', endColorstr='#111111', GradientType=0);
+        filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+    }
+
+    body.contrast .ui-widget-content,
+    body.contrast .ui-widget-header,
+    body.contrast .ui-resizable-e,
+    body.contrast .ui-resizable-s,
+    body.contrast .ui-resizable-w {
+        background: #111111 !important;
+        background-color: #111111 !important;
+        color: #FFFFFF !important;
+    }
+
+    body.contrast ui-resizable-n {
+        background-color: #333333 !important;
+    }
+
+    body.contrast .ui-button {
+        border-color: #444444 !important;
+        background: #333333 !important;
+        color: #FFFFFF !important;
+    }
+
+    body.contrast .ui-button:hover {
+        background: #444444 !important;
+    }
+
+    body.contrast .google-visualization-table-tr-over,
+    body.contrast .google-visualization-table-tr-over td,
+    body.contrast .google-visualization-table-tr-over-nonstrict {
+        background-color: #333333 !important; /* iguais, qual certo? */
+        color: #F0AD4E !important;
+        background: #444444 !important; /* iguais, qual certo? */
+    }
+
+    body.contrast .xdebug-error th,
+    body.contrast .xdebug-error td {
+        background-color: #333333 !important;
+    }
+
+    body.contrast .pcontrol input,
+    body.contrast .pGroup select {
+        color: #555555 !important;
+    }
+
+    body.contrast div.colCopy div {
+        border-bottom: 1px solid #FFFFFF !important;
+        background: #333333 !important;
+        color: #FFFFFF !important;
+        font-size: 13px;
+        font-weight: bold;
+        height: 23px;
+    }
+
+    body.contrast .flexigrid div.hDiv th.thMove div {
+        background: #333333 !important;
+        color: #FFFFFF !important;
+    }
+
+    body.contrast .active {
+        background-color: #333333 !important;
+    }
+
+    body.contrast .active > a {
+        color: #F0AD4E !important;
+    }
+
+    body.contrast .ui-datepicker-header select {
+        color: #F0AD4E !important;
+    }
+
+    body.contrast .ui-datepicker-header span {
+        color: #FFFFFF !important;
+    }
+
+    body.contrast div.error,
+    body.contrast table th span {
+        color: #FFFFFF !important;
+    }
+
+    body.contrast.login {
+        background-color: #000000;
+    }
+
+    body.contrast .ui-widget-content,
+    body.contrast .ui-widget-header {
+        border: 1px solid #333333 !important;
+    }
+
+    body.contrast .ui-autocomplete a {
+        color: #000000;
+    }
+
+    body.contrast .ui-autocomplete .ui-state-focus {
+        color: #F0AD4E;
+        background: #333333 !important;
+    }
+
+    body.contrast .helpText {
+        color: #FFFFFF;
+    }
+
+    body.contrast a[accesskey]:after,
+    body.contrast button[accesskey]:after,
+    body.contrast input[accesskey]:after,
+    body.contrast label[accesskey]:after,
+    body.contrast legend[accesskey]:after,
+    body.contrast textarea[accesskey]:after {
+        color: #FFFFFF;
+    }
+
+    body.contrast .btn-info:active,
+    body.contrast .btn-info:focus,
+    body.contrast .btn-info:hover {
+        background-color: #444444 !important;
+        border-color: #444444 !important;
+    }
+
+    body.contrast .navbar-brand,
+    body.contrast .navbar-right {
+        background-color: #111111;
+    }
+
+    body.contrast .ui-dialog-content,
+    body.contrast .ui-dialog-content,
+    body.contrast .ui-dialog-buttonpane {
+        color: #FFFFFF !important;
+        background-color: #111111 !important;
+        font-weight: bold !important;
+    }
+
+    body.contrast .ui-grid-top-panel {
+        background: none !important;
+        background-color: #333333 !important;
+    }
+
+    body.contrast .ui-grid,
+    body.contrast .ui-grid-header-cell,
+    body.contrast .ui-grid-header {
+        border-color: #444444;
+    }
+
+    body.contrast .ui-grid-cell {
+        background-color: #111111 !important;
+        border-right: 1px solid #444444;
+        border-bottom: 1px solid #444444;
+    }
+
+    body.contrast .google-visualization-table-tr-head .gradient,
+    body.contrast .google-visualization-table-tr-head-nonstrict .gradient,
+    body.contrast .google-visualization-table-div-page .gradient {
+        background: linear-gradient(to bottom, rgba(51, 51, 51, 1), rgba(51, 51, 51, 1), rgba(51, 51, 51, 1), rgba(51, 51, 51, 1)) repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+    }
+
+    body.contrast .navbar-default,
+    body.contrast .inepzend-rodape,
+    body.contrast .navbar-default .navbar-nav > li > a {
+        color: #FFFFFF;
+        background-color: #222;
+        border-color: #222;
+    }
+
+    body.contrast .navbar-default .navbar-nav > .active > span,
+    body.contrast .navbar-default .navbar-nav > li > a:hover,
+    body.contrast .navbar-default .navbar-nav > .open > a,
+    body.contrast .navbar-default .navbar-nav > .open > a:hover,
+    body.contrast .navbar-default .navbar-nav > .open > a:focus {
+        color: #FFFFFF;
+        background-color: #686868;
+        border-color: #686868;
+    }
+}
